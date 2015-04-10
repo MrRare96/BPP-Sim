@@ -3,7 +3,7 @@
  * Created by Eldin on 4/9/2015 for Windesheim Magazijn Robot KBS
  * This class is where everything starts running
  */
-public class Main {
+public class main {
     
     private static int binHeight = 600;
     private static int binWidth = 450;
@@ -26,9 +26,9 @@ public class Main {
 
         //create packets with: packetID, ContentHeight
         Packet packet1 = new Packet(1, 4);
-        Packet packet2 = new Packet(2, 3);
-        Packet packet3 = new Packet(3, 6);
-        Packet packet4 = new Packet(4, 18);
+        Packet packet2 = new Packet(2, 6);
+        Packet packet3 = new Packet(3, 8);
+        Packet packet4 = new Packet(4, 10);
 
         bin1.addPacket(packet1);
         bin1.addPacket(packet2);
