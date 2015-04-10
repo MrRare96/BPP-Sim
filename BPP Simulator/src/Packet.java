@@ -4,16 +4,16 @@
  */
 public class Packet{
 
-    private int packetContentHeight = 0;
+    private int packetCapacityHeight = 0;
     private int packetID;
 
-    public Packet(int packetID, int packetContentHeight){
-        this.packetContentHeight = packetContentHeight;
+    public Packet(int packetID, int packetCapacityHeight){
+        this.packetCapacityHeight = packetCapacityHeight;
         this.packetID = packetID;
     }
 
-    public int getPacketContentHeight() {
-        return packetContentHeight;
+    public int getPacketCapacityHeight() {
+        return packetCapacityHeight;
     }
 
     public int getPacketID() {

@@ -14,43 +14,53 @@ public class Bin {
     private int bheight;
     private int bwidth;
 
-    private int binContentHeight;
-    private int binContentHeightSteps;
+    private int binCapacityHeight;
+    private int binCapacityHeightSteps;
 
     private int packetPosY = 0;
     private int amountOfPackages = 0;
 
-    public Bin(int posX, int posY, int bwidth, int bheight, int binContentHeight){
+    public Bin(int posX, int posY, int bwidth, int bheight, int binCapacityHeight){
+
+        /**
+         * this method stores the data used to define a bin, including its position on the screen and its capacity
+         */
+
+        //these two arrays are needed to store the dimensions for the bin and stores the bin in a visuals container, which include
+        //packets
         binDimensions = new ArrayList<Integer>();
         visuals = new ArrayList<ArrayList>();
 
         this.bheight = bheight;
         this.bwidth = bwidth;
-        this.binContentHeight = binContentHeight;
+        this.binCapacityHeight = binCapacityHeight;
 
-        binContentHeightSteps = bheight / binContentHeight;
+        binCapacityHeightSteps = bheight / binCapacityHeight;
 
-        binDimensions.add(binContentHeight);
+        binDimensions.add(binCapacityHeight);
         binDimensions.add(posX);
         binDimensions.add(posY);
         binDimensions.add(bwidth);
         binDimensions.add(bheight);
         binDimensions.add(0);
         visuals.add(binDimensions);
-
-        System.out.println("added bin " + posX + "|" + binDimensions.get(1));
+        
     }
 
     public void addPacket(Packet packet){
+        /**
+         * This method adds a packet to the bin, it also defines its position for drawing on the screen, so that it looks like that its inside of the bin
+         */
+        int packetCapacityHeight = packet.getPacketCapacityHeight();
 
-        int packetContentHeight = packet.getPacketContentHeight();
-
-        if (packetContentHeight < binContentHeight){
-            binContentHeight = binContentHeight - packetContentHeight;
+        //this counts the max capacity of the bin, if its higher it wont calculate any further
+        if (packetCapacityHeight < binCapacityHeight){
+            binCapacityHeight = binCapacityHeight - packetCapacityHeight;
         }
 
+        //defines the position relative to the bin
         int packetPixelWidth = bwidth - 20;
-        int packetPixelHeight = binContentHeightSteps * packetContentHeight;
+        int packetPixelHeight = binCapacityHeightSteps * packetCapacityHeight;
         int packetPosX = binDimensions.get(1) + 10;
         if(packetPosY == 0){
             packetPosY = bheight + binDimensions.get(2) - packetPixelHeight;
@@ -58,9 +68,9 @@ public class Bin {
             packetPosY = packetPosY  - packetPixelHeight;
         }
 
-
+        //adds those dimensions in a temporary array that wiill be added to the visuals array
         ArrayList<Integer> packetDimensions = new ArrayList<Integer>();
-        packetDimensions.add(packetContentHeight);
+        packetDimensions.add(packetCapacityHeight);
         packetDimensions.add(packetPosX);
         packetDimensions.add(packetPosY);
         packetDimensions.add(packetPixelWidth);
@@ -69,7 +79,9 @@ public class Bin {
 
         visuals.add(packetDimensions);
 
+        //counts the total amount of packages stored inside the bin, could be useful in the future
         amountOfPackages++;
+        
     }
 
     public int getAmountOfPackages() {

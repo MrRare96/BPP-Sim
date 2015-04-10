@@ -53,6 +53,7 @@ public class Drawer extends JPanel {
                 g.fillRect(rectangleShapeInfo.get(1), rectangleShapeInfo.get(2), rectangleShapeInfo.get(3), rectangleShapeInfo.get(4));
             }
         }
+
     }
 
 
