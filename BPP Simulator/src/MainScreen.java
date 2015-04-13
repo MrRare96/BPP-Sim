@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * Created by Eldin on 4/9/2015 for Windesheim Magazijn Robot KBS
@@ -18,6 +19,7 @@ public class MainScreen extends JFrame {
         JPanel bins = new JPanel();
         this.bins = bins;
         JPanel parent = new JPanel();
+        parent.setLayout(new BoxLayout(parent, BoxLayout.PAGE_AXIS));
         topButtons.add(new JButton("test"));
         parent.add(topButtons);
         parent.add(bins);
