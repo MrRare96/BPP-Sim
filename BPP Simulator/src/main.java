@@ -5,8 +5,8 @@
  */
 public class main {
     
-    private static int binHeight = 600;
-    private static int binWidth = 450;
+    private static int binHeight = 400;
+    private static int binWidth = 250;
     private static int binHspacing = 25;
     private static int binWspacing = 25;
 
