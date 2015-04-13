@@ -23,6 +23,10 @@ public class main {
         //create bins with: x, y, width, height, ContentHeight
         Bin bin1 = new Bin(binWspacing, binHspacing, binWidth, binHeight, 25);
         Bin bin2 = new Bin(((binWspacing * 2) + binWidth), binHspacing, binWidth, binHeight, 25);
+        Bin bin3 = new Bin(((binWspacing * 3) + binWidth * 2), binHspacing, binWidth, binHeight, 25);
+        Bin bin4 = new Bin(((binWspacing * 4) + binWidth * 3), binHspacing, binWidth, binHeight, 25);
+        Bin bin5 = new Bin(((binWspacing * 5) + binWidth * 4), binHspacing, binWidth, binHeight, 25);
+        Bin bin6 = new Bin(((binWspacing * 6) + binWidth * 5), binHspacing, binWidth, binHeight, 25);
 
         //create packets with: packetID, ContentHeight
         Packet packet1 = new Packet(1, 4);
@@ -40,6 +44,10 @@ public class main {
         //retrieve all the dimensions for the to be drawn bins and packages
         draw.drawingShapes(bin1.getBinVisuals());
         draw.drawingShapes(bin2.getBinVisuals());
+        draw.drawingShapes(bin3.getBinVisuals());
+        draw.drawingShapes(bin4.getBinVisuals());
+        draw.drawingShapes(bin5.getBinVisuals());
+        draw.drawingShapes(bin6.getBinVisuals());
 
         screen.addToScreen(draw);
 
