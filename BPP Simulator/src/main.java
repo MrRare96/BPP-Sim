@@ -33,7 +33,6 @@ public class main {
         Packet packet2 = new Packet(2, 6);
         Packet packet3 = new Packet(3, 8);
         Packet packet4 = new Packet(4, 10);
-        //TODO: ik haal deze tekst nu weg
         bin1.addPacket(packet1);
         bin1.addPacket(packet2);
         bin1.addPacket(packet4);
