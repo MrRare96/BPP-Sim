@@ -3,7 +3,7 @@
  * Created by Eldin on 4/9/2015 for Windesheim Magazijn Robot KBS
  * This class is where everything starts running
  */
-public class main {
+public class Main {
     
     private static int binHeight = 400;
     private static int binWidth = 250;
