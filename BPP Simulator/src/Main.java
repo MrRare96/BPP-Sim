@@ -28,7 +28,7 @@ public class Main {
         Bin bin5 = new Bin(((binWspacing * 5) + binWidth * 4), binHspacing, binWidth, binHeight, 25);
         Bin bin6 = new Bin(((binWspacing * 6) + binWidth * 5), binHspacing, binWidth, binHeight, 25);
 
-        //create packets with: packetID, ContentHeight
+        //create packets with: packetID , ContentHeight
         Packet packet1 = new Packet(1, 7);
         Packet packet2 = new Packet(2, 5);
         Packet packet3 = new Packet(3, 10);
