@@ -1,5 +1,10 @@
 /**
- * Created by ewart on 13-4-2015.
+ * Created by Eldin on 4/13/2015.
  */
 public interface Algoritme {
+    void setOrder();
+
+    void startAlgo();
+
+    void stopAlgo();
 }
