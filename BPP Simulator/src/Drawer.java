@@ -26,6 +26,12 @@ public class Drawer extends JPanel {
         repaint();
     }
 
+    public Dimension getPreferredSize()
+    {
+        return (new Dimension(600, 700));
+    }
+
+
     public void paintComponent(Graphics g){
         /**
          * In this method the shapes defined in the array retrieved from the drawingShapes method are being

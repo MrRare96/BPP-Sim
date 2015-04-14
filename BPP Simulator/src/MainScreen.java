@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * Created by Eldin on 4/9/2015 for Windesheim Magazijn Robot KBS
@@ -7,26 +8,37 @@ import javax.swing.*;
 public class MainScreen extends JFrame {
 
     private JFrame mainScreen;
-    private JPanel topButtons, bins;
+    private JPanel topButtons, bins, parent;
+
 
     public MainScreen(){
         mainScreen = new JFrame("BPP Simulator");
         mainScreen.setSize(1024, 768);
         mainScreen.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         mainScreen.setVisible(true);
-        JPanel topButtons = new JPanel();
-        JPanel bins = new JPanel();
-        this.bins = bins;
-        JPanel parent = new JPanel();
+
+        topButtons = new JPanel();
+        topButtons.setPreferredSize(new Dimension(50, 50));
+        bins = new JPanel();
+        bins.setPreferredSize(new Dimension(600,600));
+        parent = new JPanel();
+        parent.setLayout(new GridLayout(3, 0));
+        parent.setPreferredSize(new Dimension(700, 700));
+
         topButtons.add(new JButton("test"));
         parent.add(topButtons);
-        parent.add(bins);
-        mainScreen.add(parent); //remove parent to change it to old setup
+       //remove parent to change it to old setup
     }
 
     public void addToScreen(Drawer draw){
-        bins.add(draw); //you can't put it directly in the JFrame because we also need buttons etc. in here.
-        //mainScreen.add(draw);
+         //you can't put it directly in the JFrame because we also need buttons etc. in here.
+
+        bins.add(draw);
+        parent.add(bins);
+        parent.revalidate();
+        mainScreen.add(parent);
+
+
     }
 
 }
