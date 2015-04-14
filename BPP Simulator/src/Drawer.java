@@ -28,7 +28,7 @@ public class Drawer extends JPanel {
 
     public Dimension getPreferredSize()
     {
-        return (new Dimension(600, 700));
+        return (new Dimension(500, 450));
     }
 
 

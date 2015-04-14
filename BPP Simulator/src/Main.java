@@ -18,7 +18,10 @@ public class Main {
 
         //create screen and drawer
         MainScreen screen = new MainScreen();
-        Drawer draw = new Drawer();
+        Drawer draw1 = new Drawer();
+        Drawer draw2 = new Drawer();
+
+
 
         //create bins with: x, y, width, height, ContentHeight
         Bin bin1 = new Bin(binWspacing, binHspacing, binWidth, binHeight, 25);
@@ -50,19 +53,20 @@ public class Main {
         bin5.addPacket(packet1);
         bin5.addPacket(packet3);
 
+
         bin6.addPacket(packet2);
         bin6.addPacket(packet3);
         bin6.addPacket(packet5);
 
         //retrieve all the dimensions for the to be drawn bins and packages
-        draw.drawingShapes(bin1.getBinVisuals());
-        draw.drawingShapes(bin2.getBinVisuals());
-        draw.drawingShapes(bin3.getBinVisuals());
-        draw.drawingShapes(bin4.getBinVisuals());
-        draw.drawingShapes(bin5.getBinVisuals());
-        draw.drawingShapes(bin6.getBinVisuals());
+        draw1.drawingShapes(bin1.getBinVisuals());
+        draw1.drawingShapes(bin2.getBinVisuals());
 
-        screen.addToScreen(draw);
+        draw2.drawingShapes(bin3.getBinVisuals());
+        draw2.drawingShapes(bin4.getBinVisuals());
+
+        screen.addToScreen(draw1);
+        screen.addToScreen(draw2);
 
     }
 }
