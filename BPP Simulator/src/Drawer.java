@@ -11,20 +11,25 @@ import java.util.Random;
 public class Drawer extends JPanel {
 
     private ArrayList<ArrayList> rectangleShape;
-
-    public Drawer(){
+    private Bin left, right;
+    public Drawer(Bin left, Bin right){
         rectangleShape = new ArrayList<ArrayList>();
+        this.left = left;
+        this.right = right;
+
+        rectangleShape.add(left.getBinVisuals());
+        rectangleShape.add(right.getBinVisuals());
     }
 
-    public void drawingShapes(ArrayList<ArrayList> rectangleShapeDimensions){
-        /**
-         * Adds the dimensions from the given arraylist to another arraylist, because otherwise adding
-         * multiple shapes in batch is not possible (in this case)
-         */
-
-        rectangleShape.add(rectangleShapeDimensions);
-        repaint();
-    }
+//    public void drawingShapes(ArrayList<ArrayList> rectangleShapeDimensions){
+//        /**
+//         * Adds the dimensions from the given arraylist to another arraylist, because otherwise adding
+//         * multiple shapes in batch is not possible (in this case)
+//         */
+//
+//        rectangleShape.add(rectangleShapeDimensions);
+//        repaint();
+//    }
 
     public Dimension getPreferredSize()
     {
@@ -59,7 +64,7 @@ public class Drawer extends JPanel {
                 g.fillRect(rectangleShapeInfo.get(1), rectangleShapeInfo.get(2), rectangleShapeInfo.get(3), rectangleShapeInfo.get(4));
             }
         }
-
+//        repaint();
     }
 
 

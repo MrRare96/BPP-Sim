@@ -57,7 +57,6 @@ public class MainScreen extends JFrame implements ActionListener {
        mid.add(draw);
        mainScreen.setVisible(true);
     }
-
     @Override
     public void actionPerformed(ActionEvent e) {
 

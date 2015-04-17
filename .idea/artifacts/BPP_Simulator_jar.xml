@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="BPP Simulator:jar">
+  <artifact type="jar" name="BPP Simulator:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/BPP_Simulator_jar</output-path>
     <root id="archive" name="BPP Simulator.jar">
       <element id="module-output" name="BPP Simulator" />
