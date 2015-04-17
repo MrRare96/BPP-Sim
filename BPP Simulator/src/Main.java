@@ -18,55 +18,21 @@ public class Main {
 
         //create screen and drawer
         MainScreen screen = new MainScreen();
-        Drawer draw1 = new Drawer();
-        Drawer draw2 = new Drawer();
+        Drawer draw = new Drawer();
 
+        Bin bin = new Bin(25, 25, 250, 400, 25);
+        Bin bin2 = new Bin(300, 25, 250, 400, 25);
+        Packet packet = new Packet(5, 6);
+        Packet packet2 = new Packet(6, 10);
 
+        bin.addPacket(packet);
+        bin2.addPacket(packet2);
 
-        //create bins with: x, y, width, height, ContentHeight
-        Bin bin1 = new Bin(binWspacing, binHspacing, binWidth, binHeight, 25);
-        Bin bin2 = new Bin(((binWspacing * 2) + binWidth), binHspacing, binWidth, binHeight, 25);
-        Bin bin3 = new Bin(((binWspacing * 3) + binWidth * 2), binHspacing, binWidth, binHeight, 25);
-        Bin bin4 = new Bin(((binWspacing * 4) + binWidth * 3), binHspacing, binWidth, binHeight, 25);
-        Bin bin5 = new Bin(((binWspacing * 5) + binWidth * 4), binHspacing, binWidth, binHeight, 25);
-        Bin bin6 = new Bin(((binWspacing * 6) + binWidth * 5), binHspacing, binWidth, binHeight, 25);
+        draw.drawingShapes(bin.getBinVisuals());
+        draw.drawingShapes(bin2.getBinVisuals());
 
-        //create packets with: packetID , ContentHeight
-        Packet packet1 = new Packet(1, 7);
-        Packet packet2 = new Packet(2, 5);
-        Packet packet3 = new Packet(3, 10);
-        Packet packet4 = new Packet(4, 2);
-        Packet packet5 = new Packet(5, 8);
+        screen.addToScreen(draw);
 
-        bin1.addPacket(packet1);
-        bin1.addPacket(packet2);
-        bin1.addPacket(packet4);
-
-        bin2.addPacket(packet1);
-        bin2.addPacket(packet3);
-
-        bin3.addPacket(packet2);
-        bin3.addPacket(packet4);
-
-        bin4.addPacket(packet1);
-
-        bin5.addPacket(packet1);
-        bin5.addPacket(packet3);
-
-
-        bin6.addPacket(packet2);
-        bin6.addPacket(packet3);
-        bin6.addPacket(packet5);
-
-        //retrieve all the dimensions for the to be drawn bins and packages
-        draw1.drawingShapes(bin1.getBinVisuals());
-        draw1.drawingShapes(bin2.getBinVisuals());
-
-        draw2.drawingShapes(bin3.getBinVisuals());
-        draw2.drawingShapes(bin4.getBinVisuals());
-
-        screen.addToScreen(draw1);
-        screen.addToScreen(draw2);
 
     }
 }
