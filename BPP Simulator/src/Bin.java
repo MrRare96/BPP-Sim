@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class Bin {
 
     private ArrayList<Packet> packets;
+
     private int binCapacityHeight;
 
 
@@ -46,6 +47,10 @@ public class Bin {
             System.err.println("packet cant exceed bincapicityheight.");
         }
         
+    }
+
+    public void setBinCapacityHeight(int binCapacityHeight) {
+        this.binCapacityHeight = binCapacityHeight;
     }
 
     public int getAmountOfPackages() {

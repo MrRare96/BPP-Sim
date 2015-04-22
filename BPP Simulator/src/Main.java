@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 /**
  * Created by Eldin on 4/9/2015 for Windesheim Magazijn Robot KBS
@@ -9,6 +10,9 @@ public class Main {
     private static int binWidth = 150;
     private static int binHspacing = 25;
     private static int binWspacing = 25;
+    private static ArrayList<Bin> binarray = new ArrayList<Bin>();
+    private static ArrayList<Packet> order = new ArrayList<Packet>();
+
 
     public static void main(String[] args) {
         /**
@@ -17,8 +21,6 @@ public class Main {
          * the bins, and drawing the bins containing those packets on the main screen.
          */
 
-        //create screen and drawer
-        MainScreen screen = new MainScreen();
 
 
 
@@ -30,6 +32,14 @@ public class Main {
         Bin bin5 = new Bin(10);
         Bin bin6 = new Bin(10);
 //        Bin bin6 = new Bin(((binWspacing * 6) + binWidth * 5), binHspacing, binWidth, binHeight, 10);
+
+        binarray.add(bin1);
+        binarray.add(bin2);
+        binarray.add(bin3);
+        binarray.add(bin4);
+        binarray.add(bin5);
+        binarray.add(bin6);
+
 
         //create packets with: packetID , ContentHeight
         Packet packet1 = new Packet(1, 3);
@@ -71,8 +81,10 @@ public class Main {
         Drawer draw2 = new Drawer("Gretig",bin3, bin4, binHeight, binWidth);
         Drawer draw3 = new Drawer("Volledige masturbatie Algoritme",bin5, bin6, binHeight, binWidth);
 //        Drawer draw2 = new Drawer(bin3, bin4);
-        //retrieve all the dimensions for the to be drawn bins and packages
 
+        //retrieve all the dimensions for the to be drawn bins and packages
+        //create screen and drawer
+        MainScreen screen = new MainScreen(binarray, order);
         screen.addToScreen(draw1);
         screen.addToScreen(draw2);
         screen.addToScreen(draw3);
