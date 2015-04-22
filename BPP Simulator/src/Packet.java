@@ -7,11 +7,9 @@ import java.util.Random;
 public class Packet{
 
     private int packetCapacityHeight = 0;
-    private int packetID;
     private Color color;
-    public Packet(int packetID, int packetCapacityHeight){
+    public Packet(int packetCapacityHeight){
         this.packetCapacityHeight = packetCapacityHeight;
-        this.packetID = packetID;
         Random rand = new Random();
 
         int  rc = rand.nextInt(255);
@@ -28,8 +26,5 @@ public class Packet{
         return packetCapacityHeight;
     }
 
-    public int getPacketID() {
-        return packetID;
-    }
 
 }

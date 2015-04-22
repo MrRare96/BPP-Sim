@@ -42,15 +42,15 @@ public class Main {
 
 
         //create packets with: packetID , ContentHeight
-        Packet packet1 = new Packet(1, 3);
-        Packet packet2 = new Packet(2, 2);
-        Packet packet3 = new Packet(3, 3);
-        Packet packet4 = new Packet(4, 4);
-        Packet packet5 = new Packet(5, 4);
-        Packet packet6 = new Packet(6, 3);
-        Packet packet7 = new Packet(7, 4);
-        Packet packet8 = new Packet(8, 3);
-        Packet packet9 = new Packet(9, 6);
+        Packet packet1 = new Packet(3);
+        Packet packet2 = new Packet(2);
+        Packet packet3 = new Packet(3);
+        Packet packet4 = new Packet(4);
+        Packet packet5 = new Packet(4);
+        Packet packet6 = new Packet(3);
+        Packet packet7 = new Packet(4);
+        Packet packet8 = new Packet(3);
+        Packet packet9 = new Packet(6);
 
         bin1.addPacket(packet1);
         bin1.addPacket(packet2);

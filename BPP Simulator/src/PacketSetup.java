@@ -2,8 +2,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.rmi.activation.ActivationID;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by Eldin on 4/22/2015.
@@ -16,33 +19,29 @@ public class PacketSetup extends JDialog implements ActionListener{
     private JTextField packetCapIn, amountOfPacketsIn;
     private JButton save, clear, generate, add;
     private JFrame parent;
+    private int x = 0;
 
     private ArrayList<Packet> order;
 
+    //TODO: max cap changeable
     public PacketSetup(JFrame parent, ArrayList<Packet> order){
         super(parent, "Bin Setup");
         this.parent = parent;
         this.order = order;
 
         packetSetup = new JPanel();
-        packetSetup.setLayout(new GridLayout(5, 0, 0, 0));
+        packetSetup.setLayout(new BoxLayout(packetSetup, BoxLayout.PAGE_AXIS));
 
         top1 = new JPanel();
-        top1.setLayout(new GridLayout(2, 0, 0, 0));
-        top15 = new JPanel();
-        top15.setLayout(new FlowLayout());
+        top1.setLayout(new FlowLayout());
         top2 = new JPanel();
-        top2.setLayout(new GridLayout(2, 0, 0, 0));
-        top25 = new JPanel();
-        top25.setLayout(new FlowLayout());
+        top2.setLayout(new FlowLayout());
         mid = new JPanel();
-        mid.setLayout(new GridLayout(2, 0, 0, 0));
+        mid.setLayout(new FlowLayout());
         bot = new JPanel();
         bot.setLayout(new FlowLayout());
 
-        addPacketL = new JLabel("Add Packet:");
-        packetCapacityL = new JLabel("Packet Capacity:");
-        packetAmountL = new JLabel("Amount of Packets:");
+        addPacketL = new JLabel("Add Packet:");s
         genRandomPacketsL = new JLabel("Generate Packets:");
         orderL = new JLabel("Order:");
 
@@ -60,20 +59,37 @@ public class PacketSetup extends JDialog implements ActionListener{
 
         packetCapIn = new JTextField();
         packetCapIn.setColumns(15);
+        packetCapIn.setText("Packet Capacity");
+        packetCapIn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                packetCapIn.setText("");
+                repaint();
+                revalidate();
+            }
+        });
+
         amountOfPacketsIn = new JTextField();
         amountOfPacketsIn.setColumns(15);
+        amountOfPacketsIn.setText("Amount of packets");
+        amountOfPacketsIn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                amountOfPacketsIn.setText("");
+                repaint();
+                revalidate();
+            }
+        });
 
         top1.add(addPacketL);
-        top15.add(packetCapacityL);
-        top15.add(packetCapIn);
-        top15.add(add);
-        top1.add(top15);
+        top1.add(packetCapIn);
+        top1.add(add);
 
         top2.add(genRandomPacketsL);
-        top25.add(packetAmountL);
-        top25.add(amountOfPacketsIn);
-        top25.add(generate);
-        top2.add(top25);
+        top2.add(amountOfPacketsIn);
+        top2.add(generate);
 
         mid.add(orderL);
         mid.add(orderOutput);
@@ -81,10 +97,10 @@ public class PacketSetup extends JDialog implements ActionListener{
         bot.add(clear);
         bot.add(save);
 
-        packetSetup.add(top1);
-        packetSetup.add(top2);
-        packetSetup.add(mid);
-        packetSetup.add(bot);
+        packetSetup.add(top1, BorderLayout.NORTH);
+        packetSetup.add(top2, BorderLayout.NORTH);
+        packetSetup.add(mid, BorderLayout.NORTH);
+        packetSetup.add(bot, BorderLayout.NORTH);
 
         getContentPane().add(packetSetup);
         pack();
@@ -92,6 +108,40 @@ public class PacketSetup extends JDialog implements ActionListener{
     }
 
     public void actionPerformed(ActionEvent e){
+        if(e.getSource() == add){
+            try{
+                x++;
+                int capacity = Integer.parseInt(packetCapIn.getText());
+                Packet pack = new Packet(capacity);
+                order.add(pack);
+                orderOutput.append("Packet #" + x + " with capacity:  " + capacity + " added!" + "\r\n");
+
+            } catch (Exception ex){
+                JOptionPane.showMessageDialog(parent, "You need to fill in a number!");
+            }
+        } else if(e.getSource() == generate){
+            try{
+                order.clear();
+                int y = 0;
+                int rounds = Integer.parseInt(amountOfPacketsIn.getText());
+                while(y != rounds){
+                    Random rand = new Random();
+                    int capacity = rand.nextInt(10);
+                    Packet pack = new Packet(capacity);
+                    order.add(pack);
+                    orderOutput.append("Packet #" + y + " with capacity:  " + capacity + " added!"  + "\r\n");
+                    y++;
+                }
+
+            } catch(Exception ex){
+                JOptionPane.showMessageDialog(parent, "You need to fill in a number!");
+            }
+        } else if(e.getSource() == clear){
+            order.clear();
+            orderOutput.setText("");
+            validate();
+            repaint();
+        }
 
     }
 }
