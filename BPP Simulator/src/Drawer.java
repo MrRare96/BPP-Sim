@@ -14,6 +14,7 @@ public class Drawer extends JPanel {
     private int binHeight, binWidth, binSpacing, binLines;
     private boolean bin;
     private String algo;
+    private boolean konami;
     public Drawer(String algo, Bin left, Bin right, int binHeight, int binWidth) {
         this.bins = new ArrayList<Bin>();
         bins.add(left);
@@ -23,6 +24,7 @@ public class Drawer extends JPanel {
         this.binSpacing = 50;
         this.algo = algo;
         this.binLines = 10;
+        this.konami = false;
     }
 
     public Dimension getPreferredSize()
@@ -34,6 +36,9 @@ public class Drawer extends JPanel {
         return binHeight/binCapacity;
     }
 
+    public void setKonami() {
+        this.konami = true;
+    }
 
     public void paintComponent(Graphics g){
         /**
@@ -70,14 +75,19 @@ public class Drawer extends JPanel {
                                     " "+ (bin.getBinCapicity()*100)/bin.getBinCapacityHeight()+ "%",// 50%
                                     x + binWidth - 50, 430);
                 }
-                Random rand = new Random();
 
-                int  rc = rand.nextInt(255);
-                int  gc = rand.nextInt(255);
-                int bc = rand.nextInt(255);
+                if(konami) {
+                    Random rand = new Random();
 
-                //paint packet
-                g.setColor(packet.getColor());
+                    int rc = rand.nextInt(255);
+                    int gc = rand.nextInt(255);
+                    int bc = rand.nextInt(255);
+
+                    g.setColor(new Color(rc,gc,bc));
+                } else {
+                    //paint packet
+                    g.setColor(packet.getColor());
+                }
                 g.fillRect(x + binLines, y, binWidth - 20, packet.getPacketHeight() * -packagesSteps(bin.getBinCapacityHeight()));
                 y -= packet.getPacketHeight() * packagesSteps(bin.getBinCapacityHeight());
                 //line between packets
@@ -88,13 +98,12 @@ public class Drawer extends JPanel {
                 System.out.println("-------------------------------");
                 System.out.println((bin.getBinCapicity()*100)/bin.getBinCapacityHeight()+ "%");
             }
-//            //outline over gray bin
-//            g.setColor(Color.BLACK);
-//            g.drawRect(x, 0, binWidth, binHeight);
 
             x+= binWidth + binSpacing;
         }
-//        repaint(); //disco
+        if(konami) {
+        repaint(); //disco
+        }
     }
 
 

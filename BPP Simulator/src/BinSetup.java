@@ -2,13 +2,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
  * Created by Eldin on 4/17/2015.
  */
-public class BinSetup extends JDialog implements ActionListener{
+public class BinSetup extends JDialog implements ActionListener, KeyListener{
 
     private JPanel binSetup, top, mid, bot;
     private JLabel binCap1Label, binCap2Label;
@@ -16,8 +18,8 @@ public class BinSetup extends JDialog implements ActionListener{
     private JButton save, cancel;
     private JFrame parent;
 
-    private int binCap1;
-    private int binCap2;
+    private int KonamiCode[] = {38,38,40,40,37,39,37,39,66,65 }, count;
+    private int binCap1, binCap2;
 
     private ArrayList<Bin> binarray;
     private ArrayList<Drawer> drawers;
@@ -27,7 +29,7 @@ public class BinSetup extends JDialog implements ActionListener{
         this.parent = parent;
         this.binarray = binarray;
         this.drawers = drawers;
-
+        this.count = 0;
         setResizable(false);
 
         binSetup = new JPanel();
@@ -45,8 +47,12 @@ public class BinSetup extends JDialog implements ActionListener{
 
         binCapacity1 = new JTextField("" + binarray.get(0).getBinCapacityHeight());
         binCapacity1.setColumns(15);
+
+        binCapacity1.addKeyListener(this);
         binCapacity2 = new JTextField("" + binarray.get(1).getBinCapacityHeight());
         binCapacity2.setColumns(15);
+
+        binCapacity2.addKeyListener(this);
 
         cancel = new JButton("cancel");
         cancel.addActionListener(this);
@@ -120,5 +126,33 @@ public class BinSetup extends JDialog implements ActionListener{
 
 
         }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        int key  =  e.getKeyCode();
+        System.out.println(key);
+        if(key == KonamiCode[count]) {
+            if(count < 9 ) {
+                count++;
+            } else {
+                //add action
+                for(Drawer d : drawers ) {
+                    d.setKonami();
+                    d.repaint();
+                }
+            }
+        } else{
+            count = 0;
+        }
+    }
+    @Override
+    public void keyReleased(KeyEvent e) {
+
     }
 }
