@@ -12,7 +12,7 @@ public class Packet{
         this.packetID = packetID;
     }
 
-    public int getPacketCapacityHeight() {
+    public int getPacketHeight() {
         return packetCapacityHeight;
     }
 

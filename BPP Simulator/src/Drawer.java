@@ -10,32 +10,25 @@ import java.util.Random;
 
 public class Drawer extends JPanel {
 
-    private ArrayList<ArrayList> rectangleShape;
-    private Bin left, right;
-    public Drawer(Bin left, Bin right){
-        rectangleShape = new ArrayList<ArrayList>();
-        this.left = left;
-        this.right = right;
-
-        rectangleShape.add(left.getBinVisuals());
-        rectangleShape.add(right.getBinVisuals());
+    private ArrayList<Bin> bins;
+    private int binHeight, binWidth;
+    private boolean bin;
+    public Drawer(Bin left, Bin right, int binHeight, int binWidth) {
+        this.bins = new ArrayList<Bin>();
+        bins.add(left);
+        bins.add(right);
+        this.binHeight = binHeight;
+        this.binWidth = binWidth;
     }
-
-//    public void drawingShapes(ArrayList<ArrayList> rectangleShapeDimensions){
-//        /**
-//         * Adds the dimensions from the given arraylist to another arraylist, because otherwise adding
-//         * multiple shapes in batch is not possible (in this case)
-//         */
-//
-//        rectangleShape.add(rectangleShapeDimensions);
-//        repaint();
-//    }
 
     public Dimension getPreferredSize()
     {
-        return (new Dimension(768, 450));
+        return (new Dimension(768, 750));
     }
 
+    public int packagesSteps(int binCapacity) {
+        return binHeight/binCapacity;
+    }
 
     public void paintComponent(Graphics g){
         /**
@@ -44,27 +37,42 @@ public class Drawer extends JPanel {
          */
 
         super.paintComponent(g);
-
         //for loop in for loop gets dimension for the specific shape
-        for(ArrayList<ArrayList> rectangleShapes : rectangleShape){
-            for(ArrayList<Integer> rectangleShapeInfo : rectangleShapes){
-                if(rectangleShapeInfo.get(5) == 0){
+            int x = 0;
+        for(Bin bin: bins) {
+            int y = 0;
+            boolean drawBin = false;
+            for (Packet packet : bin.getPackets()) {
+                if(!drawBin) {
                     g.setColor(Color.BLUE);
-                } else {
-                    Random rand = new Random();
-
-                    int  rc = rand.nextInt(255);
-                    int  gc = rand.nextInt(255);
-                    int  bc = rand.nextInt(255);
-
-                    g.drawLine(rectangleShapeInfo.get(1), rectangleShapeInfo.get(2), rectangleShapeInfo.get(1), rectangleShapeInfo.get(2) + 1);
-                    g.setColor(new Color(rc, gc, bc));
+                    g.drawString("test", x, y);
+                    drawBin = true;
+                    g.fillRect(x, y, binWidth, binHeight);
+                    y += binHeight;
+                    g.setColor(Color.black);
+                    g.drawString("" + bin.getBinCapicity() + "/" + bin.getBinCapacityHeight() +
+                            " "+ (bin.getBinCapicity()*100)/bin.getBinCapacityHeight()+ "%",
+                            x+ 200, 410);
                 }
+                Random rand = new Random();
 
-                g.fillRect(rectangleShapeInfo.get(1), rectangleShapeInfo.get(2), rectangleShapeInfo.get(3), rectangleShapeInfo.get(4));
+                int  rc = rand.nextInt(255);
+                int  gc = rand.nextInt(255);
+                int bc = rand.nextInt(255);
+
+//                g.drawLine(x, y, binWidth, binHeight);
+
+                g.setColor(new Color(rc, gc, bc));
+                g.fillRect(x, y, binWidth, packet.getPacketHeight() * -packagesSteps(bin.getBinCapacityHeight()));
+                y -= packet.getPacketHeight() * packagesSteps(bin.getBinCapacityHeight());
+                System.out.println("Bin:" + bin.getAmountOfPackages() + " current y: " + y);
+                System.out.println("-------------------------------");
+                System.out.println((bin.getBinCapicity()*100)/bin.getBinCapacityHeight()+ "%");
             }
+            x+= binWidth *2;
         }
-//        repaint();
+        repaint();
+
     }
 
 
