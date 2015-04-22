@@ -94,14 +94,12 @@ public class Drawer extends JPanel {
                 g.setColor(Color.BLACK);
                 g.drawLine(x + binLines, y, x + binWidth - 11, y);
 
-                System.out.println("Bin:" + bin.getAmountOfPackages() + " current y: " + y);
-                System.out.println("-------------------------------");
-                System.out.println((bin.getBinCapicity()*100)/bin.getBinCapacityHeight()+ "%");
             }
 
             x+= binWidth + binSpacing;
         }
         if(konami) {
+
             try {
                 Thread.sleep(15);
             } catch (InterruptedException e) {
