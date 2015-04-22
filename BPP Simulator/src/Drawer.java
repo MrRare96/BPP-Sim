@@ -102,7 +102,12 @@ public class Drawer extends JPanel {
             x+= binWidth + binSpacing;
         }
         if(konami) {
-        repaint(); //disco
+            try {
+                Thread.sleep(15);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            repaint(); //disco
         }
     }
 
