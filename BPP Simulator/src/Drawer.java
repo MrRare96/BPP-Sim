@@ -11,24 +11,29 @@ import java.util.Random;
 public class Drawer extends JPanel {
 
     private ArrayList<Bin> bins;
-    private int binHeight, binWidth;
+    private int binHeight, binWidth, binSpacing, binLines;
     private boolean bin;
-    public Drawer(Bin left, Bin right, int binHeight, int binWidth) {
+    private String algo;
+    public Drawer(String algo, Bin left, Bin right, int binHeight, int binWidth) {
         this.bins = new ArrayList<Bin>();
         bins.add(left);
         bins.add(right);
         this.binHeight = binHeight;
         this.binWidth = binWidth;
+        this.binSpacing = 50;
+        this.algo = algo;
+        this.binLines = 10;
     }
 
     public Dimension getPreferredSize()
     {
-        return (new Dimension(768, 750));
+        return (new Dimension(binWidth*2+binSpacing+binLines*2 +30, binHeight +150));
     }
 
     public int packagesSteps(int binCapacity) {
         return binHeight/binCapacity;
     }
+
 
     public void paintComponent(Graphics g){
         /**
@@ -38,21 +43,32 @@ public class Drawer extends JPanel {
 
         super.paintComponent(g);
         //for loop in for loop gets dimension for the specific shape
-            int x = 0;
+            int x = 10;
+        g.drawRect(0,0,binWidth*2 + binSpacing + 40, binHeight + 40);
+
+        g.drawString(algo,10,12);
         for(Bin bin: bins) {
-            int y = 0;
+            int y = 20;
             boolean drawBin = false;
             for (Packet packet : bin.getPackets()) {
                 if(!drawBin) {
-                    g.setColor(Color.BLUE);
-                    g.drawString("test", x, y);
                     drawBin = true;
-                    g.fillRect(x, y, binWidth, binHeight);
+
+                    //Draw packetheights in bin
+                    g.drawLine(x, y, x, y + binHeight);
+                    for(int line = 0; line <= bin.getBinCapacityHeight(); line++) {
+                        g.drawLine(x,y +line *packagesSteps(bin.getBinCapacityHeight()),x +binLines, y + line *packagesSteps(bin.getBinCapacityHeight()));
+                    }
+                    x+=binLines;
+                    //gray bin
+                    g.setColor(new Color(192, 192, 192));
+                    g.fillRect(x, y, binWidth, binHeight + 1);
                     y += binHeight;
+
                     g.setColor(Color.black);
-                    g.drawString("" + bin.getBinCapicity() + "/" + bin.getBinCapacityHeight() +
-                            " "+ (bin.getBinCapicity()*100)/bin.getBinCapacityHeight()+ "%",
-                            x+ 200, 410);
+                    g.drawString(   "" + bin.getBinCapicity() + "/" + bin.getBinCapacityHeight() +//  5/10
+                                    " "+ (bin.getBinCapicity()*100)/bin.getBinCapacityHeight()+ "%",// 50%
+                                    x + binWidth - 50, 430);
                 }
                 Random rand = new Random();
 
@@ -60,19 +76,25 @@ public class Drawer extends JPanel {
                 int  gc = rand.nextInt(255);
                 int bc = rand.nextInt(255);
 
-//                g.drawLine(x, y, binWidth, binHeight);
-
-                g.setColor(new Color(rc, gc, bc));
-                g.fillRect(x, y, binWidth, packet.getPacketHeight() * -packagesSteps(bin.getBinCapacityHeight()));
+                //paint packet
+                g.setColor(packet.getColor());
+                g.fillRect(x + binLines, y, binWidth - 20, packet.getPacketHeight() * -packagesSteps(bin.getBinCapacityHeight()));
                 y -= packet.getPacketHeight() * packagesSteps(bin.getBinCapacityHeight());
+                //line between packets
+                g.setColor(Color.BLACK);
+                g.drawLine(x + binLines, y, x + binWidth - 11, y);
+
                 System.out.println("Bin:" + bin.getAmountOfPackages() + " current y: " + y);
                 System.out.println("-------------------------------");
                 System.out.println((bin.getBinCapicity()*100)/bin.getBinCapacityHeight()+ "%");
             }
-            x+= binWidth *2;
+//            //outline over gray bin
+//            g.setColor(Color.BLACK);
+//            g.drawRect(x, 0, binWidth, binHeight);
+
+            x+= binWidth + binSpacing;
         }
 //        repaint(); //disco
-
     }
 
 

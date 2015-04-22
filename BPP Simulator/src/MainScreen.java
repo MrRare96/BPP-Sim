@@ -32,6 +32,7 @@ public class MainScreen extends JFrame implements ActionListener {
         stop = new JButton("stop");
         stop.addActionListener(this);
 
+
         binSetup = new JButton("binSetup");
         binSetup.addActionListener(this);
 
