@@ -17,7 +17,7 @@ public class MainScreen extends JFrame implements ActionListener {
 
     public MainScreen(){
         mainScreen = new JFrame("BPP Simulator");
-        mainScreen.setSize(1024, 768);
+        mainScreen.setSize(1300, 768);
         mainScreen.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         container = new JPanel();

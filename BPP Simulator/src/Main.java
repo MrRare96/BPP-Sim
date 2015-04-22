@@ -12,7 +12,8 @@ public class Main {
 
     public static void main(String[] args) {
         /**
-         * This methode runs everything, creating and showing the window, creating bins, creating packets and putting them into
+         * This methode runs everything, creatin
+         * g and showing the window, creating bins, creating packets and putting them into
          * the bins, and drawing the bins containing those packets on the main screen.
          */
 
