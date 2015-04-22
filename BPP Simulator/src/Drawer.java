@@ -71,7 +71,7 @@ public class Drawer extends JPanel {
             }
             x+= binWidth *2;
         }
-        repaint();
+//        repaint(); //disco
 
     }
 
