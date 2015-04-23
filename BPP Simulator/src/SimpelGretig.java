@@ -13,7 +13,6 @@ public class SimpelGretig implements Algoritme{
     private boolean stop = false;
     private Drawer draw;
     private long difference;
-    private int bin1Emptied, bin2Emptied;
 
 
     public SimpelGretig(Bin bin1, Bin bin2, MainScreen parentscreen, Drawer draw) {
@@ -32,17 +31,16 @@ public class SimpelGretig implements Algoritme{
         Thread test = new Thread(new Runnable() {
             @Override
             public void run() {
-                bin1Emptied = 0;
-                bin2Emptied = 0;
+
                 long lStartTime = System.nanoTime();
 
                 for(Packet packet : order){
 
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+//                    try {
+//                        Thread.sleep(100);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
                     if(stop){
                         break;
                     }
@@ -50,37 +48,17 @@ public class SimpelGretig implements Algoritme{
                     Random rand = new Random();
                     int random = rand.nextInt(2);
                     if((random % 2) == 0){
-                        if(bin1.getBinCapacityLeft() < packet.getPacketHeight()){
-                            bin1Emptied++;
-                            //parentscreen.addToResult("Left bin (bin - 1) has been emptied for #" + bin1Emptied + ", filled: " + bin1.getBinCapicityFilled() + "/" + bin1.getBinCapacityHeight() + "\r\n");
-                            bin1.emptyBin();
-                            bin1.addPacket(packet);
-                        } else {
-                            bin1.addPacket(packet);
-                        }
+                        bin1.addPacket(packet);
                     } else {
-                        if(bin2.getBinCapacityLeft() < packet.getPacketHeight()){
-                            bin2Emptied++;
-                            //parentscreen.addToResult("Right bin (bin - 2) has been emptied for #" + bin2Emptied + ", filled: " + bin2.getBinCapicityFilled() + "/" + bin2.getBinCapacityHeight() + "\r\n");
-                            bin2.emptyBin();
-                            bin2.addPacket(packet);
-                        } else {
-                            bin2.addPacket(packet);
-                        }
+                        bin2.addPacket(packet);
                     }
 
                     SwingUtilities.invokeLater(new Runnable() {
                         @Override
                         public void run() {
-                            draw.repaint();
+//                            draw.repaint();
                         }
                     });
-
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
 
                 }
                 long lEndTime = System.nanoTime();
@@ -89,9 +67,9 @@ public class SimpelGretig implements Algoritme{
 
                 parentscreen.addToResult("\r\n" + "----------------RESULT FROM SIMPEL GRETIG--------------------" +
                         "\r\n" +
-                        "Left bin: " + bin1Emptied + " times emptied." +
+                        "Left bin: " + bin1.getTimesEmptied() + " times emptied." +
                         "\r\n" +
-                        "Right bin: " + bin2Emptied + " times emptied." +
+                        "Right bin: " + bin2.getTimesEmptied() + " times emptied." +
                         "\r\n" +
                         "Capacity left in Left bin: " + bin1.getBinCapacityLeft() + "/" + bin1.getBinCapacityHeight() +
                         "\r\n" +

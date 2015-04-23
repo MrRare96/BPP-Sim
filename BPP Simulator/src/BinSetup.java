@@ -1,12 +1,15 @@
+
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-
+import java.util.TimerTask;
+import java.util.Timer;
 /**
  * Created by Eldin on 4/17/2015.
  */
@@ -142,9 +145,21 @@ public class BinSetup extends JDialog implements ActionListener, KeyListener{
                 count++;
             } else {
                 //add action
-                for(Drawer d : drawers ) {
+                for(final Drawer d : drawers ) {
+                    String bip = "mario.mp3";
+                    Media hit = new Media(bip);
+                    MediaPlayer mediaPlayer = new MediaPlayer(hit);
+                    mediaPlayer.play();
+
+
                     d.setKonami();
-                    d.repaint();
+                    Timer konamiTimer = new Timer();
+                    konamiTimer.scheduleAtFixedRate(new TimerTask() {
+                        @Override
+                        public void run() {
+                            d.repaint();
+                        }
+                    }, 15, 15);
                 }
             }
         } else{

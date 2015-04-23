@@ -12,7 +12,7 @@ public class Bin {
 
     private ArrayList<Packet> packets;
 
-    private int binCapacityHeight;
+    private int binCapacityHeight, timesEmptied;;
 
 
     public Bin(int binCapacityHeight){
@@ -22,6 +22,7 @@ public class Bin {
          */
         this.binCapacityHeight = binCapacityHeight;
         this.packets = new ArrayList<Packet>();
+        this.timesEmptied = 0;
     }
 
     public int getBinCapicityFilled() {
@@ -45,13 +46,19 @@ public class Bin {
         if((packet.getPacketHeight() + getBinCapicityFilled()) < binCapacityHeight){
             packets.add(packet);
         } else {
-            System.err.println("can't add packet to bin.");
-            System.err.println("packet cant exceed bincapicityheight.");
+            emptyBin();
+            packets.add(packet);
         }
         
     }
 
+    public int getTimesEmptied() {
+        return timesEmptied;
+    }
+
     public void emptyBin(){
+
+        timesEmptied++;
         packets.clear();
     }
 
