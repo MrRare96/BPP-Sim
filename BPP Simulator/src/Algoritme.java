@@ -9,6 +9,4 @@ public interface Algoritme {
      void startAlgo(int outputNumber);
 
      void stopAlgo();
-
-     void replaceBin(Bin bin);
 }

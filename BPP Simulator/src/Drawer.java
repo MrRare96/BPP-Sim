@@ -15,6 +15,7 @@ public class Drawer extends JPanel {
     private boolean bin;
     private String algo;
     private boolean konami;
+
     public Drawer(String algo, Bin left, Bin right, int binHeight, int binWidth) {
         this.bins = new ArrayList<Bin>();
         bins.add(left);

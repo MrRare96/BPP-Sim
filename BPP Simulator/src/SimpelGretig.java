@@ -4,14 +4,16 @@ import java.util.Random;
 
 /**
  * Created by Eldin on 4/22/2015.
+ * this class contains the logics to calculate packet allocations in the bin, this basicly is a random algoritm
  */
 public class SimpelGretig implements Algoritme{
 
     private ArrayList<Packet> order;
     private Bin bin1, bin2;
-    private MainScreen parentscreen;
-    private boolean stop = false;
     private Drawer draw;
+    private MainScreen parentscreen;
+
+    private boolean stop = false;
     private long difference;
 
 
@@ -20,6 +22,7 @@ public class SimpelGretig implements Algoritme{
         this.bin2 = bin2;
         this.parentscreen = parentscreen;
         this.draw = draw;
+        difference = 0;
     }
 
     public void setOrder(ArrayList<Packet> order){
@@ -28,7 +31,13 @@ public class SimpelGretig implements Algoritme{
 
     public void startAlgo(final int outputNumber){
 
-        Thread test = new Thread(new Runnable() {
+        /**
+         * this method contains a thread, this thread runs a for loop over a order array which contains packets
+         * a random number generator and a equation to check if the number is even or odd is used to determine
+         * if the packet in the the order array is supposed to go left or right.
+         */
+
+        Thread algoritm = new Thread(new Runnable() {
             @Override
             public void run() {
 
@@ -47,6 +56,7 @@ public class SimpelGretig implements Algoritme{
 
                     Random rand = new Random();
                     int random = rand.nextInt(2);
+
                     if((random % 2) == 0){
                         bin1.addPacket(packet);
                     } else {
@@ -59,10 +69,9 @@ public class SimpelGretig implements Algoritme{
                             draw.repaint();
                         }
                     });
-
                 }
-                long lEndTime = System.nanoTime();
 
+                long lEndTime = System.nanoTime();
                 difference = lEndTime - lStartTime;
 
                 parentscreen.addToResult(outputNumber, bin1, bin2, difference);
@@ -70,15 +79,13 @@ public class SimpelGretig implements Algoritme{
             }
         });
 
-        test.start();
+        algoritm.start();
 
+        stop = false;
     }
 
     public void stopAlgo(){
         stop = true;
     }
 
-    public void replaceBin(Bin bin){
-       bin.emptyBin();
-    }
 }

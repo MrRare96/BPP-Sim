@@ -3,14 +3,21 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * Created by Eldin on 4/10/2015 for Windesheim Magazijn Robot KBS
+ * Created by Ewart en Eldin on 4/10/2015 for Windesheim Magazijn Robot KBS
+ * This class is used to define a packet
  */
 public class Packet{
 
     private int packetCapacityHeight = 0;
     private Color color;
     private ArrayList<Color> colorList;
+
     public Packet(int packetCapacityHeight){
+
+        /**
+         * a packet contains a capacity parameter and a color which is randomly generated.
+         */
+
         this.packetCapacityHeight = packetCapacityHeight;
         Random rand = new Random();
 

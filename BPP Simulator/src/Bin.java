@@ -18,7 +18,7 @@ public class Bin {
     public Bin(int binCapacityHeight){
 
         /**
-         * this method stores the data used to define a bin, including its position on the screen and its capacity
+         * this method stores the data used to define a bin, such as its capacity and which packets it contains and how many times it has been emptied.
          */
         this.binCapacityHeight = binCapacityHeight;
         this.packets = new ArrayList<Packet>();
@@ -26,6 +26,9 @@ public class Bin {
     }
 
     public int getBinCapicityFilled() {
+        /**
+         * this method returns the capacity thats in use of the bin
+         */
         int binCapicity = 0;
         for( Packet p: packets) {
             binCapicity += p.getPacketHeight();
@@ -37,11 +40,17 @@ public class Bin {
         return binCapacityHeight;
     }
 
-    public int getBinCapacityLeft() { return binCapacityHeight - getBinCapicityFilled();}
+    public int getBinCapacityLeft() {
+        /**
+         * this method returns the empty capacity in the bin
+         */
+        return binCapacityHeight - getBinCapicityFilled();
+    }
 
     public void addPacket(Packet packet){
         /**
-         * This method adds a packet to the bin, it also defines its position for drawing on the screen, so that it looks like that its inside of the bin
+         * This method adds a packet to the bin, it checks if it fits, if not it empties the bin
+         * and add it after it is emptied.
          */
         if((packet.getPacketHeight() + getBinCapicityFilled()) < binCapacityHeight){
             packets.add(packet);
@@ -57,7 +66,9 @@ public class Bin {
     }
 
     public void emptyBin(){
-
+        /**
+         * empties the bin
+         */
         timesEmptied++;
         packets.clear();
     }

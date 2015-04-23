@@ -9,6 +9,7 @@ import java.util.Random;
 
 /**
  * Created by Eldin on 4/22/2015.
+ * in this class you can create/generate packets
  */
 public class PacketSetup extends JDialog implements ActionListener{
 
@@ -19,12 +20,14 @@ public class PacketSetup extends JDialog implements ActionListener{
     private JScrollPane scroll;
     private JButton ok, clear, generate, add;
     private JFrame parent;
+    private ArrayList<Packet> order;
     private int x = 0;
 
-    private ArrayList<Packet> order;
-
-    //TODO: max cap changeable
     public PacketSetup(JFrame parent, ArrayList<Packet> order){
+        /**
+         * in here the screen will be created.
+         */
+
         super(parent, "Bin Setup");
         this.parent = parent;
         this.order = order;
@@ -67,7 +70,6 @@ public class PacketSetup extends JDialog implements ActionListener{
                 x++;
             }
         }
-
 
         packetCapIn = new JTextField();
         packetCapIn.setColumns(15);

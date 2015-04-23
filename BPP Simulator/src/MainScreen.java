@@ -18,14 +18,17 @@ public class MainScreen extends JFrame implements ActionListener {
     private ArrayList<Bin> binarray;
     private ArrayList<Drawer> drawers = new ArrayList<Drawer>();
     private ArrayList<Packet> order = new ArrayList<Packet>();
-
     private SimpelGretig simpel;
+
+
+        /**
+         * this class contains all the atributes needed to create the main screen
+         */
 
     public MainScreen(ArrayList<Drawer> drawers, ArrayList<Bin> binarray, ArrayList<Packet> order){
         this.drawers = drawers;
         this.binarray = binarray;
         this.order = order;
-
 
         mainScreen = new JFrame("BPP Simulator");
         mainScreen.setSize(1300, 768);
@@ -116,9 +119,11 @@ public class MainScreen extends JFrame implements ActionListener {
 
 
     public void addToScreen(Drawer draw){
-       mid.add(draw);
-       mainScreen.setVisible(true);
-       drawers.add(draw);
+        /**
+         * this method adds the drawer to the main screen(see Drawer.class)
+         */
+        mid.add(draw);
+        drawers.add(draw);
     }
 
     public void addSimpelGretig(SimpelGretig simpel){
@@ -134,7 +139,6 @@ public class MainScreen extends JFrame implements ActionListener {
         } else if(e.getSource() == start){
             if(order.size() > 0){
                 simpel.startAlgo(1);
-
             } else {
                 JOptionPane.showMessageDialog(mainScreen, "You need to setup the order first!");
             }
