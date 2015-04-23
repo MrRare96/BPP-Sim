@@ -13,15 +13,16 @@ public class MainScreen extends JFrame implements ActionListener {
     private JFrame mainScreen;
     private JPanel container, top, mid, bottom;
     private JButton start, stop, clear, binSetup, packetSetup;
-    private JTextArea output;
-    private JScrollPane scroll;
+    private JTextArea simpelOutput, gretigOutput, enumeratieOutput;
+    private JScrollPane simpelScroll, gretigScroll, enumiratieScroll;
     private ArrayList<Bin> binarray;
     private ArrayList<Drawer> drawers = new ArrayList<Drawer>();
     private ArrayList<Packet> order = new ArrayList<Packet>();
 
     private SimpelGretig simpel;
 
-    public MainScreen(ArrayList<Bin> binarray, ArrayList<Packet> order){
+    public MainScreen(ArrayList<Drawer> drawers, ArrayList<Bin> binarray, ArrayList<Packet> order){
+        this.drawers = drawers;
         this.binarray = binarray;
         this.order = order;
 
@@ -57,14 +58,30 @@ public class MainScreen extends JFrame implements ActionListener {
         top.add(binSetup);
         top.add(packetSetup);
 
-        output = new JTextArea();
-        output.setEditable(false);
+        simpelOutput = new JTextArea();
+        simpelOutput.setEditable(false);
 
-        scroll = new JScrollPane(output);
-        scroll.setPreferredSize(new Dimension(600, 240));
-        scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        gretigOutput = new JTextArea();
+        gretigOutput.setEditable(false);
 
-        bottom.add(scroll);
+        enumeratieOutput = new JTextArea();
+        enumeratieOutput.setEditable(false);
+
+        simpelScroll = new JScrollPane(simpelOutput);
+        simpelScroll.setPreferredSize(new Dimension(400, 300));
+        simpelScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+        gretigScroll = new JScrollPane(gretigOutput);
+        gretigScroll.setPreferredSize(new Dimension(400, 300));
+        gretigScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+        enumiratieScroll = new JScrollPane(enumeratieOutput);
+        enumiratieScroll.setPreferredSize(new Dimension(400, 300));
+        enumiratieScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+        bottom.add(simpelScroll);
+        bottom.add(gretigScroll);
+        bottom.add(enumiratieScroll);
 
         container.add(top);
         container.add(mid);
@@ -75,9 +92,28 @@ public class MainScreen extends JFrame implements ActionListener {
 
     }
 
-    public void addToResult(String input){
-        output.append(input);
+    public void addToResult(int outputNumber, Bin left, Bin right, long difference){
+        String input = "\r\n" + "----------------RESULT FROM SIMPEL GRETIG--------------------" +
+                "\r\n" +
+                "Left bin: " + left.getTimesEmptied() + " times emptied." +
+                "\r\n" +
+                "Right bin: " + right.getTimesEmptied() + " times emptied." +
+                "\r\n" +
+                "Capacity left in Left bin: " + left.getBinCapacityLeft() + "/" + left.getBinCapacityHeight() +
+                "\r\n" +
+                "Capacity left in Right bin: " + right.getBinCapacityLeft() + "/" + left.getBinCapacityHeight() +
+                "\r\n" +
+                "Time to simulate: " + difference + " Nano Seconds";
+        System.out.println(" output: " + outputNumber);
+        if(outputNumber == 1) {
+            simpelOutput.append(input);
+        } else if (outputNumber == 2) {
+            gretigOutput.append(input);
+        } else {
+            enumeratieOutput.append(input);
+        }
     }
+
 
     public void addToScreen(Drawer draw){
        mid.add(draw);
@@ -97,14 +133,18 @@ public class MainScreen extends JFrame implements ActionListener {
             PacketSetup psetup = new PacketSetup(mainScreen, order);
         } else if(e.getSource() == start){
             if(order.size() > 0){
-                simpel.startAlgo();
+                simpel.startAlgo(1);
+
             } else {
                 JOptionPane.showMessageDialog(mainScreen, "You need to setup the order first!");
             }
         } else if(e.getSource() == stop){
             simpel.stopAlgo();
         } else if(e.getSource() == clear){
-            output.setText("");
+            simpelOutput.setText("");
+            gretigOutput.setText("");
+            enumeratieOutput.setText("");
+
             revalidate();
             repaint();
         }

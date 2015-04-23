@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public interface Algoritme {
      void setOrder(ArrayList<Packet> order);
 
-     void startAlgo();
+     void startAlgo(int outputNumber);
 
      void stopAlgo();
 

@@ -146,11 +146,6 @@ public class BinSetup extends JDialog implements ActionListener, KeyListener{
             } else {
                 //add action
                 for(final Drawer d : drawers ) {
-                    String bip = "mario.mp3";
-                    Media hit = new Media(bip);
-                    MediaPlayer mediaPlayer = new MediaPlayer(hit);
-                    mediaPlayer.play();
-
 
                     d.setKonami();
                     Timer konamiTimer = new Timer();

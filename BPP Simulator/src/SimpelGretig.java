@@ -15,7 +15,7 @@ public class SimpelGretig implements Algoritme{
     private long difference;
 
 
-    public SimpelGretig(Bin bin1, Bin bin2, MainScreen parentscreen, Drawer draw) {
+    public SimpelGretig(Bin bin1, Bin bin2, MainScreen parentscreen, Drawer draw, int screen) {
         this.bin1 = bin1;
         this.bin2 = bin2;
         this.parentscreen = parentscreen;
@@ -26,7 +26,7 @@ public class SimpelGretig implements Algoritme{
         this.order = order;
     }
 
-    public void startAlgo(){
+    public void startAlgo(final int outputNumber){
 
         Thread test = new Thread(new Runnable() {
             @Override
@@ -36,11 +36,11 @@ public class SimpelGretig implements Algoritme{
 
                 for(Packet packet : order){
 
-//                    try {
-//                        Thread.sleep(100);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     if(stop){
                         break;
                     }
@@ -56,7 +56,7 @@ public class SimpelGretig implements Algoritme{
                     SwingUtilities.invokeLater(new Runnable() {
                         @Override
                         public void run() {
-//                            draw.repaint();
+                            draw.repaint();
                         }
                     });
 
@@ -65,17 +65,8 @@ public class SimpelGretig implements Algoritme{
 
                 difference = lEndTime - lStartTime;
 
-                parentscreen.addToResult("\r\n" + "----------------RESULT FROM SIMPEL GRETIG--------------------" +
-                        "\r\n" +
-                        "Left bin: " + bin1.getTimesEmptied() + " times emptied." +
-                        "\r\n" +
-                        "Right bin: " + bin2.getTimesEmptied() + " times emptied." +
-                        "\r\n" +
-                        "Capacity left in Left bin: " + bin1.getBinCapacityLeft() + "/" + bin1.getBinCapacityHeight() +
-                        "\r\n" +
-                        "Capacity left in Right bin: " + bin2.getBinCapacityLeft() + "/" + bin2.getBinCapacityHeight() +
-                        "\r\n" +
-                        "Time to simulate: " + difference + " Nano Seconds");
+                parentscreen.addToResult(outputNumber, bin1, bin2, difference);
+
             }
         });
 
