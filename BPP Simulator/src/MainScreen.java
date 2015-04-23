@@ -12,12 +12,14 @@ public class MainScreen extends JFrame implements ActionListener {
 
     private JFrame mainScreen;
     private JPanel container, top, mid, bottom;
-    private JButton start, stop, binSetup, packetSetup;
+    private JButton start, stop, clear, binSetup, packetSetup;
     private JTextArea output;
-    private Bin bin1, bin2;
+    private JScrollPane scroll;
     private ArrayList<Bin> binarray;
     private ArrayList<Drawer> drawers = new ArrayList<Drawer>();
     private ArrayList<Packet> order = new ArrayList<Packet>();
+
+    private SimpelGretig simpel;
 
     public MainScreen(ArrayList<Bin> binarray, ArrayList<Packet> order){
         this.binarray = binarray;
@@ -46,15 +48,23 @@ public class MainScreen extends JFrame implements ActionListener {
         packetSetup = new JButton("Packet Setup");
         packetSetup.addActionListener(this);
 
+        clear = new JButton("Clear");
+        clear.addActionListener(this);
+
+        top.add(clear);
         top.add(start);
         top.add(stop);
         top.add(binSetup);
         top.add(packetSetup);
 
         output = new JTextArea();
-        output.setPreferredSize(new Dimension(600, 240));
+        output.setEditable(false);
 
-        bottom.add(output);
+        scroll = new JScrollPane(output);
+        scroll.setPreferredSize(new Dimension(600, 240));
+        scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+        bottom.add(scroll);
 
         container.add(top);
         container.add(mid);
@@ -65,18 +75,38 @@ public class MainScreen extends JFrame implements ActionListener {
 
     }
 
+    public void addToResult(String input){
+        output.append(input);
+    }
 
     public void addToScreen(Drawer draw){
        mid.add(draw);
        mainScreen.setVisible(true);
        drawers.add(draw);
     }
+
+    public void addSimpelGretig(SimpelGretig simpel){
+        this.simpel = simpel;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == binSetup){
             BinSetup setup = new BinSetup(mainScreen, binarray, drawers);
         } else if(e.getSource() == packetSetup){
             PacketSetup psetup = new PacketSetup(mainScreen, order);
+        } else if(e.getSource() == start){
+            if(order.size() > 0){
+                simpel.startAlgo();
+            } else {
+                JOptionPane.showMessageDialog(mainScreen, "You need to setup the order first!");
+            }
+        } else if(e.getSource() == stop){
+            simpel.stopAlgo();
+        } else if(e.getSource() == clear){
+            output.setText("");
+            revalidate();
+            repaint();
         }
     }
 }

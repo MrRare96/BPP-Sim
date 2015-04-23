@@ -71,8 +71,8 @@ public class Drawer extends JPanel {
                     y += binHeight;
 
                     g.setColor(Color.black);
-                    g.drawString(   "" + bin.getBinCapicity() + "/" + bin.getBinCapacityHeight() +//  5/10
-                                    " "+ (bin.getBinCapicity()*100)/bin.getBinCapacityHeight()+ "%",// 50%
+                    g.drawString(   "" + bin.getBinCapicityFilled() + "/" + bin.getBinCapacityHeight() +//  5/10
+                                    " "+ (bin.getBinCapicityFilled()*100)/bin.getBinCapacityHeight()+ "%",// 50%
                                     x + binWidth - 50, 430);
                 }
 

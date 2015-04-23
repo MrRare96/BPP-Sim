@@ -24,7 +24,7 @@ public class Bin {
         this.packets = new ArrayList<Packet>();
     }
 
-    public int getBinCapicity() {
+    public int getBinCapicityFilled() {
         int binCapicity = 0;
         for( Packet p: packets) {
             binCapicity += p.getPacketHeight();
@@ -36,11 +36,13 @@ public class Bin {
         return binCapacityHeight;
     }
 
+    public int getBinCapacityLeft() { return binCapacityHeight - getBinCapicityFilled();}
+
     public void addPacket(Packet packet){
         /**
          * This method adds a packet to the bin, it also defines its position for drawing on the screen, so that it looks like that its inside of the bin
          */
-        if((packet.getPacketHeight() + getBinCapicity()) < binCapacityHeight){
+        if((packet.getPacketHeight() + getBinCapicityFilled()) < binCapacityHeight){
             packets.add(packet);
         } else {
             System.err.println("can't add packet to bin.");
@@ -49,12 +51,12 @@ public class Bin {
         
     }
 
-    public void setBinCapacityHeight(int binCapacityHeight) {
-        this.binCapacityHeight = binCapacityHeight;
+    public void emptyBin(){
+        packets.clear();
     }
 
-    public int getAmountOfPackages() {
-        return packets.size();
+    public void setBinCapacityHeight(int binCapacityHeight) {
+        this.binCapacityHeight = binCapacityHeight;
     }
 
     public ArrayList<Packet> getPackets() {

@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.util.ArrayList;
 
 /**
@@ -12,6 +13,8 @@ public class Main {
     private static int binWspacing = 25;
     private static ArrayList<Bin> binarray = new ArrayList<Bin>();
     private static ArrayList<Packet> order = new ArrayList<Packet>();
+
+    private static SimpelGretig test;
 
 
     public static void main(String[] args) {
@@ -42,44 +45,31 @@ public class Main {
 
 
         //create packets with: packetID , ContentHeight
-        Packet packet1 = new Packet(3);
-        Packet packet2 = new Packet(2);
-        Packet packet3 = new Packet(3);
-        Packet packet4 = new Packet(4);
-        Packet packet5 = new Packet(4);
-        Packet packet6 = new Packet(3);
-        Packet packet7 = new Packet(4);
-        Packet packet8 = new Packet(3);
-        Packet packet9 = new Packet(6);
+          Packet packet1 = new Packet(0);
 
-        bin1.addPacket(packet1);
-        bin1.addPacket(packet2);
-        bin1.addPacket(packet4);
-
-        bin2.addPacket(packet3);
-        bin2.addPacket(packet5);
-
-        bin3.addPacket(packet2);
-        bin3.addPacket(packet4);
-
-        bin4.addPacket(packet6);
-        bin4.addPacket(packet7);
-
-        bin5.addPacket(packet1);
-        bin5.addPacket(packet3);
-
-        bin6.addPacket(packet8);
-        bin6.addPacket(packet9);
-
-//
-//
-//        bin6.addPacket(packet2);
-//        bin6.addPacket(packet3);
-//        bin6.addPacket(packet5);
+        for(Bin bin : binarray){
+            bin.addPacket(packet1);
+        }
 
         Drawer draw1 = new Drawer("Simpel gretig",bin1, bin2, binHeight, binWidth);
         Drawer draw2 = new Drawer("Gretig",bin3, bin4, binHeight, binWidth);
         Drawer draw3 = new Drawer("Volledige masturbatie Algoritme",bin5, bin6, binHeight, binWidth);
+
+        int x = 0;
+        while(true){
+            if(x == 5){
+                break;
+            }
+            bin3.addPacket(packet1);
+            x++;
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+
+        }
 //        Drawer draw2 = new Drawer(bin3, bin4);
 
         //retrieve all the dimensions for the to be drawn bins and packages
@@ -88,6 +78,14 @@ public class Main {
         screen.addToScreen(draw1);
         screen.addToScreen(draw2);
         screen.addToScreen(draw3);
+
+        test = new SimpelGretig(bin1, bin2, screen, draw1);
+        test.setOrder(order);
+
+        screen.addSimpelGretig(test);
+
+
+        System.out.println("Bin capacity after adding packets: " + bin1.getBinCapacityLeft());
 
     }
 }

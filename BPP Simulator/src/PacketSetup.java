@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.rmi.activation.ActivationID;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -13,11 +12,12 @@ import java.util.Random;
  */
 public class PacketSetup extends JDialog implements ActionListener{
 
-    private JPanel packetSetup, top1, top2, mid, bot, top15, top25;
-    private JLabel addPacketL, packetCapacityL, packetAmountL, genRandomPacketsL, orderL;
+    private JPanel packetSetup, top1, top2, mid, bot;
+    private JLabel addPacketL, orderL, genRandomPacketsL;
     private JTextArea orderOutput;
-    private JTextField packetCapIn, amountOfPacketsIn;
-    private JButton save, clear, generate, add;
+    private JTextField packetCapIn, amountOfPacketsIn, maxCapIn;
+    private JScrollPane scroll;
+    private JButton ok, clear, generate, add;
     private JFrame parent;
     private int x = 0;
 
@@ -41,7 +41,7 @@ public class PacketSetup extends JDialog implements ActionListener{
         bot = new JPanel();
         bot.setLayout(new FlowLayout());
 
-        addPacketL = new JLabel("Add Packet:");s
+        addPacketL = new JLabel("Add Packet:");
         genRandomPacketsL = new JLabel("Generate Packets:");
         orderL = new JLabel("Order:");
 
@@ -51,11 +51,23 @@ public class PacketSetup extends JDialog implements ActionListener{
         generate.addActionListener(this);
         clear = new JButton("clear");
         clear.addActionListener(this);
-        save = new JButton("save");
-        save.addActionListener(this);
+        ok = new JButton("ok");
+        ok.addActionListener(this);
 
         orderOutput = new JTextArea();
-        orderOutput.setPreferredSize(new Dimension(500, 300));
+        orderOutput.setEditable(false);
+        scroll = new JScrollPane(orderOutput);
+        scroll.setPreferredSize(new Dimension(400, 240));
+        scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+        if(order.size() > 0){
+
+            for(Packet pack : order){
+                orderOutput.append("Packet #" + x + " with capacity:  " + pack.getPacketHeight() + " in order!" + "\r\n");
+                x++;
+            }
+        }
+
 
         packetCapIn = new JTextField();
         packetCapIn.setColumns(15);
@@ -82,6 +94,19 @@ public class PacketSetup extends JDialog implements ActionListener{
                 revalidate();
             }
         });
+        maxCapIn = new JTextField();
+        maxCapIn.setColumns(8);
+        maxCapIn.setText("Max Capicity");
+        maxCapIn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                maxCapIn.setText("");
+                repaint();
+                revalidate();
+            }
+        });
+        
 
         top1.add(addPacketL);
         top1.add(packetCapIn);
@@ -89,13 +114,14 @@ public class PacketSetup extends JDialog implements ActionListener{
 
         top2.add(genRandomPacketsL);
         top2.add(amountOfPacketsIn);
+        top2.add(maxCapIn);
         top2.add(generate);
 
         mid.add(orderL);
-        mid.add(orderOutput);
+        mid.add(scroll);
 
         bot.add(clear);
-        bot.add(save);
+        bot.add(ok);
 
         packetSetup.add(top1, BorderLayout.NORTH);
         packetSetup.add(top2, BorderLayout.NORTH);
@@ -124,13 +150,15 @@ public class PacketSetup extends JDialog implements ActionListener{
                 order.clear();
                 int y = 0;
                 int rounds = Integer.parseInt(amountOfPacketsIn.getText());
+                int maxCap = Integer.parseInt(maxCapIn.getText());
                 while(y != rounds){
                     Random rand = new Random();
-                    int capacity = rand.nextInt(10);
+                    int capacity = rand.nextInt(maxCap - 1) + 1;
                     Packet pack = new Packet(capacity);
                     order.add(pack);
-                    orderOutput.append("Packet #" + y + " with capacity:  " + capacity + " added!"  + "\r\n");
+                    orderOutput.append("Packet #" + x + " with capacity:  " + capacity + " added!"  + "\r\n");
                     y++;
+                    x++;
                 }
 
             } catch(Exception ex){
@@ -141,6 +169,9 @@ public class PacketSetup extends JDialog implements ActionListener{
             orderOutput.setText("");
             validate();
             repaint();
+        } else if(e.getSource() == ok){
+            setVisible(false);
+            dispose();
         }
 
     }
