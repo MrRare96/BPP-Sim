@@ -43,10 +43,17 @@ public class Enumeratie implements Algoritme{
                 long lStartTime = System.nanoTime();
                 ArrayList<Packet> stack = new ArrayList<Packet>();
                 int handledCount = 0;
-                while(handledCount > order.size()) {
+
+
+                while(handledCount < order.size()) {
                     populateSubset(order, handledCount, stack, 0, bin1.getBinCapacityHeight());
 
-                    handledCount += bestStackId;
+                    handledCount += bestStackId + 1;
+                    for(Packet p: bestCombination) {
+                        leftArray.add(p);
+                    }
+                    bestCombination.clear();
+                    bestStackId = 0;
                 }
 
 
@@ -92,20 +99,18 @@ public class Enumeratie implements Algoritme{
                                final int target) {
 
 
-
-        if (calculateStackHeight(stack) == target && stackId < bestStackId) {
+        //check if combo is equal or under bincapicity, if current combo is equal or higher then the best combo. if the last Id of combie is lower then the best Combo
+        if (calculateStackHeight(stack) <= bin1.getBinCapacityHeight() && calculateStackHeight(stack) >= calculateStackHeight(bestCombination) && stackId < bestStackId) {
             this.bestCombination = stack;
             this.bestStackId = stackId;
         }
 
         while (fromIndex < data.size() && data.get(fromIndex).getPacketHeight() > bin1.getBinCapacityLeft()) {
-            // take advantage of sorted data.
-            // we can skip all values that are too large.
+            // skip packages higher then capacityLeft
             fromIndex++;
         }
         while (fromIndex < data.size() && fromIndex > bestStackId) {
-            // take advantage of sorted data.
-            // we can skip all values that are worse then the current best solution
+            //skip packages when Id is higher then Best ID
             fromIndex++;
         }
         while (fromIndex < data.size() && data.get(fromIndex).getPacketHeight()+ calculateStackHeight(stack) <= target) {
