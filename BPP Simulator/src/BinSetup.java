@@ -11,7 +11,8 @@ import java.util.ArrayList;
 import java.util.TimerTask;
 import java.util.Timer;
 /**
- * Created by Eldin on 4/17/2015.
+ * Created by Ewart en Eldin on 4/17/2015.
+ * This class creates a binsetup window containing options for setting the capicity for the left and right bin.
  */
 public class BinSetup extends JDialog implements ActionListener, KeyListener{
 
@@ -45,8 +46,8 @@ public class BinSetup extends JDialog implements ActionListener, KeyListener{
         bot = new JPanel();
         bot.setLayout(new FlowLayout());
 
-        binCap1Label = new JLabel("Set capacity bin1");
-        binCap2Label = new JLabel("Set capacity bin2");
+        binCap1Label = new JLabel("Set capacity left bin:");
+        binCap2Label = new JLabel("Set capacity right bin:");
 
         binCapacity1 = new JTextField("" + binarray.get(0).getBinCapacityHeight());
         binCapacity1.setColumns(15);
@@ -68,8 +69,8 @@ public class BinSetup extends JDialog implements ActionListener, KeyListener{
         mid.add(binCap2Label);
         mid.add(binCapacity2);
 
-        bot.add(cancel);
         bot.add(save);
+        bot.add(cancel);
 
         binSetup.add(top);
         binSetup.add(mid);
@@ -107,7 +108,6 @@ public class BinSetup extends JDialog implements ActionListener, KeyListener{
                         }
                         x++;
                     }
-
 
                     for(Drawer draw : drawers){
                         draw.repaint();

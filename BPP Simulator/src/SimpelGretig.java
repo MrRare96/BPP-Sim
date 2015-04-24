@@ -50,6 +50,7 @@ public class SimpelGretig implements Algoritme{
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+
                     if(stop){
                         break;
                     }

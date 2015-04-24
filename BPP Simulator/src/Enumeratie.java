@@ -117,4 +117,17 @@ public class Enumeratie implements Algoritme{
             fromIndex++;
         }
     }
+
+    public void binPlacer(){
+        for(Packet pack : order){
+            if(leftArray.contains(pack)) {
+                bin1.addPacket(pack);
+            } else {
+                if(bin2.getBinCapacityLeft() < pack.getPacketHeight()){
+                    bin1.emptyBin();
+                }
+                bin2.addPacket(pack);
+            }
+        }
+    }
 }

@@ -21,9 +21,10 @@ public class PacketSetup extends JDialog implements ActionListener{
     private JButton ok, clear, generate, add;
     private JFrame parent;
     private ArrayList<Packet> order;
+    private ArrayList<Bin> bins;
     private int x = 0;
 
-    public PacketSetup(JFrame parent, ArrayList<Packet> order){
+    public PacketSetup(JFrame parent, ArrayList<Packet> order, ArrayList<Bin> bins){
         /**
          * in here the screen will be created.
          */
@@ -31,6 +32,7 @@ public class PacketSetup extends JDialog implements ActionListener{
         super(parent, "Bin Setup");
         this.parent = parent;
         this.order = order;
+        this.bins = bins;
 
         packetSetup = new JPanel();
         packetSetup.setLayout(new BoxLayout(packetSetup, BoxLayout.PAGE_AXIS));
@@ -122,8 +124,8 @@ public class PacketSetup extends JDialog implements ActionListener{
         mid.add(orderL);
         mid.add(scroll);
 
-        bot.add(clear);
         bot.add(ok);
+        bot.add(clear);
 
         packetSetup.add(top1, BorderLayout.NORTH);
         packetSetup.add(top2, BorderLayout.NORTH);
@@ -153,14 +155,18 @@ public class PacketSetup extends JDialog implements ActionListener{
                 int y = 0;
                 int rounds = Integer.parseInt(amountOfPacketsIn.getText());
                 int maxCap = Integer.parseInt(maxCapIn.getText());
-                while(y != rounds){
-                    Random rand = new Random();
-                    int capacity = rand.nextInt(maxCap - 1) + 1;
-                    Packet pack = new Packet(capacity);
-                    order.add(pack);
-                    orderOutput.append("Packet #" + x + " with capacity:  " + capacity + " added!"  + "\r\n");
-                    y++;
-                    x++;
+                if(maxCap <= bins.get(0).getBinCapacityHeight() || maxCap <= bins.get(1).getBinCapacityHeight()){
+                    while(y != rounds){
+                        Random rand = new Random();
+                        int capacity = rand.nextInt(maxCap - 1) + 1;
+                        Packet pack = new Packet(capacity);
+                        order.add(pack);
+                        orderOutput.append("Packet #" + x + " with capacity:  " + capacity + " added!"  + "\r\n");
+                        y++;
+                        x++;
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(parent, "A packet cannot be bigger then the max capacity of the bins!");
                 }
 
             } catch(Exception ex){

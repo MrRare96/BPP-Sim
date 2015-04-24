@@ -32,7 +32,7 @@ public class MainScreen extends JFrame implements ActionListener {
         this.order = order;
 
         mainScreen = new JFrame("BPP Simulator");
-        mainScreen.setSize(1300, 768);
+        mainScreen.setSize(1300, 800);
         mainScreen.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         container = new JPanel();
@@ -95,6 +95,7 @@ public class MainScreen extends JFrame implements ActionListener {
 
         mainScreen.setVisible(true);
 
+
     }
 
     public void addToResult(int outputNumber, Bin left, Bin right, long difference){
@@ -142,7 +143,7 @@ public class MainScreen extends JFrame implements ActionListener {
         if(e.getSource() == binSetup){
             BinSetup setup = new BinSetup(mainScreen, bins, drawers);
         } else if(e.getSource() == packetSetup){
-            PacketSetup psetup = new PacketSetup(mainScreen, order);
+            PacketSetup psetup = new PacketSetup(mainScreen, order, bins);
         } else if(e.getSource() == start){
             if(order.size() > 0){
                 start.setEnabled(false);
