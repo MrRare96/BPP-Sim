@@ -1,3 +1,5 @@
+    import com.sun.xml.internal.bind.v2.runtime.reflect.Lister;
+
     import javax.swing.*;
     import java.util.ArrayList;
     import java.util.Random;
@@ -6,13 +8,15 @@
      */
 public class Enumeratie implements Algoritme{
 
-    private ArrayList<Packet> order, bestCombination, leftArray;
+    private ArrayList<Packet> order;//, bestCombination, leftArray;
     private Bin bin1, bin2;
     private Drawer draw;
     private MainScreen parentscreen;
     private boolean stop = false;
     private long difference;
-    private int bestStackId;
+    private ArrayList<Packet> bestCombination = new ArrayList<Packet>();
+    private int bestStackId = 10000;
+    private ArrayList<Packet> leftArray = new ArrayList<Packet>();
 
     public Enumeratie(Bin bin1, Bin bin2, MainScreen parentscreen, Drawer draw, int screen) {
         this.bin1 = bin1;
@@ -20,8 +24,9 @@ public class Enumeratie implements Algoritme{
         this.parentscreen = parentscreen;
         this.draw = draw;
         difference = 0;
-        this.bestCombination = new ArrayList<Packet>();
-        this.bestStackId = 100;
+//        this.bestCombination = new ArrayList<Packet>();
+//        this.bestStackId = 100;
+//        this.leftArray = new ArrayList<Packet>();
     }
 
     public void setOrder(ArrayList<Packet> order){
@@ -40,6 +45,7 @@ public class Enumeratie implements Algoritme{
             @Override
             public void run() {
 
+
                 long lStartTime = System.nanoTime();
                 ArrayList<Packet> stack = new ArrayList<Packet>();
                 int handledCount = 0;
@@ -47,19 +53,28 @@ public class Enumeratie implements Algoritme{
 
                 while(handledCount < order.size()) {
                     populateSubset(order, handledCount, stack, 0, bin1.getBinCapacityHeight());
-
+                    System.out.println("combo: " + calculateStackHeight(bestCombination) + ", StackId: " + bestStackId);
                     handledCount += bestStackId + 1;
                     for(Packet p: bestCombination) {
                         leftArray.add(p);
                     }
                     bestCombination.clear();
-                    bestStackId = 0;
+                    bestStackId = 10000;
                 }
 
 
 
                 for(Packet packet : order){
+                    parentscreen.delay();
 
+                    if(leftArray.contains(packet)) {
+                        bin1.addPacket(packet);
+                    } else {
+//                        if(bin2.getBinCapacityLeft() < packet.getPacketHeight()){
+//                            bin1.emptyBin();
+//                        }
+                        bin2.addPacket(packet);
+                    }
 
 
                     SwingUtilities.invokeLater(new Runnable() {
@@ -98,41 +113,50 @@ public class Enumeratie implements Algoritme{
                                ArrayList<Packet> stack, int stackId,
                                final int target) {
 
+        while(fromIndex < bin1.getBinCapacityHeight()) {
+            //check if combo is equal or under bincapicity, if current combo is equal or higher then the best combo. if the last Id of combie is lower then the best Combo
 
-        //check if combo is equal or under bincapicity, if current combo is equal or higher then the best combo. if the last Id of combie is lower then the best Combo
-        if (calculateStackHeight(stack) <= bin1.getBinCapacityHeight() && calculateStackHeight(stack) >= calculateStackHeight(bestCombination) && stackId < bestStackId) {
-            this.bestCombination = stack;
-            this.bestStackId = stackId;
-        }
 
-        while (fromIndex < data.size() && data.get(fromIndex).getPacketHeight() > bin1.getBinCapacityLeft()) {
-            // skip packages higher then capacityLeft
-            fromIndex++;
-        }
-        while (fromIndex < data.size() && fromIndex > bestStackId) {
-            //skip packages when Id is higher then Best ID
-            fromIndex++;
-        }
-        while (fromIndex < data.size() && data.get(fromIndex).getPacketHeight()+ calculateStackHeight(stack) <= target) {
-            // stop looping when we run out of data, or when we overflow our target.
-            stack.add(order.get(fromIndex));
-            stackId = fromIndex;
+            while (fromIndex < data.size() && data.get(fromIndex).getPacketHeight() > bin1.getBinCapacityLeft()) {
+                // skip packages higher then capacityLeft
+                fromIndex++;
+            }
+            while (fromIndex < data.size() && fromIndex > bestStackId) {
+                //skip packages when Id is higher then Best ID
+                fromIndex++;
+            }
+            while (fromIndex < data.size() && data.get(fromIndex).getPacketHeight() + calculateStackHeight(stack) <= target) {
+                // stop looping when we run out of data, or when we overflow our target.
+                stack.add(order.get(fromIndex));
+                stackId = fromIndex;
+//                System.out.println("stackid:" + stackId);
 
-            populateSubset(data, fromIndex + 1, stack, stackId, target);
-            fromIndex++;
-        }
-    }
-
-    public void binPlacer(){
-        for(Packet pack : order){
-            if(leftArray.contains(pack)) {
-                bin1.addPacket(pack);
-            } else {
-                if(bin2.getBinCapacityLeft() < pack.getPacketHeight()){
-                    bin1.emptyBin();
-                }
-                bin2.addPacket(pack);
+                populateSubset(data, fromIndex + 1, stack, stackId, target);
+                fromIndex++;
+            }
+            if (    calculateStackHeight(stack) <= bin1.getBinCapacityHeight()
+                    && calculateStackHeight(stack) >= calculateStackHeight(bestCombination)
+                    && stackId < bestStackId) {
+                System.out.println(calculateStackHeight(stack) + " | " + calculateStackHeight(bestCombination) + " | " +  stackId);
+//                this.bestCombination.clear();
+                this.bestCombination = stack;
+                this.bestStackId = stackId;
+//                System.out.println(calculateStackHeight(this.bestCombination) + " | " + this.bestStackId);
             }
         }
+
     }
+
+//    public void binPlacer(){
+//        for(Packet pack : order){
+//            if(leftArray.contains(pack)) {
+//                bin1.addPacket(pack);
+//            } else {
+//                if(bin2.getBinCapacityLeft() < pack.getPacketHeight()){
+//                    bin1.emptyBin();
+//                }
+//                bin2.addPacket(pack);
+//            }
+//        }
+//    }
 }

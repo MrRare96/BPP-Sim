@@ -44,11 +44,7 @@ public class Gretig implements Algoritme{
 
                 for(Packet packet : order){
 
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    parentscreen.delay();
                     if(stop){
                         break;
                     }

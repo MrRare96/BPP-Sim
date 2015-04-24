@@ -14,6 +14,7 @@ public class Main {
 
     private static SimpelGretig simpel;
     private static Gretig gretig;
+    private static Enumeratie enumeratie;
 
 
     public static void main(String[] args) {
@@ -82,19 +83,19 @@ public class Main {
 
         simpel = new SimpelGretig(bin1, bin2, screen, draw1, 1);
         gretig = new Gretig(bin3, bin4, screen, draw2, 2);
+        enumeratie = new Enumeratie(bin5, bin6, screen, draw3, 3);
 
         simpel.setOrder(order);
         gretig.setOrder(order);
+        enumeratie.setOrder(order);
 
         screen.addSimpelGretig(simpel);
         screen.addGretig(gretig);
+        screen.addEnumeratie(enumeratie);
 
 
         System.out.println("Bin capacity after adding packets: " + bin1.getBinCapacityLeft());
 
-        if(order.contains(order.get(0))){
-            System.out.println("check");
-        }
 
     }
 }

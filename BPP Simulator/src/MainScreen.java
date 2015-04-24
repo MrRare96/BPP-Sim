@@ -20,6 +20,7 @@ public class MainScreen extends JFrame implements ActionListener {
     private ArrayList<Packet> order = new ArrayList<Packet>();
     private SimpelGretig simpel;
     private Gretig gretig;
+    private Enumeratie enumeratie;
 
 
         /**
@@ -115,7 +116,7 @@ public class MainScreen extends JFrame implements ActionListener {
             simpelOutput.append(input);
         } else if (outputNumber == 2) {
             gretigOutput.append(input);
-        } else {
+        } else if (outputNumber == 3){
             enumeratieOutput.append(input);
         }
         start.setEnabled(true);
@@ -137,7 +138,16 @@ public class MainScreen extends JFrame implements ActionListener {
     public void addGretig(Gretig gretig){
         this.gretig = gretig;
     }
-
+    public void addEnumeratie(Enumeratie enumeratie){
+        this.enumeratie = enumeratie;
+    }
+    public void delay() {
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == binSetup){
@@ -150,6 +160,7 @@ public class MainScreen extends JFrame implements ActionListener {
                 stop.setEnabled(true);
                 simpel.startAlgo(1);
                 gretig.startAlgo(2);
+                enumeratie.startAlgo(3);
 
             } else {
                 JOptionPane.showMessageDialog(mainScreen, "You need to setup the order first!");
@@ -170,8 +181,6 @@ public class MainScreen extends JFrame implements ActionListener {
             for(Drawer draw : drawers) {
                 draw.repaint();
             }
-            start.setEnabled(true);
-            stop.setEnabled(false);
             revalidate();
             repaint();
         }
