@@ -12,7 +12,7 @@ public class MainScreen extends JFrame implements ActionListener {
 
     private JFrame mainScreen;
     private JPanel container, top, mid, bottom;
-    private JButton start, stop, clear, binSetup, packetSetup;
+    private JButton start, stop, clear, binSetup, packetSetup, simSetup;
     private JTextArea simpelOutput, gretigOutput, enumeratieOutput;
     private JScrollPane simpelScroll, gretigScroll, enumiratieScroll;
     private ArrayList<Bin> bins;
@@ -21,6 +21,8 @@ public class MainScreen extends JFrame implements ActionListener {
     private SimpelGretig simpel;
     private Gretig gretig;
     private Enumeratie enumeratie;
+
+    private int delay = 50;
 
 
         /**
@@ -55,6 +57,9 @@ public class MainScreen extends JFrame implements ActionListener {
         packetSetup = new JButton("Packet Setup");
         packetSetup.addActionListener(this);
 
+        simSetup = new JButton("Sim Setup");
+        simSetup.addActionListener(this);
+
         clear = new JButton("Clear");
         clear.addActionListener(this);
 
@@ -63,6 +68,7 @@ public class MainScreen extends JFrame implements ActionListener {
         top.add(stop);
         top.add(binSetup);
         top.add(packetSetup);
+        top.add(simSetup);
 
         simpelOutput = new JTextArea();
         simpelOutput.setEditable(false);
@@ -138,12 +144,21 @@ public class MainScreen extends JFrame implements ActionListener {
     public void addGretig(Gretig gretig){
         this.gretig = gretig;
     }
+
+    public void setDelay(int delay) {
+        this.delay = delay;
+    }
+
+    public int getDelay() {
+        return delay;
+    }
+
     public void addEnumeratie(Enumeratie enumeratie){
         this.enumeratie = enumeratie;
     }
     public void delay() {
         try {
-            Thread.sleep(100);
+            Thread.sleep(delay);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -154,8 +169,8 @@ public class MainScreen extends JFrame implements ActionListener {
             BinSetup setup = new BinSetup(mainScreen, bins, drawers);
         } else if(e.getSource() == packetSetup){
             PacketSetup psetup = new PacketSetup(mainScreen, order, bins);
-        } else if(e.getSource() == start){
-            if(order.size() > 0){
+        } else if(e.getSource() == start) {
+            if (order.size() > 0) {
                 start.setEnabled(false);
                 stop.setEnabled(true);
                 simpel.startAlgo(1);
@@ -165,6 +180,8 @@ public class MainScreen extends JFrame implements ActionListener {
             } else {
                 JOptionPane.showMessageDialog(mainScreen, "You need to setup the order first!");
             }
+        } else if(e.getSource() == simSetup){
+            SimSetup setup = new SimSetup(mainScreen);
         } else if(e.getSource() == stop){
             start.setEnabled(true);
             stop.setEnabled(false);
@@ -181,6 +198,8 @@ public class MainScreen extends JFrame implements ActionListener {
             for(Drawer draw : drawers) {
                 draw.repaint();
             }
+            start.setEnabled(true);
+            stop.setEnabled(false);
             revalidate();
             repaint();
         }

@@ -13,6 +13,9 @@ public class SimpelGretig implements Algoritme{
     private Drawer draw;
     private MainScreen parentscreen;
 
+
+    private int delay;
+
     private boolean stop = false;
     private long difference;
 
