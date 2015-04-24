@@ -52,6 +52,7 @@ public class Gretig implements Algoritme{
                     if(stop){
                         break;
                     }
+
                     if(bin1.getBinCapacityLeft() <= packet.getPacketHeight()) {
                         if(bin2.getBinCapacityLeft() <= packet.getPacketHeight()) {
                             bin1.addPacket(packet);
