@@ -33,17 +33,17 @@ public class SimSetup extends JDialog implements ActionListener{
 
         delayL = new JLabel("Set delay(min: 50):");
 
-        delayInput = new JTextField(parent.getD);
-        delayInput.setColumns(8);
-        delayInput.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                delayInput.setText("");
-                repaint();
-                revalidate();
-            }
-        });
+//        delayInput = new JTextField(parent.getD);
+//        delayInput.setColumns(8);
+//        delayInput.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                super.mouseClicked(e);
+//                delayInput.setText("");
+//                repaint();
+//                revalidate();
+//            }
+//        });
 
 
         cancel = new JButton("cancel");
@@ -69,7 +69,7 @@ public class SimSetup extends JDialog implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == ok){
-            parent.
+//            parent.
         }
 
 

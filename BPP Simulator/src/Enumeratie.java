@@ -54,36 +54,48 @@ public class Enumeratie implements Algoritme{
                 while(handledCount < order.size()) {
                     populateSubset(order, handledCount, stack, 0, bin1.getBinCapacityHeight(), 0);
                     System.out.println("combo: " + calculateStackHeight(bestCombination) + ", StackId: " + bestStackId);
-                    handledCount += bestStackId + 1;
-                    for(Packet p: bestCombination) {
-                        leftArray.add(p);
-                    }
-                    bestCombination.clear();
-                    bestStackId = 10000;
-                }
+//                    for(Packet p: bestCombination) {
+//                        leftArray.add(p);
+//                    }
+//                    bestCombination.clear();
 
 
-
-                for(Packet packet : order){
-                    parentscreen.delay();
-
-                    if(leftArray.contains(packet)) {
-                        bin1.addPacket(packet);
-                    } else {
-//                        if(bin2.getBinCapacityLeft() < packet.getPacketHeight()){
-//                            bin1.emptyBin();
-//                        }
-                        bin2.addPacket(packet);
-                    }
-
-
-                    SwingUtilities.invokeLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            draw.repaint();
+                    for( int x = handledCount; x <= bestStackId; x++) {
+                        parentscreen.delay();
+                        if(bestCombination.contains(order.get(x))) {
+                            bin1.addPacket(order.get(x));
+                        } else {
+                            bin2.addPacket(order.get(x));
                         }
-                    });
+                        SwingUtilities.invokeLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                draw.repaint();
+                            }
+                        });
+                    }
+                    handledCount = bestStackId + 1;
+                    bestStackId = 10000;
+
                 }
+
+//                for(Packet packet : order){
+//                    parentscreen.delay();
+//
+//                    if(leftArray.contains(packet)) {
+//                        bin1.addPacket(packet);
+//                    } else {
+//                        bin2.addPacket(packet);
+//                    }
+//
+//
+//                    SwingUtilities.invokeLater(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            draw.repaint();
+//                        }
+//                    });
+//                }
 
                 long lEndTime = System.nanoTime();
                 difference = lEndTime - lStartTime;
