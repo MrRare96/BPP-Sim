@@ -47,6 +47,10 @@ public class Bin {
         return binCapacityHeight - getBinCapicityFilled();
     }
 
+    public void setTimesEmptied(int timesEmptied) {
+        this.timesEmptied = timesEmptied;
+    }
+
     public void addPacket(Packet packet){
         /**
          * This method adds a packet to the bin, it checks if it fits, if not it empties the bin

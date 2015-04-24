@@ -15,6 +15,7 @@ public class Drawer extends JPanel {
     private boolean bin;
     private String algo;
     private boolean konami;
+//    private JProgressBar progressBar;
 
     public Drawer(String algo, Bin left, Bin right, int binHeight, int binWidth) {
         this.bins = new ArrayList<Bin>();
@@ -53,29 +54,29 @@ public class Drawer extends JPanel {
         g.drawRect(0,0,binWidth*2 + binSpacing + 40, binHeight + 40);
 
         g.drawString(algo,10,12);
+//        progressBar.setValue(0);
+//        progressBar.setStringPainted(true);
         for(Bin bin: bins) {
             int y = 20;
-            boolean drawBin = false;
+
+            //Draw packetheights in bin
+            g.drawLine(x, y, x, y + binHeight);
+            for(int line = 0; line <= bin.getBinCapacityHeight(); line++) {
+                g.drawLine(x,y +line *packagesSteps(bin.getBinCapacityHeight()),x +binLines, y + line *packagesSteps(bin.getBinCapacityHeight()));
+            }
+            x+=binLines;
+            //gray bin
+            g.setColor(new Color(192, 192, 192));
+            g.fillRect(x, y, binWidth, binHeight + 1);
+            y += binHeight;
+
+            g.setColor(Color.black);
+            g.drawString(   "Times emptied: " + bin.getTimesEmptied() +
+                            " " + bin.getBinCapicityFilled() + "/" + bin.getBinCapacityHeight() +//  5/10
+                            " "+ (bin.getBinCapicityFilled()*100)/bin.getBinCapacityHeight()+ "%",// 50%
+                            x, 430);
+
             for (Packet packet : bin.getPackets()) {
-                if(!drawBin) {
-                    drawBin = true;
-
-                    //Draw packetheights in bin
-                    g.drawLine(x, y, x, y + binHeight);
-                    for(int line = 0; line <= bin.getBinCapacityHeight(); line++) {
-                        g.drawLine(x,y +line *packagesSteps(bin.getBinCapacityHeight()),x +binLines, y + line *packagesSteps(bin.getBinCapacityHeight()));
-                    }
-                    x+=binLines;
-                    //gray bin
-                    g.setColor(new Color(192, 192, 192));
-                    g.fillRect(x, y, binWidth, binHeight + 1);
-                    y += binHeight;
-
-                    g.setColor(Color.black);
-                    g.drawString(   "" + bin.getBinCapicityFilled() + "/" + bin.getBinCapacityHeight() +//  5/10
-                                    " "+ (bin.getBinCapicityFilled()*100)/bin.getBinCapacityHeight()+ "%",// 50%
-                                    x + binWidth - 50, 430);
-                }
 
                 if(konami) {
                     Random rand = new Random();
@@ -99,14 +100,7 @@ public class Drawer extends JPanel {
 
             x+= binWidth + binSpacing;
         }
-//        if(konami) {
-//            try {
-//                Thread.sleep(15);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//            repaint(); //disco
-//        }
+
     }
 
 

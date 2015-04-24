@@ -14,7 +14,8 @@ public class Main {
     private static ArrayList<Packet> order = new ArrayList<Packet>();
     private static ArrayList<Drawer> drawers = new ArrayList<Drawer>();
 
-    private static SimpelGretig test;
+    private static SimpelGretig simpel;
+    private static Gretig gretig;
 
 
     public static void main(String[] args) {
@@ -81,11 +82,14 @@ public class Main {
         screen.addToScreen(draw2);
         screen.addToScreen(draw3);
 
-        test = new SimpelGretig(bin1, bin2, screen, draw1, 1);
+        simpel = new SimpelGretig(bin1, bin2, screen, draw1, 1);
+        gretig = new Gretig(bin3, bin4, screen, draw2, 2);
 
-        test.setOrder(order);
+        simpel.setOrder(order);
+        gretig.setOrder(order);
 
-        screen.addSimpelGretig(test);
+        screen.addSimpelGretig(simpel);
+        screen.addGretig(gretig);
 
 
         System.out.println("Bin capacity after adding packets: " + bin1.getBinCapacityLeft());

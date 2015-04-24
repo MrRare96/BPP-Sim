@@ -15,19 +15,20 @@ public class MainScreen extends JFrame implements ActionListener {
     private JButton start, stop, clear, binSetup, packetSetup;
     private JTextArea simpelOutput, gretigOutput, enumeratieOutput;
     private JScrollPane simpelScroll, gretigScroll, enumiratieScroll;
-    private ArrayList<Bin> binarray;
+    private ArrayList<Bin> bins;
     private ArrayList<Drawer> drawers = new ArrayList<Drawer>();
     private ArrayList<Packet> order = new ArrayList<Packet>();
     private SimpelGretig simpel;
+    private Gretig gretig;
 
 
         /**
          * this class contains all the atributes needed to create the main screen
          */
 
-    public MainScreen(ArrayList<Drawer> drawers, ArrayList<Bin> binarray, ArrayList<Packet> order){
+    public MainScreen(ArrayList<Drawer> drawers, ArrayList<Bin> bins, ArrayList<Packet> order){
         this.drawers = drawers;
-        this.binarray = binarray;
+        this.bins = bins;
         this.order = order;
 
         mainScreen = new JFrame("BPP Simulator");
@@ -44,6 +45,7 @@ public class MainScreen extends JFrame implements ActionListener {
         start.addActionListener(this);
 
         stop = new JButton("stop");
+        stop.setEnabled(false);
         stop.addActionListener(this);
 
         binSetup = new JButton("Bin Setup");
@@ -115,6 +117,8 @@ public class MainScreen extends JFrame implements ActionListener {
         } else {
             enumeratieOutput.append(input);
         }
+        start.setEnabled(true);
+        stop.setEnabled(false);
     }
 
 
@@ -129,26 +133,44 @@ public class MainScreen extends JFrame implements ActionListener {
     public void addSimpelGretig(SimpelGretig simpel){
         this.simpel = simpel;
     }
+    public void addGretig(Gretig gretig){
+        this.gretig = gretig;
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == binSetup){
-            BinSetup setup = new BinSetup(mainScreen, binarray, drawers);
+            BinSetup setup = new BinSetup(mainScreen, bins, drawers);
         } else if(e.getSource() == packetSetup){
             PacketSetup psetup = new PacketSetup(mainScreen, order);
         } else if(e.getSource() == start){
             if(order.size() > 0){
+                start.setEnabled(false);
+                stop.setEnabled(true);
                 simpel.startAlgo(1);
+                gretig.startAlgo(2);
+
             } else {
                 JOptionPane.showMessageDialog(mainScreen, "You need to setup the order first!");
             }
         } else if(e.getSource() == stop){
+            start.setEnabled(true);
+            stop.setEnabled(false);
             simpel.stopAlgo();
         } else if(e.getSource() == clear){
             simpelOutput.setText("");
             gretigOutput.setText("");
             enumeratieOutput.setText("");
 
+            for(Bin bin : bins) {
+                bin.emptyBin();
+                bin.setTimesEmptied(0);
+            }
+            for(Drawer draw : drawers) {
+                draw.repaint();
+            }
+            start.setEnabled(true);
+            stop.setEnabled(false);
             revalidate();
             repaint();
         }

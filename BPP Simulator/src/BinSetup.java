@@ -154,7 +154,7 @@ public class BinSetup extends JDialog implements ActionListener, KeyListener{
                         public void run() {
                             d.repaint();
                         }
-                    }, 15, 15);
+                    }, 30, 30);
                 }
             }
         } else{
