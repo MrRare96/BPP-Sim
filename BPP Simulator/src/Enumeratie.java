@@ -52,7 +52,7 @@ public class Enumeratie implements Algoritme{
 
 
                 while(handledCount < order.size()) {
-                    populateSubset(order, handledCount, stack, 0, bin1.getBinCapacityHeight());
+                    populateSubset(order, handledCount, stack, 0, bin1.getBinCapacityHeight(), 0);
                     System.out.println("combo: " + calculateStackHeight(bestCombination) + ", StackId: " + bestStackId);
                     handledCount += bestStackId + 1;
                     for(Packet p: bestCombination) {
@@ -111,38 +111,45 @@ public class Enumeratie implements Algoritme{
     }
     public void populateSubset(ArrayList<Packet> data, int fromIndex,
                                ArrayList<Packet> stack, int stackId,
-                               final int target) {
+                               final int target, int wrongBin) {
 
         while(fromIndex < bin1.getBinCapacityHeight()) {
             //check if combo is equal or under bincapicity, if current combo is equal or higher then the best combo. if the last Id of combie is lower then the best Combo
 
 
-            while (fromIndex < data.size() && data.get(fromIndex).getPacketHeight() > bin1.getBinCapacityLeft()) {
-                // skip packages higher then capacityLeft
+            while (fromIndex < data.size()
+                    && data.get(fromIndex).getPacketHeight() + calculateStackHeight(stack) > target) {
+                // skip packages higher then capacity Left
                 fromIndex++;
+                wrongBin += data.get(fromIndex).getPacketHeight();
+
+                if(wrongBin > target){
+                    fromIndex = data.size();
+                }
             }
             while (fromIndex < data.size() && fromIndex > bestStackId) {
                 //skip packages when Id is higher then Best ID
                 fromIndex++;
+
             }
             while (fromIndex < data.size() && data.get(fromIndex).getPacketHeight() + calculateStackHeight(stack) <= target) {
                 // stop looping when we run out of data, or when we overflow our target.
                 stack.add(order.get(fromIndex));
                 stackId = fromIndex;
-//                System.out.println("stackid:" + stackId);
 
-                populateSubset(data, fromIndex + 1, stack, stackId, target);
+                populateSubset(data, fromIndex + 1, stack, stackId, target, wrongBin);
                 fromIndex++;
             }
-            if (    calculateStackHeight(stack) <= bin1.getBinCapacityHeight()
+            if (    calculateStackHeight(stack) <= target
                     && calculateStackHeight(stack) >= calculateStackHeight(bestCombination)
-                    && stackId < bestStackId) {
+                    && stackId < bestStackId
+                    && wrongBin <= target) {
                 System.out.println(calculateStackHeight(stack) + " | " + calculateStackHeight(bestCombination) + " | " +  stackId);
 //                this.bestCombination.clear();
                 this.bestCombination = stack;
                 this.bestStackId = stackId;
-//                System.out.println(calculateStackHeight(this.bestCombination) + " | " + this.bestStackId);
             }
+
         }
 
     }
