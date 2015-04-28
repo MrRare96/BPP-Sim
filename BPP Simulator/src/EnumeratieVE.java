@@ -52,6 +52,8 @@ public class EnumeratieVE implements Algoritme{
 
         int target = 10;
 
+        boolean found = false;
+
         System.out.println("DERP ENUM STARteD");
 
         start:
@@ -77,7 +79,7 @@ public class EnumeratieVE implements Algoritme{
 
                 if(firstLoopCounter < secondLoopCounter){
                     adder = adder + binCap;
-                    System.out.println("")
+                    System.out.println(adder);
                     packetsUsed.add(pack2);
 
                     if(target == (adder + startSum)){
