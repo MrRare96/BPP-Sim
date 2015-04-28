@@ -20,9 +20,9 @@ public class MainScreen extends JFrame implements ActionListener {
     private ArrayList<Packet> order = new ArrayList<Packet>();
     private SimpelGretig simpel;
     private Gretig gretig;
-    private Enumeratie enumeratie;
+    private EnumeratieVE enumeratie;
 
-    private int delay = 50;
+    private Integer delay = 50;
 
 
         /**
@@ -149,11 +149,11 @@ public class MainScreen extends JFrame implements ActionListener {
         this.delay = delay;
     }
 
-    public int getDelay() {
+    public Integer getDelay() {
         return delay;
     }
 
-    public void addEnumeratie(Enumeratie enumeratie){
+    public void addEnumeratie(EnumeratieVE enumeratie){
         this.enumeratie = enumeratie;
     }
     public void delay() {
@@ -181,11 +181,13 @@ public class MainScreen extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(mainScreen, "You need to setup the order first!");
             }
         } else if(e.getSource() == simSetup){
-            SimSetup setup = new SimSetup(mainScreen);
+            SimSetup setup = new SimSetup(this);
         } else if(e.getSource() == stop){
             start.setEnabled(true);
             stop.setEnabled(false);
             simpel.stopAlgo();
+            gretig.stopAlgo();
+            enumeratie.stopAlgo();
         } else if(e.getSource() == clear){
             simpelOutput.setText("");
             gretigOutput.setText("");

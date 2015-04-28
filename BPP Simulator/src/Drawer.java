@@ -11,16 +11,18 @@ import java.util.Random;
 public class Drawer extends JPanel {
 
     private ArrayList<Bin> bins;
+    private ArrayList<Packet> order;
     private int binHeight, binWidth, binSpacing, binLines;
     private boolean bin;
     private String algo;
     private boolean konami;
 //    private JProgressBar progressBar;
 
-    public Drawer(String algo, Bin left, Bin right, int binHeight, int binWidth) {
+    public Drawer(String algo, Bin left, Bin right,ArrayList<Packet> order, int binHeight, int binWidth) {
         this.bins = new ArrayList<Bin>();
         bins.add(left);
         bins.add(right);
+        this.order = order;
         this.binHeight = binHeight;
         this.binWidth = binWidth;
         this.binSpacing = 50;
@@ -91,10 +93,20 @@ public class Drawer extends JPanel {
                     g.setColor(packet.getColor());
                 }
                 g.fillRect(x + binLines, y, binWidth - 20, packet.getPacketHeight() * -packagesSteps(bin.getBinCapacityHeight()));
-                y -= packet.getPacketHeight() * packagesSteps(bin.getBinCapacityHeight());
-                //line between packets
+                // pack number text
+                Integer packPosition = order.indexOf(packet);
                 g.setColor(Color.BLACK);
+                g.setFont(new Font(null, Font.PLAIN, 14));
+                g.drawString("#" + packPosition.toString(), x - binLines + 20, y - 25);
+                y -= packet.getPacketHeight() * packagesSteps(bin.getBinCapacityHeight());
+
+
+
+
+                //line between packets
                 g.drawLine(x + binLines, y, x + binWidth - 11, y);
+
+
 
             }
 

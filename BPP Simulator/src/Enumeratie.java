@@ -65,7 +65,6 @@ public class Enumeratie implements Algoritme{
 
 
                 for(Packet packet : order){
-                    parentscreen.delay();
 
                     if(leftArray.contains(packet)) {
                         bin1.addPacket(packet);
@@ -76,15 +75,20 @@ public class Enumeratie implements Algoritme{
                         bin2.addPacket(packet);
                     }
 
-
-                    SwingUtilities.invokeLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            draw.repaint();
-                        }
-                    });
+                    if(parentscreen.getDelay() >= 50){
+                        parentscreen.delay();
+                        SwingUtilities.invokeLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                draw.repaint();
+                            }
+                        });
+                    }
                 }
 
+                if(parentscreen.getDelay() == 0){
+                    draw.repaint();
+                }
                 long lEndTime = System.nanoTime();
                 difference = lEndTime - lStartTime;
 
@@ -150,6 +154,10 @@ public class Enumeratie implements Algoritme{
                 this.bestStackId = stackId;
             }
 
+        }
+
+        for(Packet pack : leftArray){
+            System.out.println("|" + pack.getPacketHeight());
         }
 
     }

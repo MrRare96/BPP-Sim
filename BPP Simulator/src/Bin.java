@@ -14,6 +14,7 @@ public class Bin {
 
     private int binCapacityHeight, timesEmptied;;
 
+    private boolean autoEmpty = true;
 
     public Bin(int binCapacityHeight){
 
@@ -56,10 +57,15 @@ public class Bin {
          * This method adds a packet to the bin, it checks if it fits, if not it empties the bin
          * and add it after it is emptied.
          */
-        if((packet.getPacketHeight() + getBinCapicityFilled()) < binCapacityHeight){
-            packets.add(packet);
+        if(autoEmpty){
+            if((packet.getPacketHeight() + getBinCapicityFilled()) < binCapacityHeight){
+                packets.add(packet);
+            } else {
+                System.out.println("emptied in bin");
+                emptyBin();
+                packets.add(packet);
+            }
         } else {
-            emptyBin();
             packets.add(packet);
         }
         
@@ -75,6 +81,10 @@ public class Bin {
          */
         timesEmptied++;
         packets.clear();
+    }
+
+    public void setAutoEmpty(boolean autoEmpty) {
+        this.autoEmpty = autoEmpty;
     }
 
     public void setBinCapacityHeight(int binCapacityHeight) {

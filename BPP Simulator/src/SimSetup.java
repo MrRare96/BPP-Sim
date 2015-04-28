@@ -13,11 +13,11 @@ public class SimSetup extends JDialog implements ActionListener{
     private JButton ok, cancel;
 
     private JTextField delayInput;
-    private JFrame parent;
+    private MainScreen parent;
 
     private JLabel delayL;
 
-    public SimSetup(JFrame parent){
+    public SimSetup(MainScreen parent){
         super(parent, "Bin Setup");
         this.parent = parent;
 
@@ -31,10 +31,11 @@ public class SimSetup extends JDialog implements ActionListener{
         bot = new JPanel();
         bot.setLayout(new FlowLayout());
 
-        delayL = new JLabel("Set delay(min: 50):");
+        delayL = new JLabel("Set delay(min: 50 / 0 == direct result) in ms:");
 
-        delayInput = new JTextField(parent.getD);
+        delayInput = new JTextField(parent.getDelay());
         delayInput.setColumns(8);
+        delayInput.setText(parent.getDelay().toString());
         delayInput.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -69,7 +70,30 @@ public class SimSetup extends JDialog implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == ok){
-            parent.
+            try{
+
+                Integer delay = Integer.parseInt(delayInput.getText());
+                if(delay < 50 && delay != 0){
+                    JOptionPane.showMessageDialog(parent, "Delay can only be set to 0 (direct result) or higher then 50 in ms!");
+                } else {
+                    if(delay == 0){
+                        JOptionPane.showMessageDialog(parent, "Delay off, direct result!: ");
+
+                    }
+                    JOptionPane.showMessageDialog(parent, "Delay set to: " + delay + " ms");
+
+                    parent.setDelay(delay);
+                    setVisible(false);
+                    dispose();
+                }
+
+            } catch(Exception yo){
+                JOptionPane.showMessageDialog(parent, "You need to use a number, no string or special characters allowed!");
+            }
+
+        } else if(e.getSource() == cancel) {
+            setVisible(false);
+            dispose();
         }
 
 

@@ -14,7 +14,7 @@ public class Main {
 
     private static SimpelGretig simpel;
     private static Gretig gretig;
-    private static Enumeratie enumeratie;
+    private static EnumeratieVE enumeratie;
 
 
     public static void main(String[] args) {
@@ -51,9 +51,9 @@ public class Main {
             bin.addPacket(packet1);
         }
 
-        Drawer draw1 = new Drawer("Simpel gretig",bin1, bin2, binHeight, binWidth);
-        Drawer draw2 = new Drawer("Gretig",bin3, bin4, binHeight, binWidth);
-        Drawer draw3 = new Drawer("Volledige enumeratie Algoritme",bin5, bin6, binHeight, binWidth);
+        Drawer draw1 = new Drawer("Simpel gretig",bin1, bin2, order, binHeight, binWidth);
+        Drawer draw2 = new Drawer("Gretig",bin3, bin4, order, binHeight, binWidth);
+        Drawer draw3 = new Drawer("Volledige enumeratie Algoritme", bin5, bin6, order, binHeight, binWidth);
         drawers.add(draw1);
         drawers.add(draw2);
         drawers.add(draw3);
@@ -83,7 +83,7 @@ public class Main {
 
         simpel = new SimpelGretig(bin1, bin2, screen, draw1, 1);
         gretig = new Gretig(bin3, bin4, screen, draw2, 2);
-        enumeratie = new Enumeratie(bin5, bin6, screen, draw3, 3);
+        enumeratie = new EnumeratieVE(bin5, bin6, screen, draw3, 3);
 
         simpel.setOrder(order);
         gretig.setOrder(order);

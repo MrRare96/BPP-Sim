@@ -44,7 +44,7 @@ public class Gretig implements Algoritme{
 
                 for(Packet packet : order){
 
-                    parentscreen.delay();
+
                     if(stop){
                         break;
                     }
@@ -60,12 +60,21 @@ public class Gretig implements Algoritme{
                         bin1.addPacket(packet);
                     }
 
-                    SwingUtilities.invokeLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            draw.repaint();
-                        }
-                    });
+                    if(parentscreen.getDelay() >= 50){
+                        parentscreen.delay();
+                        SwingUtilities.invokeLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                draw.repaint();
+                            }
+                        });
+                    }
+
+
+                }
+
+                if(parentscreen.getDelay() == 0){
+                    draw.repaint();
                 }
 
                 long lEndTime = System.nanoTime();
