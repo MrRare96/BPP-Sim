@@ -106,11 +106,12 @@ public class MainScreen extends JFrame implements ActionListener {
     }
 
     public void addToResult(int outputNumber, Bin left, Bin right, long difference){
-        String input = "\r\n" + "----------------RESULT FROM SIMPEL GRETIG--------------------" +
-                "\r\n" +
+        String input = "\r\n" +
                 "Left bin: " + left.getTimesEmptied() + " times emptied." +
                 "\r\n" +
                 "Right bin: " + right.getTimesEmptied() + " times emptied." +
+                "\r\n" +
+                "TOTAL: " + (right.getTimesEmptied()+ left.getTimesEmptied()) + " times emptied." +
                 "\r\n" +
                 "Capacity left in Left bin: " + left.getBinCapacityLeft() + "/" + left.getBinCapacityHeight() +
                 "\r\n" +
@@ -119,11 +120,11 @@ public class MainScreen extends JFrame implements ActionListener {
                 "Time to simulate: " + difference + " Nano Seconds";
         System.out.println(" output: " + outputNumber);
         if(outputNumber == 1) {
-            simpelOutput.append(input);
+            simpelOutput.append("\r\n" + "----------------SIMPEL GRETIG--------------------" + input);
         } else if (outputNumber == 2) {
-            gretigOutput.append(input);
+            gretigOutput.append("\r\n" + "----------------GRETIG--------------------" + input);
         } else if (outputNumber == 3){
-            enumeratieOutput.append(input);
+            enumeratieOutput.append("\r\n" + "----------------ENUMERATIE--------------------" + input);
         }
         start.setEnabled(true);
         stop.setEnabled(false);
