@@ -1,14 +1,17 @@
 import javax.swing.*;
+import javax.swing.Timer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.*;
 
 /**
  * Created by Eldin on 4/9/2015 for Windesheim Magazijn Robot KBS
  * In this class the mainScreen will be created
  */
-public class MainScreen extends JFrame implements ActionListener {
+public class MainScreen extends JFrame implements ActionListener, KeyListener {
 
     private JFrame mainScreen;
     private JPanel container, top, mid, bottom;
@@ -21,9 +24,21 @@ public class MainScreen extends JFrame implements ActionListener {
     private SimpelGretig simpel;
     private Gretig gretig;
     private EnumeratieVE enumeratie;
+    private int testOrder[] = {80,69,84,69,82 };
+    private int testPackages[] = {3,2,3,4,5,2,3,1,2,4,5,2,3,2,4,5,6,5,4,3,2,1,2,3,4,4,3,2,4,5,4,4,1,2,3,5,4,4,3,5,4,3,4,2,3,4,5,6,1,4,1,3,6,6,4,5,3,2,3};
+    private int KonamiCode[] = {38,38,40,40,37,39,37,39,66,65 }, count;
+
+    public void setKonamiCode(boolean konamiCode) {
+        this.konamiCode = konamiCode;
+    }
+
+    public boolean isKonamiCode() {
+
+        return konamiCode;
+    }
 
     private Integer delay = 50;
-
+    private boolean konamiCode;
 
         /**
          * this class contains all the atributes needed to create the main screen
@@ -33,7 +48,7 @@ public class MainScreen extends JFrame implements ActionListener {
         this.drawers = drawers;
         this.bins = bins;
         this.order = order;
-
+        this.konamiCode = false;
         mainScreen = new JFrame("BPP Simulator");
         mainScreen.setSize(1300, 800);
         mainScreen.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -72,12 +87,15 @@ public class MainScreen extends JFrame implements ActionListener {
 
         simpelOutput = new JTextArea();
         simpelOutput.setEditable(false);
+        simpelOutput.addKeyListener(this);
 
         gretigOutput = new JTextArea();
         gretigOutput.setEditable(false);
+        gretigOutput.addKeyListener(this);
 
         enumeratieOutput = new JTextArea();
         enumeratieOutput.setEditable(false);
+        enumeratieOutput.addKeyListener(this);
 
         simpelScroll = new JScrollPane(simpelOutput);
         simpelScroll.setPreferredSize(new Dimension(400, 300));
@@ -193,7 +211,8 @@ public class MainScreen extends JFrame implements ActionListener {
             simpelOutput.setText("");
             gretigOutput.setText("");
             enumeratieOutput.setText("");
-
+            simpel.stopAlgo();
+            gretig.stopAlgo();
             for(Bin bin : bins) {
                 bin.emptyBin();
                 bin.setTimesEmptied(0);
@@ -201,10 +220,63 @@ public class MainScreen extends JFrame implements ActionListener {
             for(Drawer draw : drawers) {
                 draw.repaint();
             }
+            simpel.stopAlgo();
+            gretig.stopAlgo();
             start.setEnabled(true);
             stop.setEnabled(false);
             revalidate();
             repaint();
         }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        int key = e.getKeyCode();
+        System.out.print(key + " ");
+        if(key == KonamiCode[count]) {
+            System.out.print((char)key + "|");
+            if(count < 9 ) {
+                count++;
+            } else {
+                //add action
+                System.out.println("konami Activated");
+                for(final Drawer d : drawers ) {
+
+                    d.setKonami();
+                    java.util.Timer konamiTimer = new java.util.Timer();
+                    konamiTimer.scheduleAtFixedRate(new TimerTask() {
+                        @Override
+                        public void run() {
+                            d.repaint();
+                        }
+                    }, 30, 30);
+                }
+            }
+        } else if(key == testOrder[count]) {
+//            System.out.print((char)key + "|");
+            if(count < testOrder.length - 1 ) {
+                count++;
+            } else {
+                //add action
+                System.out.println("TestOrder Activated");
+                order.clear();
+                for(int x = 0; x < testPackages.length; x++) {
+                    order.add(new Packet(testPackages[x]));
+                }
+            }
+        } else{
+            System.out.print("\n");
+            count = 0;
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
     }
 }

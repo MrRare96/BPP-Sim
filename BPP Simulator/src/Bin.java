@@ -22,7 +22,7 @@ public class Bin {
          * this method stores the data used to define a bin, such as its capacity and which packets it contains and how many times it has been emptied.
          */
         this.binCapacityHeight = binCapacityHeight;
-        this.packets = new ArrayList<Packet>();
+        this.packets = new ArrayList<>();
         this.timesEmptied = 0;
     }
 
@@ -57,18 +57,16 @@ public class Bin {
          * This method adds a packet to the bin, it checks if it fits, if not it empties the bin
          * and add it after it is emptied.
          */
-        if(autoEmpty){
-            if((packet.getPacketHeight() + getBinCapicityFilled()) < binCapacityHeight){
+
+            if((packet.getPacketHeight() + getBinCapicityFilled()) <= binCapacityHeight){
                 packets.add(packet);
             } else {
                 System.out.println("emptied in bin");
                 emptyBin();
                 packets.add(packet);
             }
-        } else {
-            packets.add(packet);
-        }
-        
+
+
     }
 
     public int getTimesEmptied() {

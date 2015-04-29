@@ -73,8 +73,8 @@ public class Drawer extends JPanel {
             y += binHeight;
 
             g.setColor(Color.black);
-            g.drawString(   "Times emptied: " + bin.getTimesEmptied() +
-                            " " + bin.getBinCapicityFilled() + "/" + bin.getBinCapacityHeight() +//  5/10
+            g.drawString(   " emptied: " + bin.getTimesEmptied() +
+                            "            " + bin.getBinCapicityFilled() + "/" + bin.getBinCapacityHeight() +//  5/10
                             " "+ (bin.getBinCapicityFilled()*100)/bin.getBinCapacityHeight()+ "%",// 50%
                             x, 430);
 
@@ -92,12 +92,14 @@ public class Drawer extends JPanel {
                     //paint packet
                     g.setColor(packet.getColor());
                 }
+
                 g.fillRect(x + binLines, y, binWidth - 20, packet.getPacketHeight() * -packagesSteps(bin.getBinCapacityHeight()));
                 // pack number text
                 Integer packPosition = order.indexOf(packet);
                 g.setColor(Color.BLACK);
                 g.setFont(new Font(null, Font.PLAIN, 14));
-                g.drawString("#" + packPosition.toString(), x - binLines + 20, y - 25);
+                //package number
+                g.drawString("#" + packPosition.toString(), x + 10, y - 5);
                 y -= packet.getPacketHeight() * packagesSteps(bin.getBinCapacityHeight());
 
 

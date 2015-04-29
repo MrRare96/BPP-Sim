@@ -44,25 +44,27 @@ public class Main {
 
 
         //create packets with: packetID , ContentHeight
-          Packet packet1 = new Packet(0);
-
-
-        for(Bin bin : binArray){
-            bin.addPacket(packet1);
-        }
+//          Packet packet1 = new Packet(0);
+//
+//
+//        for(Bin bin : binArray){
+//            bin.addPacket(packet1);
+//        }
 
         Drawer draw1 = new Drawer("Simpel gretig",bin1, bin2, order, binHeight, binWidth);
         Drawer draw2 = new Drawer("Gretig",bin3, bin4, order, binHeight, binWidth);
-        Drawer draw3 = new Drawer("Volledige enumeratie Algoritme", bin5, bin6, order, binHeight, binWidth);
+        Drawer draw3 = new Drawer("Enumeratie", bin5, bin6, order, binHeight, binWidth);
         drawers.add(draw1);
         drawers.add(draw2);
         drawers.add(draw3);
+
+
         int x = 0;
         while(true){
             if(x == 5){
                 break;
             }
-            bin3.addPacket(packet1);
+//            bin3.addPacket(packet1);
             x++;
             try {
                 Thread.sleep(500);

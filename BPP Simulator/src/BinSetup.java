@@ -14,7 +14,7 @@ import java.util.Timer;
  * Created by Ewart en Eldin on 4/17/2015.
  * This class creates a binsetup window containing options for setting the capicity for the left and right bin.
  */
-public class BinSetup extends JDialog implements ActionListener, KeyListener{
+public class BinSetup extends JDialog implements ActionListener{
 
     private JPanel binSetup, top, mid, bot;
     private JLabel binCap1Label, binCap2Label;
@@ -52,11 +52,9 @@ public class BinSetup extends JDialog implements ActionListener, KeyListener{
         binCapacity1 = new JTextField("" + binarray.get(0).getBinCapacityHeight());
         binCapacity1.setColumns(15);
 
-        binCapacity1.addKeyListener(this);
         binCapacity2 = new JTextField("" + binarray.get(1).getBinCapacityHeight());
         binCapacity2.setColumns(15);
 
-        binCapacity2.addKeyListener(this);
 
         cancel = new JButton("cancel");
         cancel.addActionListener(this);
@@ -129,40 +127,5 @@ public class BinSetup extends JDialog implements ActionListener, KeyListener{
 
 
         }
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        int key  =  e.getKeyCode();
-        System.out.println(key);
-        if(key == KonamiCode[count]) {
-            if(count < 9 ) {
-                count++;
-            } else {
-                //add action
-                for(final Drawer d : drawers ) {
-
-                    d.setKonami();
-                    Timer konamiTimer = new Timer();
-                    konamiTimer.scheduleAtFixedRate(new TimerTask() {
-                        @Override
-                        public void run() {
-                            d.repaint();
-                        }
-                    }, 30, 30);
-                }
-            }
-        } else{
-            count = 0;
-        }
-    }
-    @Override
-    public void keyReleased(KeyEvent e) {
-
     }
 }
