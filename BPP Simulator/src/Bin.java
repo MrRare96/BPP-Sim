@@ -58,7 +58,7 @@ public class Bin {
          * and add it after it is emptied.
          */
 
-            if((packet.getPacketHeight() + getBinCapicityFilled()) <= binCapacityHeight){
+            if((packet.getPacketHeight() <= getBinCapacityLeft())){
                 packets.add(packet);
             } else {
                 System.out.println("emptied in bin");

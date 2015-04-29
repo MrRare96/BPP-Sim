@@ -175,6 +175,7 @@ public class MainScreen extends JFrame implements ActionListener, KeyListener {
     public void addEnumeratie(EnumeratieVE enumeratie){
         this.enumeratie = enumeratie;
     }
+
     public void delay() {
         try {
             Thread.sleep(delay);

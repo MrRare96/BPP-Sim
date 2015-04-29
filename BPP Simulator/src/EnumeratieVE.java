@@ -1,46 +1,45 @@
-import com.sun.xml.internal.bind.v2.runtime.reflect.Lister;
-
 import javax.swing.*;
-import javax.swing.text.html.HTMLDocument;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * Created by Eldin on 4/25/2015.
+ * Enumeration algoritm, using a set order of packets
  */
 public class EnumeratieVE implements Algoritme{
 
+    //creates all the arraylist needed to calculate the order in which packets should be added to the bins using enumeration.
     private ArrayList<Packet> order = new ArrayList<Packet>();
-    private ArrayList<Packet> packetsUsed;
-    private ArrayList<Packet> packetsUsed1;
-
+    private ArrayList<Packet> packetsUsedStartSum;
+    private ArrayList<Packet> packetsUsedAdderSum;
     private ArrayList<Packet> tempOrder;
     private ArrayList<ArrayList> bestCombination;
 
-    private ArrayList<Packet> used;
-
+    //needed to draw a visual simulation on the mainscreen and starting / stopping the alogoritm using the buttons
     private MainScreen parentscreen;
     private Drawer draw;
 
     private boolean stop = false;
 
+    //defines the bins
     private Bin binL, binR;
 
     public EnumeratieVE(Bin bin1, Bin bin2, MainScreen parentscreen, Drawer draw, int screen) {
 
+        /*
+         * CONSTRUCTOR
+         */
+
+        //initiates the arraylists on initiation of this class
         tempOrder = new ArrayList<Packet>();
-
-        packetsUsed = new ArrayList<Packet>();
-
-        packetsUsed1 = new ArrayList<Packet>();
-
+        packetsUsedStartSum = new ArrayList<Packet>();
+        packetsUsedAdderSum = new ArrayList<Packet>();
         bestCombination = new ArrayList<ArrayList>();
 
-        used = new ArrayList<Packet>();
-
+        //sets the screen so it can visualize the simulation
         this.parentscreen = parentscreen;
         this.draw = draw;
 
+        //sets the bins
         binL = bin1;
         binR = bin2;
 
@@ -48,84 +47,117 @@ public class EnumeratieVE implements Algoritme{
 
     public boolean enumeratie(){
 
-        int binCap;
-        int startSum = 0;
-
-        int firstLoopCounter = 0;
-        int secondLoopCounter = 0;
-
-        int target = binL.getBinCapacityHeight();
+        /*
+         * This method contains the logics for calculating the order of packets using enumerations.
+         */
 
         boolean found = false;
 
-        System.out.println("DERP ENUM STARteD");
+        //sets the variables needed to calculate
+        int packCap;
+        int startSum = 0;
 
+        int firstLoopCounter = 0;
+        int secondLoopCounter;
+
+        //target is the optimal capacity number, which equals to the left bin capacity
+        int target = binL.getBinCapacityHeight();
+
+        //used to keep track of the amount of loops has been done
         int x = 0;
+
+        //loops until in one way it found the best possible solution
         while(x != tempOrder.size()) {
 
+            if(stop) break;
+
+            //if no solution is found, it needs to reset all the containers.
             bestCombination.clear();
-            packetsUsed.clear();
+            packetsUsedStartSum.clear();
 
             start:
             for (Packet pack1 : tempOrder) {
 
                 found = false;
 
-                System.out.println("Derp loop 1 started");
+                packCap = pack1.getPacketHeight();
 
-                binCap = pack1.getPacketHeight();
-                startSum = binCap + startSum;
+                startSum = packCap + startSum;
+
+                //adds the packet used in the startsum to starstum array, later to be combined with the addersum array
+                packetsUsedStartSum.add(pack1);
+
                 firstLoopCounter++;
 
-                if (!packetsUsed.isEmpty()) {
-                    packetsUsed.clear();
-                }
-
-                packetsUsed.add(pack1);
-
+                //resets the adder
                 int adder = 0;
+
+                //keeps track of second loop
+                secondLoopCounter = 0;
 
                 for (Packet pack2 : tempOrder) {
 
-                    binCap = pack2.getPacketHeight();
+                    packCap = pack2.getPacketHeight();
 
                     if (firstLoopCounter <= secondLoopCounter) {
-                        adder = adder + binCap;
-                        System.out.println("Start: " + startSum);
-                        System.out.println(adder + startSum);
-                        packetsUsed.add(pack2);
 
+                        //adds the packCap to the adder
+                        adder = adder + packCap;
+
+                        //adds used pack in the adder to a temporary array
+                        packetsUsedAdderSum.add(pack2);
+
+                        /*
+                         the adder and teh startsum will be summed up and compared to the target
+                         when those are equal the packets used in the startsum array and in the adder array
+                         will be added to the bestcombination array
+                         */
                         if (target == (adder + startSum)) {
-                            bestCombination.add(packetsUsed);
-                            System.out.println("TARGet OFUSDFd");
+
+                            for(Packet packetu1 : packetsUsedAdderSum){
+                                packetsUsedStartSum.add(packetu1);
+                            }
+
+                            bestCombination.add(packetsUsedStartSum);
+
+                            packetsUsedAdderSum.clear();
+
                             found = true;
+                            //it will end both for loops
                             break start;
                         } else {
+                            //if nothing == target
                             found = false;
                         }
 
                     }
+
                     secondLoopCounter++;
+
+                    //resets adder
                     adder = 0;
+
                 }
+
+                //clears the addersum array
+                packetsUsedAdderSum.clear();
 
             }
 
+            /*
+            when no combinations are found, the target number will be adjusted (-1) until it finds something
+            when it does not find anything it will break the loop. if there is a combination found, this loop will
+            also end.
+             */
             if(!found){
                 target = target - 1;
-                System.out.println("target one down");
                 if(target <= 0){
                     break;
                 }
             } else {
                 break;
             }
-        }
 
-        for (ArrayList<Packet> packetsUsedinBC : bestCombination) {
-            for (Packet packinbc : packetsUsedinBC) {
-                System.out.println("RESULT: " + packinbc.getPacketHeight());
-            }
         }
 
         return found;
@@ -137,44 +169,67 @@ public class EnumeratieVE implements Algoritme{
 
     public void startAlgo(final int outputNumber){
 
-
         Thread runEnumeratie = new Thread(new Runnable() {
             @Override
             public void run() {
 
+                //this will add all packets to a temporary order list(so things can be removed)
                 for(Packet pInOrder : order){
                     tempOrder.add(pInOrder);
                 }
 
-
-                int x = 0;
+                //starts the first enumeratie loop
                 boolean found = enumeratie();
 
+                //sets start time in nano seconds
                 long lStartTime = System.nanoTime();
+
+                //loop counter
+                int x = 0;
+                int y = 0;
+
                 for(Packet pack : order){
-                    if(stop){
-                        break;
-                    }
+
+                    if(stop) break;
+
+                    /*
+                     * When a combination has been found, for each packet in the order a for loop runs over bestcombination
+                     * array, when the packet exists in the bestcombination arraylist, the packet will be added to the left
+                     * bin, if not, it will be added to the right bin. When the loop counter equals the size of the
+                     * bestcombination array, means all packets in best combination are added to the left bin,
+                     * enumeration will start again with the remaining packets, every packet added to a bin will be removed
+                     * from the temporder arraylist.
+                     */
                     if(found){
+
                         for(ArrayList<Packet> packetsUsedinBC : bestCombination){
                             if(packetsUsedinBC.contains(pack)){
                                 binL.addPacket(pack);
+                                x++;
+                                System.out.println(bestCombination.get(bestCombination.size() - 1).size() + "|" + x);
                             } else {
                                 binR.addPacket(pack);
                             }
                         }
 
                         if(bestCombination.get(bestCombination.size() - 1).size() == x){
+                            x = y;
+                            System.out.println("enum started");
                             bestCombination.clear();
-                            x = 0;
+                            y++;
                             found = enumeratie();
+
                         }
+
                     } else {
-                        System.out.println("enumeration did not find anything");
                         break;
                     }
 
-                    if(parentscreen.getDelay() >= 50){
+                    //removes pack from tempOrder, since it has been added to a bin
+                    tempOrder.remove(pack);
+
+                    //repaints every time a pack has been added.
+                    if(parentscreen.getDelay() >= 50) {
                         parentscreen.delay();
                         SwingUtilities.invokeLater(new Runnable() {
                             @Override
@@ -183,26 +238,28 @@ public class EnumeratieVE implements Algoritme{
                             }
                         });
                     }
-                    tempOrder.remove(pack);
-                    x++;
                 }
 
+                //when delay has been turned off, it will only repaint when everything has been finishd.
                 if(parentscreen.getDelay() == 0){
                     draw.repaint();
                 }
 
+                //sets end time and calculates how much times has been passed
                 long lEndTime = System.nanoTime();
                 long difference = lEndTime - lStartTime;
 
+                //prints the result
                 parentscreen.addToResult(outputNumber, binL, binR, difference);
-
 
             }
         });
 
+        //starts the algoritm
         runEnumeratie.start();
 
         stop = false;
+
     }
 
     public void stopAlgo(){
