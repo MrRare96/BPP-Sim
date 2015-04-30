@@ -63,9 +63,9 @@ public class Enumeratie implements Algoritme{
                     for( int x = handledCount; x <= bestStackId; x++) {
                         parentscreen.delay();
                         if(bestCombination.contains(order.get(x))) {
-                            bin1.addPacket(order.get(x));
+                            bin1.addPacket(order.get(x), "Enumeratie");
                         } else {
-                            bin2.addPacket(order.get(x));
+                            bin2.addPacket(order.get(x), "Enumeratie");
                         }
                         SwingUtilities.invokeLater(new Runnable() {
                             @Override

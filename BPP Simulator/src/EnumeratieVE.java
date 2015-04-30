@@ -203,7 +203,7 @@ public class EnumeratieVE implements Algoritme{
                     if(found){
 
                             if(bestCombination.contains(pack)){
-                                binL.addPacket(pack);
+                                binL.addPacket(pack, "Enumeratie");
                                 x++;
                             } else {
                                 if(bestCombination.size() == x || binR.getBinCapacityLeft() < pack.getPacketHeight()){
@@ -214,7 +214,7 @@ public class EnumeratieVE implements Algoritme{
                                     found = enumeratie();
                                 }
 
-                                binR.addPacket(pack);
+                                binR.addPacket(pack, "Enumeratie");
                             }
 
 

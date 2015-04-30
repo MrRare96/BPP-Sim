@@ -57,9 +57,9 @@ public class SimpelGretig implements Algoritme{
                     int random = rand.nextInt(2);
 
                     if((random % 2) == 0){
-                        bin1.addPacket(packet);
+                        bin1.addPacket(packet, "Simpel Gretig");
                     } else {
-                        bin2.addPacket(packet);
+                        bin2.addPacket(packet, "Simpel Gretig");
                     }
 
                     if(parentscreen.getDelay() >= 50){

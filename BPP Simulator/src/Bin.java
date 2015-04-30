@@ -1,6 +1,4 @@
-
 import com.sun.xml.internal.bind.v2.runtime.reflect.Lister;
-
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -52,7 +50,7 @@ public class Bin {
         this.timesEmptied = timesEmptied;
     }
 
-    public void addPacket(Packet packet) {
+    public void addPacket(Packet packet, String algo) {
         /**
          * This method adds a packet to the bin, it checks if it fits, if not it empties the bin
          * and add it after it is emptied.
@@ -61,7 +59,8 @@ public class Bin {
             if((packet.getPacketHeight() <= getBinCapacityLeft())) {
                 packets.add(packet);
             } else {
-                System.err.println("packet cant exceed binHeight");
+                System.err.print("packet cant exceed binHeight");
+                System.err.println(", Algo :" + algo);
             }
 
 

@@ -51,13 +51,14 @@ public class Gretig implements Algoritme{
 
                     if(bin1.getBinCapacityLeft() <= packet.getPacketHeight()) {
                         if(bin2.getBinCapacityLeft() <= packet.getPacketHeight()) {
-                            bin1.addPacket(packet);
+                            bin1.emptyBin();
                             bin2.emptyBin();
+                            bin1.addPacket(packet, "Gretig");
+                        } else {
+                            bin2.addPacket(packet, "Gretig");
                         }
-                            bin2.addPacket(packet);
-
                     } else {
-                        bin1.addPacket(packet);
+                        bin1.addPacket(packet, "Gretig");
                     }
 
                     if(parentscreen.getDelay() >= 50){

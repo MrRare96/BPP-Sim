@@ -24,10 +24,11 @@ public class MainScreen extends JFrame implements ActionListener, KeyListener {
     private SimpelGretig simpel;
     private Gretig gretig;
     private EnumeratieVE enumeratie;
-    private int testOrder[] = {80,69,84,69,82 };
-    //private int testPackages[] = {3,2,3,4,5,2,3,1,2,4,5,2,3,2,4,5,6,5,4,3,2,1,2,3,4,4,3,2,4,5,4,4,1,2,3,5,4,4,3,5,4,3,4,2,3,4,5,6,1,4,1,3,6,6,4,5,3,2,3};
-    private int testPackages[] ={9,3,4,6,4,2,1};
-    private int KonamiCode[] = {38,38,40,40,37,39,37,39,66,65 }, count;
+    private int peterOrder[] = {80,69,84,69,82 };
+    private int peterPackages[] = {3,2,3,4,5,2,3,1,2,4,5,2,3,2,4,5,6,5,4,3,2,1,2,3,4,4,3,2,4,5,4,4,1,2,3,5,4,4,3,5,4,3,4,2,3,4,5,6,1,4,1,3,6,6,4,5,3,2,3};
+    private int henkOrder[] = {72,69,78,75};
+    private int henkPackages[] ={9,3,4,6,4,2,1};
+    private int KonamiCode[] = {38,38,40,40,37,39,37,39,66,65}, count;
 
     public void setKonamiCode(boolean konamiCode) {
         this.konamiCode = konamiCode;
@@ -239,12 +240,14 @@ public class MainScreen extends JFrame implements ActionListener, KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
-        System.out.print(key + " ");
+        System.out.print((char)key + "|");
+        System.out.print(key + "|");
         if(key == KonamiCode[count]) {
-            System.out.print((char)key + "|");
+//            System.out.print((char)key + "|");
             if(count < 9 ) {
                 count++;
             } else {
+                count = 0;
                 //add action
                 System.out.println("konami Activated");
                 for(final Drawer d : drawers ) {
@@ -256,19 +259,35 @@ public class MainScreen extends JFrame implements ActionListener, KeyListener {
                         public void run() {
                             d.repaint();
                         }
-                    }, 30, 30);
+                    }, 50, 50);
                 }
             }
-        } else if(key == testOrder[count]) {
+        } else if(key == peterOrder[count]) {
 //            System.out.print((char)key + "|");
-            if(count < testOrder.length - 1 ) {
+            if(count < peterOrder.length - 1 ) {
                 count++;
             } else {
+                count = 0;
                 //add action
-                System.out.println("TestOrder Activated");
+                System.out.println("Peter Activated");
+
                 order.clear();
-                for(int x = 0; x < testPackages.length; x++) {
-                    order.add(new Packet(testPackages[x]));
+                for(int x = 0; x < peterPackages.length; x++) {
+                    order.add(new Packet(peterPackages[x]));
+                }
+            }
+        } else if(key == henkOrder[count]) {
+//            System.out.print((char)key + "|");
+            if(count < henkOrder.length - 1 ) {
+                count++;
+            } else {
+                count = 0;
+                //add action
+                System.out.println("Henk Activated");
+
+                order.clear();
+                for(int x = 0; x < henkPackages.length; x++) {
+                    order.add(new Packet(henkPackages[x]));
                 }
             }
         } else{
