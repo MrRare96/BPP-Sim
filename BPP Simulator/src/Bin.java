@@ -52,18 +52,16 @@ public class Bin {
         this.timesEmptied = timesEmptied;
     }
 
-    public void addPacket(Packet packet){
+    public void addPacket(Packet packet) {
         /**
          * This method adds a packet to the bin, it checks if it fits, if not it empties the bin
          * and add it after it is emptied.
          */
 
-            if((packet.getPacketHeight() <= getBinCapacityLeft())){
+            if((packet.getPacketHeight() <= getBinCapacityLeft())) {
                 packets.add(packet);
             } else {
-                System.out.println("emptied in bin");
-                emptyBin();
-                packets.add(packet);
+                System.err.println("packet cant exceed binHeight");
             }
 
 
