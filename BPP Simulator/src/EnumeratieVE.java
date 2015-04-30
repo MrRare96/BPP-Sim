@@ -12,7 +12,7 @@ public class EnumeratieVE implements Algoritme{
     private ArrayList<Packet> packetsUsedStartSum;
     private ArrayList<Packet> packetsUsedAdderSum;
     private ArrayList<Packet> tempOrder;
-    private ArrayList<ArrayList> bestCombination;
+    private ArrayList<Packet> bestCombination;
 
     //needed to draw a visual simulation on the mainscreen and starting / stopping the alogoritm using the buttons
     private MainScreen parentscreen;
@@ -30,10 +30,10 @@ public class EnumeratieVE implements Algoritme{
          */
 
         //initiates the arraylists on initiation of this class
-        tempOrder = new ArrayList<Packet>();
-        packetsUsedStartSum = new ArrayList<Packet>();
-        packetsUsedAdderSum = new ArrayList<Packet>();
-        bestCombination = new ArrayList<ArrayList>();
+        tempOrder = new ArrayList<>();
+        packetsUsedStartSum = new ArrayList<>();
+        packetsUsedAdderSum = new ArrayList<>();
+        bestCombination = new ArrayList<>();
 
         //sets the screen so it can visualize the simulation
         this.parentscreen = parentscreen;
@@ -118,7 +118,7 @@ public class EnumeratieVE implements Algoritme{
                                 packetsUsedStartSum.add(packetu1);
                             }
 
-                            bestCombination.add(packetsUsedStartSum);
+                            bestCombination = packetsUsedStartSum;
 
                             packetsUsedAdderSum.clear();
 
@@ -202,24 +202,24 @@ public class EnumeratieVE implements Algoritme{
                      */
                     if(found){
 
-                        for(ArrayList<Packet> packetsUsedinBC : bestCombination){
-                            if(packetsUsedinBC.contains(pack)){
+
+                            if(bestCombination.contains(pack)){
                                 binL.addPacket(pack);
                                 x++;
-                                System.out.println(bestCombination.get(bestCombination.size() - 1).size() + "|" + x);
                             } else {
+                                if(bestCombination.size() == x || binR.getBinCapacityLeft() < pack.getPacketHeight()){
+                                    x = y;
+                                    System.out.println("enum started");
+                                    bestCombination.clear();
+                                    y++;
+                                    found = enumeratie();
+                                }
+
                                 binR.addPacket(pack);
                             }
-                        }
 
-                        if(bestCombination.get(bestCombination.size() - 1).size() == x){
-                            x = y;
-                            System.out.println("enum started");
-                            bestCombination.clear();
-                            y++;
-                            found = enumeratie();
 
-                        }
+
 
                     } else {
                         break;

@@ -25,7 +25,8 @@ public class MainScreen extends JFrame implements ActionListener, KeyListener {
     private Gretig gretig;
     private EnumeratieVE enumeratie;
     private int testOrder[] = {80,69,84,69,82 };
-    private int testPackages[] = {3,2,3,4,5,2,3,1,2,4,5,2,3,2,4,5,6,5,4,3,2,1,2,3,4,4,3,2,4,5,4,4,1,2,3,5,4,4,3,5,4,3,4,2,3,4,5,6,1,4,1,3,6,6,4,5,3,2,3};
+    //private int testPackages[] = {3,2,3,4,5,2,3,1,2,4,5,2,3,2,4,5,6,5,4,3,2,1,2,3,4,4,3,2,4,5,4,4,1,2,3,5,4,4,3,5,4,3,4,2,3,4,5,6,1,4,1,3,6,6,4,5,3,2,3};
+    private int testPackages[] ={9,3,4,6,4,2,1};
     private int KonamiCode[] = {38,38,40,40,37,39,37,39,66,65 }, count;
 
     public void setKonamiCode(boolean konamiCode) {

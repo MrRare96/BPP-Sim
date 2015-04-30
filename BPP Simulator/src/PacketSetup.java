@@ -175,6 +175,7 @@ public class PacketSetup extends JDialog implements ActionListener{
         } else if(e.getSource() == clear){
             order.clear();
             orderOutput.setText("");
+            x = 0;
             validate();
             repaint();
         } else if(e.getSource() == ok){

@@ -97,7 +97,7 @@ public class Drawer extends JPanel {
                 // pack number text
                 Integer packPosition = order.indexOf(packet);
                 g.setColor(Color.BLACK);
-                g.setFont(new Font(null, Font.PLAIN, 14));
+                g.setFont(new Font(null, Font.PLAIN, 12));
                 //package number
                 g.drawString("#" + packPosition.toString(), x + 10, y - 5);
                 y -= packet.getPacketHeight() * packagesSteps(bin.getBinCapacityHeight());

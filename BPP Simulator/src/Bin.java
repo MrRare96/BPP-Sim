@@ -61,7 +61,6 @@ public class Bin {
             if((packet.getPacketHeight() <= getBinCapacityLeft())){
                 packets.add(packet);
             } else {
-                System.out.println("emptied in bin");
                 emptyBin();
                 packets.add(packet);
             }
