@@ -202,7 +202,6 @@ public class EnumeratieVE implements Algoritme{
                      */
                     if(found){
 
-
                             if(bestCombination.contains(pack)){
                                 binL.addPacket(pack);
                                 x++;
