@@ -11,7 +11,7 @@ import java.util.Random;
  * Created by Eldin on 4/22/2015.
  * in this class you can create/generate packets
  */
-public class PacketSetup extends JDialog implements ActionListener{
+public class PacketGenerator extends JDialog implements ActionListener{
 
     private JPanel packetSetup, top1, top2, mid, bot;
     private JLabel addPacketL, orderL, genRandomPacketsL;
@@ -24,7 +24,7 @@ public class PacketSetup extends JDialog implements ActionListener{
     private ArrayList<Bin> bins;
     private int x = 0;
 
-    public PacketSetup(JFrame parent, ArrayList<Packet> order, ArrayList<Bin> bins){
+    public PacketGenerator(JFrame parent, ArrayList<Packet> order, ArrayList<Bin> bins){
         /**
          * in here the screen will be created.
          */
@@ -78,7 +78,7 @@ public class PacketSetup extends JDialog implements ActionListener{
         packetCapIn.setText("Packet Capacity");
         packetCapIn.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mousePressed(MouseEvent e) {
                 super.mouseClicked(e);
                 packetCapIn.setText("");
                 repaint();
@@ -91,7 +91,7 @@ public class PacketSetup extends JDialog implements ActionListener{
         amountOfPacketsIn.setText("Amount of packets");
         amountOfPacketsIn.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mousePressed(MouseEvent e) {
                 super.mouseClicked(e);
                 amountOfPacketsIn.setText("");
                 repaint();
@@ -103,7 +103,7 @@ public class PacketSetup extends JDialog implements ActionListener{
         maxCapIn.setText("Max Capicity");
         maxCapIn.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mousePressed(MouseEvent e) {
                 super.mouseClicked(e);
                 maxCapIn.setText("");
                 repaint();

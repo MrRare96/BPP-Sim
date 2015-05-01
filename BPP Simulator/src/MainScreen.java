@@ -190,7 +190,7 @@ public class MainScreen extends JFrame implements ActionListener, KeyListener {
         if(e.getSource() == binSetup){
             setup setup = new setup(this, bins, drawers);
         } else if(e.getSource() == packetSetup){
-            PacketSetup psetup = new PacketSetup(mainScreen, order, bins);
+            PacketGenerator psetup = new PacketGenerator(mainScreen, order, bins);
         } else if(e.getSource() == start) {
             if (order.size() > 0) {
                 start.setEnabled(false);
