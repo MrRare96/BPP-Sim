@@ -53,17 +53,27 @@ public class EnumeratieVB implements Algoritme{
                 for(Packet pInOrder : order){
                     tempOrder.add(pInOrder);
                 }
-
+                Bin highestBin;
+                Bin lowestBin;
                 while(!tempOrder.isEmpty()) {
-                    BestCombo bo = new BestCombo(tempOrder.size(), bin1.getBinCapacityHeight());
+                    if (bin1.getBinCapacityHeight() >= bin2.getBinCapacityHeight()) {
+                        highestBin = bin1;
+                        lowestBin = bin2;
+                    } else {
+                        highestBin = bin2;
+                        lowestBin = bin1;
+
+                    }
+                    BestCombo bo = new BestCombo(tempOrder.size(), highestBin.getBinCapacityHeight());
                     bestCombination = bo.calculateTarget(tempOrder, 0, tempOrder.size());
-                    System.out.print("combo: {");
+                    System.out.print(" Beste StackId: " + bo.getBestStackId());
+                    System.out.print(" combo: {");
                     for(Packet p: bestCombination) {
                         System.out.print(p.getPacketHeight() + ",");
                     }
-                    System.out.println("} Beste StackId: " + bo.getBestStackId());
+                    System.out.println("}");
 
-                    if(calculateStackHeight(bin1.getPackets()) == bin1.getBinCapacityHeight() && calculateStackHeight(bestCombination) == bin1.getBinCapacityHeight()) bin1.emptyBin();
+                    if(calculateStackHeight(highestBin.getPackets()) == highestBin.getBinCapacityHeight() && calculateStackHeight(bestCombination) == highestBin.getBinCapacityHeight()) highestBin.emptyBin();
                     for (int x = 0; x < bo.getBestStackId();x++ ) {
                         if(parentscreen.getDelay() >= 50){
                             parentscreen.delay(false);
@@ -75,10 +85,12 @@ public class EnumeratieVB implements Algoritme{
                             });
                         }
                         if(bestCombination.contains(tempOrder.get(x))) {
-                            bin1.addPacket(tempOrder.get(x), "Enumeratie");
+                            highestBin.addPacket(tempOrder.get(x), "Enumeratie");
                         } else {
-                            if(bin2.getBinCapacityLeft() < tempOrder.get(x).getPacketHeight()) bin2.emptyBin();
-                            bin2.addPacket(tempOrder.get(x), "Enumeratie");
+                            if(lowestBin.getBinCapacityLeft() < tempOrder.get(x).getPacketHeight()) {
+                                lowestBin.emptyBin();
+                            }
+                            lowestBin.addPacket(tempOrder.get(x), "Enumeratie");
                         }
 
                     }
