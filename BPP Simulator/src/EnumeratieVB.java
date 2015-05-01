@@ -1,10 +1,6 @@
-    import com.sun.xml.internal.bind.v2.runtime.reflect.Lister;
-
-    import javax.swing.*;
-    import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
-    import java.util.ArrayList;
-    import java.util.Random;
-    import java.util.Stack;
+import javax.swing.*;
+import java.util.ArrayList;
+import java.util.Stack;
 
     /**
      * Created by ewart on 23-4-2015.
@@ -17,12 +13,10 @@ public class EnumeratieVB implements Algoritme{
     private MainScreen parentscreen;
     private boolean stop = false;
     private long difference;
-    private ArrayList<Packet> bestCombination = new ArrayList<>();
-    private int bestStackId = 10000;
+    private ArrayList<Packet> bestCombination;
 
 
 
-        private int TARGET_SUM;
         private Stack<Packet> stack = new Stack<>();
 
         /** Store the sum of current elements stored in stack */
@@ -30,13 +24,10 @@ public class EnumeratieVB implements Algoritme{
     public EnumeratieVB(Bin bin1, Bin bin2, MainScreen parentscreen, Drawer draw, int screen) {
         this.bin1 = bin1;
         this.bin2 = bin2;
-        this.TARGET_SUM = bin1.getBinCapacityHeight();
         this.parentscreen = parentscreen;
         this.draw = draw;
         difference = 0;
-//        this.bestCombination = new ArrayList<Packet>();
-//        this.bestStackId = 100;
-//        this.leftArray = new ArrayList<Packet>();
+        this.bestCombination = new ArrayList<>();
     }
 
     public void setOrder(ArrayList<Packet> order){
@@ -65,14 +56,14 @@ public class EnumeratieVB implements Algoritme{
 
                 while(!tempOrder.isEmpty()) {
                     BestCombo bo = new BestCombo(tempOrder.size(), bin1.getBinCapacityHeight());
-                    bestCombination = bo.populateSubset(tempOrder, 0, tempOrder.size());
+                    bestCombination = bo.calculateTarget(tempOrder, 0, tempOrder.size());
                     System.out.print("combo: {");
                     for(Packet p: bestCombination) {
                         System.out.print(p.getPacketHeight() + ",");
                     }
                     System.out.println("} Beste StackId: " + bo.getBestStackId());
 
-                    if(calculateStackHeight(bin1.getPackets()) == 10 && calculateStackHeight(bestCombination) == 10) bin1.emptyBin();
+                    if(calculateStackHeight(bin1.getPackets()) == bin1.getBinCapacityHeight() && calculateStackHeight(bestCombination) == bin1.getBinCapacityHeight()) bin1.emptyBin();
                     for (int x = 0; x < bo.getBestStackId();x++ ) {
                         if(parentscreen.getDelay() >= 50){
                             parentscreen.delay();

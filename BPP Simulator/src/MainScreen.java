@@ -1,5 +1,4 @@
 import javax.swing.*;
-import javax.swing.Timer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -39,6 +38,7 @@ public class MainScreen extends JFrame implements ActionListener, KeyListener {
         return konamiCode;
     }
 
+
     private Integer delay = 50;
     private boolean konamiCode;
 
@@ -68,10 +68,10 @@ public class MainScreen extends JFrame implements ActionListener, KeyListener {
         stop.setEnabled(false);
         stop.addActionListener(this);
 
-        binSetup = new JButton("Bin Setup");
+        binSetup = new JButton("Setup");
         binSetup.addActionListener(this);
 
-        packetSetup = new JButton("Packet Setup");
+        packetSetup = new JButton("Packet Generator");
         packetSetup.addActionListener(this);
 
         simSetup = new JButton("Sim Setup");
@@ -85,7 +85,7 @@ public class MainScreen extends JFrame implements ActionListener, KeyListener {
         top.add(stop);
         top.add(binSetup);
         top.add(packetSetup);
-        top.add(simSetup);
+//        top.add(simSetup);
 
         simpelOutput = new JTextArea();
         simpelOutput.setEditable(false);
@@ -188,7 +188,7 @@ public class MainScreen extends JFrame implements ActionListener, KeyListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == binSetup){
-            BinSetup setup = new BinSetup(mainScreen, bins, drawers);
+            setup setup = new setup(this, bins, drawers);
         } else if(e.getSource() == packetSetup){
             PacketSetup psetup = new PacketSetup(mainScreen, order, bins);
         } else if(e.getSource() == start) {
@@ -202,8 +202,6 @@ public class MainScreen extends JFrame implements ActionListener, KeyListener {
             } else {
                 JOptionPane.showMessageDialog(mainScreen, "You need to setup the order first!");
             }
-        } else if(e.getSource() == simSetup){
-            SimSetup setup = new SimSetup(this);
         } else if(e.getSource() == stop){
             start.setEnabled(true);
             stop.setEnabled(false);

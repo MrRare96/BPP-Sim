@@ -29,7 +29,7 @@ public class PacketSetup extends JDialog implements ActionListener{
          * in here the screen will be created.
          */
 
-        super(parent, "Bin Setup");
+        super(parent, "Packet Generator");
         this.parent = parent;
         this.order = order;
         this.bins = bins;

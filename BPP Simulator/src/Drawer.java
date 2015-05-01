@@ -63,8 +63,9 @@ public class Drawer extends JPanel {
 
             //Draw packetheights in bin
             g.drawLine(x, y, x, y + binHeight);
-            for(int line = 0; line <= bin.getBinCapacityHeight(); line++) {
-                g.drawLine(x,y +line *packagesSteps(bin.getBinCapacityHeight()),x +binLines, y + line *packagesSteps(bin.getBinCapacityHeight()));
+            for(int line = 0; line < bin.getBinCapacityHeight(); line++) {
+//                g.drawLine(x,y + Line packagesSteps(bin.getBinCapacityHeight()),x +binLines, y *packagesSteps(bin.getBinCapacityHeight()));
+                  g.drawLine(x,y + line * packagesSteps(bin.getBinCapacityHeight()), x + binLines,y + line * packagesSteps(bin.getBinCapacityHeight()));
             }
             x+=binLines;
             //gray bin
