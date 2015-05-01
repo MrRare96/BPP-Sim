@@ -14,7 +14,7 @@ public class Main {
 
     private static SimpelGretig simpel;
     private static Gretig gretig;
-    private static EnumeratieVE enumeratie;
+    private static EnumeratieVB enumeratie;
 
 
     public static void main(String[] args) {
@@ -85,7 +85,7 @@ public class Main {
 
         simpel = new SimpelGretig(bin1, bin2, screen, draw1, 1);
         gretig = new Gretig(bin3, bin4, screen, draw2, 2);
-        enumeratie = new EnumeratieVE(bin5, bin6, screen, draw3, 3);
+        enumeratie = new EnumeratieVB(bin5, bin6, screen, draw3, 3);
 
         simpel.setOrder(order);
         gretig.setOrder(order);

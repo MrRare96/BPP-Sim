@@ -23,7 +23,7 @@ public class MainScreen extends JFrame implements ActionListener, KeyListener {
     private ArrayList<Packet> order = new ArrayList<Packet>();
     private SimpelGretig simpel;
     private Gretig gretig;
-    private EnumeratieVE enumeratie;
+    private EnumeratieVB enumeratie;
     private int peterOrder[] = {80,69,84,69,82 };
     private int peterPackages[] = {3,2,3,4,5,2,3,1,2,4,5,2,3,2,4,5,6,5,4,3,2,1,2,3,4,4,3,2,4,5,4,4,1,2,3,5,4,4,3,5,4,3,4,2,3,4,5,6,1,4,1,3,6,6,4,5,3,2,3};
     private int henkOrder[] = {72,69,78,75};
@@ -174,7 +174,7 @@ public class MainScreen extends JFrame implements ActionListener, KeyListener {
         return delay;
     }
 
-    public void addEnumeratie(EnumeratieVE enumeratie){
+    public void addEnumeratie(EnumeratieVB enumeratie){
         this.enumeratie = enumeratie;
     }
 

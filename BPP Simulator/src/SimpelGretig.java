@@ -57,20 +57,14 @@ public class SimpelGretig implements Algoritme{
                     int random = rand.nextInt(2);
 
                     if((random % 2) == 0){
-                        if(bin1.getBinCapacityLeft() < packet.getPacketHeight()){
-                            bin1.emptyBin();
-                        }
-                        bin1.addPacket(packet);
+                        if(bin1.getBinCapacityLeft() < packet.getPacketHeight()) bin1.emptyBin();
                         bin1.addPacket(packet, "Simpel Gretig");
                     } else {
-                        if(bin2.getBinCapacityLeft() < packet.getPacketHeight()){
-                            bin2.emptyBin();
-                        }
-                        bin2.addPacket(packet);
+                        if(bin2.getBinCapacityLeft() < packet.getPacketHeight()) bin2.emptyBin();
                         bin2.addPacket(packet, "Simpel Gretig");
                     }
 
-                    if(parentscreen.getDelay() >= 50){
+                    if(parentscreen.getDelay() >= 50) {
                         parentscreen.delay();
                         SwingUtilities.invokeLater(new Runnable() {
                             @Override

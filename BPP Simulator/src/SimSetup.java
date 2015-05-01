@@ -31,7 +31,7 @@ public class SimSetup extends JDialog implements ActionListener{
         bot = new JPanel();
         bot.setLayout(new FlowLayout());
 
-        delayL = new JLabel("Set delay(min: 50 / 0 == direct result) in ms:");
+        delayL = new JLabel("Set delay in ms:");
 
         delayInput = new JTextField(parent.getDelay());
         delayInput.setColumns(8);
