@@ -13,7 +13,7 @@ public class Main {
     private static ArrayList<Drawer> drawers = new ArrayList<Drawer>();
 
     private static SimpelGretig simpel;
-    private static Gretig gretig;
+    private static LookUp lookUp;
     private static EnumeratieVB enumeratie;
 
 
@@ -84,15 +84,15 @@ public class Main {
         screen.addToScreen(draw3);
 
         simpel = new SimpelGretig(bin1, bin2, screen, draw1, 1);
-        gretig = new Gretig(bin3, bin4, screen, draw2, 2);
+        lookUp = new LookUp(bin3, bin4, screen, draw2, 2);
         enumeratie = new EnumeratieVB(bin5, bin6, screen, draw3, 3);
 
         simpel.setOrder(order);
-        gretig.setOrder(order);
+        lookUp.setOrder(order);
         enumeratie.setOrder(order);
 
         screen.addSimpelGretig(simpel);
-        screen.addGretig(gretig);
+        screen.addLookUp(lookUp);
         screen.addEnumeratie(enumeratie);
 
 

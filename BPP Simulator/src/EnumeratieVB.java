@@ -66,7 +66,7 @@ public class EnumeratieVB implements Algoritme{
                     if(calculateStackHeight(bin1.getPackets()) == bin1.getBinCapacityHeight() && calculateStackHeight(bestCombination) == bin1.getBinCapacityHeight()) bin1.emptyBin();
                     for (int x = 0; x < bo.getBestStackId();x++ ) {
                         if(parentscreen.getDelay() >= 50){
-                            parentscreen.delay();
+                            parentscreen.delay(false);
                             SwingUtilities.invokeLater(new Runnable() {
                                 @Override
                                 public void run() {

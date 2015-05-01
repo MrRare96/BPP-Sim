@@ -62,7 +62,7 @@ public class Gretig implements Algoritme{
                     }
 
                     if(parentscreen.getDelay() >= 50){
-                        parentscreen.delay();
+                        parentscreen.delay(false);
                         SwingUtilities.invokeLater(new Runnable() {
                             @Override
                             public void run() {

@@ -15,19 +15,22 @@ public class MainScreen extends JFrame implements ActionListener, KeyListener {
     private JFrame mainScreen;
     private JPanel container, top, mid, bottom;
     private JButton start, stop, clear, binSetup, packetSetup, simSetup;
-    private JTextArea simpelOutput, gretigOutput, enumeratieOutput;
-    private JScrollPane simpelScroll, gretigScroll, enumiratieScroll;
+    private JTextArea simpelOutput, lookUpOutput, enumeratieOutput;
+    private JScrollPane simpelScroll, lookUpScroll, enumiratieScroll;
     private ArrayList<Bin> bins;
     private ArrayList<Drawer> drawers = new ArrayList<Drawer>();
     private ArrayList<Packet> order = new ArrayList<Packet>();
     private SimpelGretig simpel;
-    private Gretig gretig;
+    private LookUp lookUp;
     private EnumeratieVB enumeratie;
     private int peterOrder[] = {80,69,84,69,82 };
     private int peterPackages[] = {3,2,3,4,5,2,3,1,2,4,5,2,3,2,4,5,6,5,4,3,2,1,2,3,4,4,3,2,4,5,4,4,1,2,3,5,4,4,3,5,4,3,4,2,3,4,5,6,1,4,1,3,6,6,4,5,3,2,3};
     private int henkOrder[] = {72,69,78,75};
     private int henkPackages[] ={9,3,4,6,4,2,1};
     private int KonamiCode[] = {38,38,40,40,37,39,37,39,66,65}, count;
+    private int delayCommand[] = {17, 68};
+    private int pauseCommand[] = {17, 80};
+    private boolean pause = false;
 
     public void setKonamiCode(boolean konamiCode) {
         this.konamiCode = konamiCode;
@@ -91,9 +94,9 @@ public class MainScreen extends JFrame implements ActionListener, KeyListener {
         simpelOutput.setEditable(false);
         simpelOutput.addKeyListener(this);
 
-        gretigOutput = new JTextArea();
-        gretigOutput.setEditable(false);
-        gretigOutput.addKeyListener(this);
+        lookUpOutput = new JTextArea();
+        lookUpOutput.setEditable(false);
+        lookUpOutput.addKeyListener(this);
 
         enumeratieOutput = new JTextArea();
         enumeratieOutput.setEditable(false);
@@ -103,16 +106,16 @@ public class MainScreen extends JFrame implements ActionListener, KeyListener {
         simpelScroll.setPreferredSize(new Dimension(400, 300));
         simpelScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
-        gretigScroll = new JScrollPane(gretigOutput);
-        gretigScroll.setPreferredSize(new Dimension(400, 300));
-        gretigScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        lookUpScroll = new JScrollPane(lookUpOutput);
+        lookUpScroll.setPreferredSize(new Dimension(400, 300));
+        lookUpScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
         enumiratieScroll = new JScrollPane(enumeratieOutput);
         enumiratieScroll.setPreferredSize(new Dimension(400, 300));
         enumiratieScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
         bottom.add(simpelScroll);
-        bottom.add(gretigScroll);
+        bottom.add(lookUpScroll);
         bottom.add(enumiratieScroll);
 
         container.add(top);
@@ -142,7 +145,7 @@ public class MainScreen extends JFrame implements ActionListener, KeyListener {
         if(outputNumber == 1) {
             simpelOutput.append("\r\n" + "----------------SIMPEL GRETIG--------------------" + input);
         } else if (outputNumber == 2) {
-            gretigOutput.append("\r\n" + "----------------GRETIG--------------------" + input);
+            lookUpOutput.append("\r\n" + "----------------GRETIG--------------------" + input);
         } else if (outputNumber == 3){
             enumeratieOutput.append("\r\n" + "----------------ENUMERATIE--------------------" + input);
         }
@@ -162,8 +165,8 @@ public class MainScreen extends JFrame implements ActionListener, KeyListener {
     public void addSimpelGretig(SimpelGretig simpel){
         this.simpel = simpel;
     }
-    public void addGretig(Gretig gretig){
-        this.gretig = gretig;
+    public void addLookUp(LookUp lookUp){
+        this.lookUp = lookUp;
     }
 
     public void setDelay(int delay) {
@@ -178,13 +181,24 @@ public class MainScreen extends JFrame implements ActionListener, KeyListener {
         this.enumeratie = enumeratie;
     }
 
-    public void delay() {
+    public void delay(boolean pause) {
+
         try {
             Thread.sleep(delay);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        try {
+            while(pause) {
+                Thread.sleep(100);
+                System.out.println("paused");
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == binSetup){
@@ -196,7 +210,7 @@ public class MainScreen extends JFrame implements ActionListener, KeyListener {
                 start.setEnabled(false);
                 stop.setEnabled(true);
                 simpel.startAlgo(1);
-                gretig.startAlgo(2);
+                lookUp.startAlgo(2);
                 enumeratie.startAlgo(3);
 
             } else {
@@ -206,14 +220,14 @@ public class MainScreen extends JFrame implements ActionListener, KeyListener {
             start.setEnabled(true);
             stop.setEnabled(false);
             simpel.stopAlgo();
-            gretig.stopAlgo();
+            lookUp.stopAlgo();
             enumeratie.stopAlgo();
         } else if(e.getSource() == clear){
             simpelOutput.setText("");
-            gretigOutput.setText("");
+            lookUpOutput.setText("");
             enumeratieOutput.setText("");
             simpel.stopAlgo();
-            gretig.stopAlgo();
+            lookUp.stopAlgo();
             for(Bin bin : bins) {
                 bin.emptyBin();
                 bin.setTimesEmptied(0);
@@ -222,7 +236,7 @@ public class MainScreen extends JFrame implements ActionListener, KeyListener {
                 draw.repaint();
             }
             simpel.stopAlgo();
-            gretig.stopAlgo();
+            lookUp.stopAlgo();
             start.setEnabled(true);
             stop.setEnabled(false);
             revalidate();
@@ -288,7 +302,51 @@ public class MainScreen extends JFrame implements ActionListener, KeyListener {
                     order.add(new Packet(henkPackages[x]));
                 }
             }
-        } else{
+        }
+        else if(key == delayCommand[count]) {
+//            System.out.print((char)key + "|");
+            if(count < delayCommand.length - 1 ) {
+                count++;
+            } else {
+                count = 0;
+                //add action
+
+
+                int tempDelay = delay;
+
+                if(delay == 0 && tempDelay != 0){
+                    System.out.println("Delay ON");
+                    delay = tempDelay;
+                } else if (delay == 0){
+                    System.out.println("Delay ON");
+                    delay = 50;
+                } else {
+                    System.out.println("Delay OFF");
+                    delay = 0;
+                }
+
+            }
+        }  else if(key == pauseCommand[count]) {
+//            System.out.print((char)key + "|");
+            if(count < pauseCommand.length - 1 ) {
+                count++;
+            } else {
+                count = 0;
+                //add action
+
+
+                if(!pause){
+                    pause = true;
+                    System.out.println("pause");
+                } else {
+                    pause = false;
+                    System.out.println("continue");
+                }
+
+                delay(pause);
+
+            }
+        }else{
             System.out.print("\n");
             count = 0;
         }
