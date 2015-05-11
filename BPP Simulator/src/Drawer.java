@@ -93,7 +93,6 @@ public class Drawer extends JPanel {
                     //paint packet
                     g.setColor(packet.getColor());
                 }
-
                 g.fillRect(x + binLines, y, binWidth - 20, packet.getPacketHeight() * -packagesSteps(bin.getBinCapacityHeight()));
                 // pack number text
                 Integer packPosition = order.indexOf(packet);

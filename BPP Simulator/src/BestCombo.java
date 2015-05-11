@@ -22,8 +22,8 @@ public class BestCombo {
 
         // bestStackId is equal to length of data array.
         // if arrayLength is higher then 2 times the target bestStackId equals target times 2 to prevent unnecessary calculations.
-        if( arrayLength > targetNumber * 2) {
-            this.bestStackId = targetNumber * 2;
+        if( arrayLength > targetNumber) {
+            this.bestStackId = targetNumber;
         } else {
             this.bestStackId = arrayLength;
         }

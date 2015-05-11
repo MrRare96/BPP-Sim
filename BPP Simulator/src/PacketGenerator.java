@@ -92,10 +92,15 @@ public class PacketGenerator extends JDialog implements ActionListener{
         amountOfPacketsIn.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                super.mouseClicked(e);
-                amountOfPacketsIn.setText("");
-                repaint();
-                revalidate();
+                try {
+                    int rounds = Integer.parseInt(amountOfPacketsIn.getText());
+                } catch (Exception ex) {
+                    super.mouseClicked(e);
+                    amountOfPacketsIn.setText("");
+                    repaint();
+                    revalidate();
+                }
+
             }
         });
         maxCapIn = new JTextField();
