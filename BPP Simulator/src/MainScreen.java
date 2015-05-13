@@ -137,10 +137,10 @@ public class MainScreen extends JFrame implements ActionListener, KeyListener {
         return " test";
     }
     public void addToResult(int outputNumber, Bin left, Bin right, long difference){
-        String input = "\r\n" +
-                "Left emptied: " + left.getTimesEmptied() +
-//                "\r\n" +
-                "  Right emptied: " + right.getTimesEmptied();
+//        String input = "\r\n" +
+//                "Left emptied: " + left.getTimesEmptied() +
+////                "\r\n" +
+//                "  Right emptied: " + right.getTimesEmptied();
 
 
                 for( int x = 0; x < left.getBinCapacityHeight(); x++) {
