@@ -1,5 +1,3 @@
-import com.sun.xml.internal.bind.v2.runtime.reflect.Lister;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -11,7 +9,7 @@ public class Bin {
     private ArrayList<Packet> packets;
 
     private int binCapacityHeight, timesEmptied;;
-
+    private int emptiedHeightLeft[];
     private boolean autoEmpty = true;
 
     public Bin(int binCapacityHeight){
@@ -22,6 +20,11 @@ public class Bin {
         this.binCapacityHeight = binCapacityHeight;
         this.packets = new ArrayList<>();
         this.timesEmptied = 0;
+        this.emptiedHeightLeft = new int[binCapacityHeight];
+    }
+
+    public int[] getEmptiedHeightLeft() {
+        return emptiedHeightLeft;
     }
 
     public int getBinCapicityFilled() {
@@ -33,6 +36,7 @@ public class Bin {
             binCapicity += p.getPacketHeight();
         }
         return binCapicity;
+
     }
 
     public int getBinCapacityHeight() {
@@ -70,10 +74,14 @@ public class Bin {
         return timesEmptied;
     }
 
+    public void addBinLeftover(int capicityLeft) {
+        emptiedHeightLeft[capicityLeft]++;
+    }
     public void emptyBin(){
         /**
          * empties the bin
          */
+        addBinLeftover(getBinCapacityLeft());
         timesEmptied++;
         packets.clear();
     }

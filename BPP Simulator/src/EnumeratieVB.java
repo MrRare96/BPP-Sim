@@ -16,7 +16,6 @@ public class EnumeratieVB implements Algoritme{
     private ArrayList<Packet> bestCombination;
 
 
-
         private Stack<Packet> stack = new Stack<>();
 
         /** Store the sum of current elements stored in stack */

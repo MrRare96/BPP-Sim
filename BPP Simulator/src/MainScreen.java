@@ -128,16 +128,38 @@ public class MainScreen extends JFrame implements ActionListener, KeyListener {
 
     }
 
+    private String addSubResult(Bin left, Bin right)  {
+
+        String str = "";
+        for(int x: left.getEmptiedHeightLeft()) {
+
+        }
+        return " test";
+    }
     public void addToResult(int outputNumber, Bin left, Bin right, long difference){
         String input = "\r\n" +
-                "Left bin: " + left.getTimesEmptied() + " times emptied." +
-                "\r\n" +
-                "Right bin: " + right.getTimesEmptied() + " times emptied." +
-                "\r\n" +
-                "TOTAL: " + (right.getTimesEmptied()+ left.getTimesEmptied()) + " times emptied." +
+                "Left emptied: " + left.getTimesEmptied() +
+//                "\r\n" +
+                "  Right emptied: " + right.getTimesEmptied();
+
+
+                for( int x = 0; x < left.getBinCapacityHeight(); x++) {
+                    if(left.getEmptiedHeightLeft()[x] > 0 || right.getEmptiedHeightLeft()[x] > 0) {
+                        input += "\n" + " Emptied with " + x + " left: " + left.getEmptiedHeightLeft()[x] + " | Right: " + right.getEmptiedHeightLeft()[x] ;
+                    }
+                }
+//        for( int x = 0; x < right.getBinCapacityHeight(); x++) {
+//                    if(right.getEmptiedHeightLeft()[x] > 0) {
+//                        input += " \r\n Right emptied with " + x + " left: " + right.getEmptiedHeightLeft()[x] ;
+//                    }
+//                }
+
+
+                input += " \r\n TOTAL emptied: " + (right.getTimesEmptied()+ left.getTimesEmptied()) +
                 "\r\n" +
                 "Capacity left in Left bin: " + left.getBinCapacityLeft() + "/" + left.getBinCapacityHeight() +
                 "\r\n" +
+
                 "Capacity left in Right bin: " + right.getBinCapacityLeft() + "/" + left.getBinCapacityHeight() +
                 "\r\n" +
                 "Time to simulate: " + difference + " Nano Seconds";
