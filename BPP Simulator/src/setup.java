@@ -50,8 +50,8 @@ public class setup extends JDialog implements ActionListener{
 
 
 
-        binCap1Label = new JLabel("capacity left bin:");
-        binCap2Label = new JLabel("capacity right bin:");
+        binCap1Label = new JLabel("Left bin capacity:");
+        binCap2Label = new JLabel("Right bin capacity:");
 
         binCapacity1 = new JTextField("" + binarray.get(0).getBinCapacityHeight());
         binCapacity1.setColumns(5);
@@ -74,9 +74,9 @@ public class setup extends JDialog implements ActionListener{
                 revalidate();
             }
         });
-        cancel = new JButton("cancel");
+        cancel = new JButton("Cancel");
         cancel.addActionListener(this);
-        save = new JButton("save");
+        save = new JButton("Save");
         save.addActionListener(this);
 
         top.add(binCap1Label);

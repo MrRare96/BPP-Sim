@@ -75,14 +75,18 @@ public class PacketGenerator extends JDialog implements ActionListener{
 
         packetCapIn = new JTextField();
         packetCapIn.setColumns(15);
-        packetCapIn.setText("Packet Capacity");
+        packetCapIn.setText("Packet capacity");
         packetCapIn.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                super.mouseClicked(e);
-                packetCapIn.setText("");
-                repaint();
-                revalidate();
+                try {
+                    Integer.parseInt(packetCapIn.getText());
+                } catch (Exception ex) {
+                    super.mouseClicked(e);
+                    packetCapIn.setText("");
+                    repaint();
+                    revalidate();
+                }
             }
         });
 
@@ -93,7 +97,7 @@ public class PacketGenerator extends JDialog implements ActionListener{
             @Override
             public void mousePressed(MouseEvent e) {
                 try {
-                    int rounds = Integer.parseInt(amountOfPacketsIn.getText());
+                    Integer.parseInt(amountOfPacketsIn.getText());
                 } catch (Exception ex) {
                     super.mouseClicked(e);
                     amountOfPacketsIn.setText("");
@@ -105,14 +109,19 @@ public class PacketGenerator extends JDialog implements ActionListener{
         });
         maxCapIn = new JTextField();
         maxCapIn.setColumns(8);
-        maxCapIn.setText("Max Capicity");
+        maxCapIn.setText("Max capacity");
         maxCapIn.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                super.mouseClicked(e);
-                maxCapIn.setText("");
-                repaint();
-                revalidate();
+                try {
+                    Integer.parseInt(maxCapIn.getText());
+                } catch (Exception ex) {
+                    super.mouseClicked(e);
+                    maxCapIn.setText("");
+                    repaint();
+                    revalidate();
+                }
+
             }
         });
         

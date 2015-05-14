@@ -42,7 +42,10 @@ public class Bin {
     public int getBinCapacityHeight() {
         return binCapacityHeight;
     }
-
+    public void resetEmptiedHeightLeft() {
+        this.emptiedHeightLeft = null;
+        this.emptiedHeightLeft = new int[binCapacityHeight];
+    }
     public int getBinCapacityLeft() {
         /**
          * this method returns the empty capacity in the bin
@@ -63,7 +66,7 @@ public class Bin {
             if((packet.getPacketHeight() <= getBinCapacityLeft())) {
                 packets.add(packet);
             } else {
-                System.err.print("packet cant exceed binHeight");
+                System.err.print("Packet cant exceed binHeight");
                 System.err.println(", Algo :" + algo);
             }
 

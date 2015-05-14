@@ -46,7 +46,7 @@ public class LookUp implements Algoritme{
             public void run() {
                 int half = binL.getBinCapacityHeight() / 4;
 
-                long lStartTime = System.nanoTime();
+                long lStartTime = System.currentTimeMillis();
                 for(Packet pack : order){
 
                     if(stop) break;
@@ -98,7 +98,7 @@ public class LookUp implements Algoritme{
                 }
 
                 //sets end time and calculates how much times has been passed
-                long lEndTime = System.nanoTime();
+                long lEndTime = System.currentTimeMillis();
                 long difference = lEndTime - lStartTime;
 
                 //prints the result

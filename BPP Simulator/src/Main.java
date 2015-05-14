@@ -51,12 +51,6 @@ public class Main {
 //            bin.addPacket(packet1);
 //        }
 
-        Drawer draw1 = new Drawer("Simpel gretig",bin1, bin2, order, binHeight, binWidth);
-        Drawer draw2 = new Drawer("Gretig",bin3, bin4, order, binHeight, binWidth);
-        Drawer draw3 = new Drawer("Enumeratie", bin5, bin6, order, binHeight, binWidth);
-        drawers.add(draw1);
-        drawers.add(draw2);
-        drawers.add(draw3);
 
 
         int x = 0;
@@ -79,6 +73,13 @@ public class Main {
         //retrieve all the dimensions for the to be drawn bins and packages
         //create screen and drawer
         MainScreen screen = new MainScreen(drawers, binArray, order);
+        Drawer draw1 = new Drawer(screen, "Simpel gretig",bin1, bin2, order, binHeight, binWidth);
+        Drawer draw2 = new Drawer(screen, "Gretig",bin3, bin4, order, binHeight, binWidth);
+        Drawer draw3 = new Drawer(screen, "Enumeratie", bin5, bin6, order, binHeight, binWidth);
+        drawers.add(draw1);
+        drawers.add(draw2);
+        drawers.add(draw3);
+
         screen.addToScreen(draw1);
         screen.addToScreen(draw2);
         screen.addToScreen(draw3);

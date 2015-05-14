@@ -46,7 +46,8 @@ public class EnumeratieVB implements Algoritme{
             public void run() {
 
 
-                long lStartTime = System.nanoTime();
+//                long lStartTime = System.nanoTime();
+                long lStartTime = System.currentTimeMillis();
                 ArrayList<Packet> tempOrder = new ArrayList<>();
 
                 for(Packet pInOrder : order){
@@ -99,7 +100,7 @@ public class EnumeratieVB implements Algoritme{
                     }
 
                 }
-                long lEndTime = System.nanoTime();
+                long lEndTime = System.currentTimeMillis();
                 difference = lEndTime - lStartTime;
 
                 parentscreen.addToResult(outputNumber, bin1, bin2, difference);

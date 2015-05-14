@@ -44,7 +44,7 @@ public class SimpelGretig implements Algoritme{
             @Override
             public void run() {
 
-                long lStartTime = System.nanoTime();
+                long lStartTime = System.currentTimeMillis();
 
                 for(Packet packet : order){
 
@@ -58,10 +58,10 @@ public class SimpelGretig implements Algoritme{
 
                     if((random % 2) == 0){
                         if(bin1.getBinCapacityLeft() < packet.getPacketHeight()) bin1.emptyBin();
-                        bin1.addPacket(packet, "Simpel Gretig");
+                        bin1.addPacket(packet, "Simpel gretig");
                     } else {
                         if(bin2.getBinCapacityLeft() < packet.getPacketHeight()) bin2.emptyBin();
-                        bin2.addPacket(packet, "Simpel Gretig");
+                        bin2.addPacket(packet, "Simpel gretig");
                     }
 
                     if(parentscreen.getDelay() >= 50) {
@@ -79,7 +79,7 @@ public class SimpelGretig implements Algoritme{
                     draw.repaint();
                 }
 
-                long lEndTime = System.nanoTime();
+                long lEndTime = System.currentTimeMillis();
                 difference = lEndTime - lStartTime;
 
                 parentscreen.addToResult(outputNumber, bin1, bin2, difference);

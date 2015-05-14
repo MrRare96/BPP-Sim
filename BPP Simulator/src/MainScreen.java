@@ -64,21 +64,19 @@ public class MainScreen extends JFrame implements ActionListener, KeyListener {
         mid = new JPanel();
         bottom = new JPanel();
 
-        start = new JButton("start");
+        start = new JButton("Start");
         start.addActionListener(this);
 
-        stop = new JButton("stop");
+        stop = new JButton("Stop");
         stop.setEnabled(false);
         stop.addActionListener(this);
 
         binSetup = new JButton("Setup");
         binSetup.addActionListener(this);
 
-        packetSetup = new JButton("Packet Generator");
+        packetSetup = new JButton("Packet generator");
         packetSetup.addActionListener(this);
 
-        simSetup = new JButton("Sim Setup");
-        simSetup.addActionListener(this);
 
         clear = new JButton("Clear");
         clear.addActionListener(this);
@@ -128,14 +126,6 @@ public class MainScreen extends JFrame implements ActionListener, KeyListener {
 
     }
 
-    private String addSubResult(Bin left, Bin right)  {
-
-        String str = "";
-        for(int x: left.getEmptiedHeightLeft()) {
-
-        }
-        return " test";
-    }
     public void addToResult(int outputNumber, Bin left, Bin right, long difference){
         String input = "";
 //                "\r\n" +
@@ -146,7 +136,7 @@ public class MainScreen extends JFrame implements ActionListener, KeyListener {
 
                 for( int x = 0; x < left.getBinCapacityHeight(); x++) {
                     if(left.getEmptiedHeightLeft()[x] > 0 || right.getEmptiedHeightLeft()[x] > 0) {
-                        input += "\n" + " Emptied with " + x + " left: " + left.getEmptiedHeightLeft()[x] + " | Right: " + right.getEmptiedHeightLeft()[x] ;
+                        input += "\n" + " Bin leftovers with " + x + "   Left: " + left.getEmptiedHeightLeft()[x] + " | Right: " + right.getEmptiedHeightLeft()[x] ;
                     }
                 }
 //        for( int x = 0; x < right.getBinCapacityHeight(); x++) {
@@ -156,14 +146,15 @@ public class MainScreen extends JFrame implements ActionListener, KeyListener {
 //                }
 
 
-                input += " \r\n TOTAL emptied: " + (right.getTimesEmptied()+ left.getTimesEmptied()) +
+        double seconds = difference / 1000.0;
+                input += " \r\n Total emptied: " + (right.getTimesEmptied()+ left.getTimesEmptied()) +
                 "\r\n" +
-                "Capacity left in Left bin: " + left.getBinCapacityLeft() + "/" + left.getBinCapacityHeight() +
+                "Capacity left in left bin: " + left.getBinCapacityLeft() + "/" + left.getBinCapacityHeight() +
                 "\r\n" +
 
-                "Capacity left in Right bin: " + right.getBinCapacityLeft() + "/" + left.getBinCapacityHeight() +
+                "Capacity left in right bin: " + right.getBinCapacityLeft() + "/" + left.getBinCapacityHeight() +
                 "\r\n" +
-                "Time to simulate: " + difference + " Nano Seconds";
+                "Time to simulate: " + seconds + " Seconds";
         System.out.println(" output: " + outputNumber);
         if(outputNumber == 1) {
             simpelOutput.append("\r\n" + "----------------SIMPEL GRETIG--------------------" + input);
@@ -215,7 +206,7 @@ public class MainScreen extends JFrame implements ActionListener, KeyListener {
         try {
             while(pause) {
                 Thread.sleep(100);
-                System.out.println("paused");
+                System.out.println("Paused");
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -235,7 +226,7 @@ public class MainScreen extends JFrame implements ActionListener, KeyListener {
                 simpel.startAlgo(1);
                 lookUp.startAlgo(2);
                 enumeratie.startAlgo(3);
-
+                for(Bin bin: bins) bin.resetEmptiedHeightLeft();
             } else {
                 JOptionPane.showMessageDialog(mainScreen, "You need to setup the order first!");
             }
@@ -284,7 +275,7 @@ public class MainScreen extends JFrame implements ActionListener, KeyListener {
             } else {
                 count = 0;
                 //add action
-                System.out.println("konami Activated");
+                System.out.println("Konami activated");
                 for(final Drawer d : drawers ) {
 
                     d.setKonami();
@@ -304,7 +295,7 @@ public class MainScreen extends JFrame implements ActionListener, KeyListener {
             } else {
                 count = 0;
                 //add action
-                System.out.println("Peter Activated");
+                System.out.println("Peter activated");
 
                 order.clear();
                 for(int x = 0; x < peterPackages.length; x++) {
@@ -318,7 +309,7 @@ public class MainScreen extends JFrame implements ActionListener, KeyListener {
             } else {
                 count = 0;
                 //add action
-                System.out.println("Henk Activated");
+                System.out.println("Henk activated");
 
                 order.clear();
                 for(int x = 0; x < henkPackages.length; x++) {
@@ -360,10 +351,10 @@ public class MainScreen extends JFrame implements ActionListener, KeyListener {
 
                 if(!pause){
                     pause = true;
-                    System.out.println("pause");
+                    System.out.println("Pause");
                 } else {
                     pause = false;
-                    System.out.println("continue");
+                    System.out.println("Continue");
                 }
 
                 delay(pause);

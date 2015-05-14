@@ -3,6 +3,8 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static java.lang.Thread.sleep;
+
 /**
  * Created by Eldin on 4/9/2015 for Windesheim Magazijn Robot KBS
  * drawer draws all the what you put in array(contains coordinates and size of shape)
@@ -16,9 +18,10 @@ public class Drawer extends JPanel {
     private boolean bin;
     private String algo;
     private boolean konami;
+    private MainScreen parent;
 //    private JProgressBar progressBar;
 
-    public Drawer(String algo, Bin left, Bin right,ArrayList<Packet> order, int binHeight, int binWidth) {
+    public Drawer(MainScreen parent, String algo, Bin left, Bin right,ArrayList<Packet> order, int binHeight, int binWidth) {
         this.bins = new ArrayList<Bin>();
         bins.add(left);
         bins.add(right);
@@ -29,6 +32,7 @@ public class Drawer extends JPanel {
         this.algo = algo;
         this.binLines = 10;
         this.konami = false;
+        this.parent = parent;
     }
 
     public Dimension getPreferredSize()
@@ -74,10 +78,10 @@ public class Drawer extends JPanel {
             y += binHeight;
 
             g.setColor(Color.black);
-            g.drawString(   " emptied: " + bin.getTimesEmptied() +
-                            "            " + bin.getBinCapicityFilled() + "/" + bin.getBinCapacityHeight() +//  5/10
+            g.drawString(" Emptied: " + bin.getTimesEmptied(), x, 430);
+                    g.drawString(bin.getBinCapicityFilled() + "/" + bin.getBinCapacityHeight() +//  5/10
                             " "+ (bin.getBinCapicityFilled()*100)/bin.getBinCapacityHeight()+ "%",// 50%
-                            x, 430);
+                            x + 100, 430);
 
             for (Packet packet : bin.getPackets()) {
 
@@ -93,6 +97,26 @@ public class Drawer extends JPanel {
                     //paint packet
                     g.setColor(packet.getColor());
                 }
+                //animation
+//                int yAnimation = 20;
+//                if(parent.getDelay() >= 50) {
+//                    for (int delay = 0; delay < parent.getDelay(); delay += 5) {
+//                        g.setColor(packet.getColor());
+////                        g.fillRect(x + binLines, yAnimation, binWidth - 20, packet.getPacketHeight() * packagesSteps(bin.getBinCapacityHeight()));
+//                        g.fillRect(x + binLines, yAnimation, binWidth - 20, 200);
+//                            try {
+//                                sleep(5);
+//                            } catch (InterruptedException e) {
+//                                e.printStackTrace();
+//                            }
+//                        g.setColor(new Color(192, 192, 192));
+//                        g.fillRect(x + binLines, yAnimation, binWidth - 20, packet.getPacketHeight() * packagesSteps(bin.getBinCapacityHeight()));
+//                        yAnimation += (y-20)/(parent.getDelay()/5);
+//                        g.setColor(packet.getColor());
+//
+//                    }
+//                }
+                //end position
                 g.fillRect(x + binLines, y + packet.getPacketHeight() * -packagesSteps(bin.getBinCapacityHeight()), binWidth - 20, packet.getPacketHeight() * packagesSteps(bin.getBinCapacityHeight()));
                 // pack number text
                 Integer packPosition = order.indexOf(packet);

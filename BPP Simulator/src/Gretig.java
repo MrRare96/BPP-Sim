@@ -40,7 +40,7 @@ public class Gretig implements Algoritme{
             @Override
             public void run() {
 
-                long lStartTime = System.nanoTime();
+                long lStartTime = System.currentTimeMillis();
 
                 for(Packet packet : order){
 
@@ -78,7 +78,7 @@ public class Gretig implements Algoritme{
                     draw.repaint();
                 }
 
-                long lEndTime = System.nanoTime();
+                long lEndTime = System.currentTimeMillis();
                 difference = lEndTime - lStartTime;
 
                 parentscreen.addToResult(outputNumber, bin1, bin2, difference);
