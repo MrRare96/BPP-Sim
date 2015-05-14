@@ -139,7 +139,7 @@ public class MainScreen extends JFrame implements ActionListener, KeyListener {
                  "" +
                  "-----------------------------";
 
-        for( int x = 0; x < left.getBinCapacityHeight(); x++) {
+        for( int x = 0; x < left.getBinCapacityHeight() && x < right.getBinCapacityHeight(); x++) {
             if(left.getEmptiedHeightLeft()[x] > 0 || right.getEmptiedHeightLeft()[x] > 0) {
                 input += "\n" + " Left Bin emptied with " + String.valueOf(left.getBinCapacityHeight() - x) + "/" + String.valueOf(left.getBinCapacityHeight()) + " filled :    " + String.valueOf(left.getEmptiedHeightLeft()[x]) + " times.";
                 input += "\n" + " Right Bin emptied with " + String.valueOf(right.getBinCapacityHeight() - x) + "/" + String.valueOf(right.getBinCapacityHeight()) + " filled : " + String.valueOf(right.getEmptiedHeightLeft()[x]) + " times.";

@@ -84,7 +84,11 @@ public class Bin {
         /**
          * empties the bin
          */
-        addBinLeftover(getBinCapacityLeft());
+        try{
+            addBinLeftover(getBinCapacityLeft());
+        } catch (Exception e){
+
+        }
         timesEmptied++;
         packets.clear();
     }

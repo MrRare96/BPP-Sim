@@ -14,6 +14,7 @@ public class EnumeratieVB implements Algoritme{
     private boolean stop = false;
     private long difference;
     private ArrayList<Packet> bestCombination;
+    private int screen;
 
 
         private Stack<Packet> stack = new Stack<>();
@@ -27,6 +28,7 @@ public class EnumeratieVB implements Algoritme{
         this.draw = draw;
         difference = 0;
         this.bestCombination = new ArrayList<>();
+        this.screen = screen;
     }
 
     public void setOrder(ArrayList<Packet> order){
@@ -103,7 +105,7 @@ public class EnumeratieVB implements Algoritme{
                 long lEndTime = System.currentTimeMillis();
                 difference = lEndTime - lStartTime;
 
-                parentscreen.addToResult(outputNumber, bin1, bin2, difference);
+                parentscreen.addToResult(screen, bin1, bin2, difference);
 
             }
         });
