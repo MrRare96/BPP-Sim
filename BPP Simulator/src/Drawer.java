@@ -60,15 +60,12 @@ public class Drawer extends JPanel {
         g.drawRect(0,0,binWidth*2 + binSpacing + 40, binHeight + 40);
 
         g.drawString(algo,10,12);
-//        progressBar.setValue(0);
-//        progressBar.setStringPainted(true);
         for(Bin bin: bins) {
             int y = 20;
 
             //Draw packetheights in bin
             g.drawLine(x, y, x, y + binHeight);
             for(int line = 0; line < bin.getBinCapacityHeight(); line++) {
-//                g.drawLine(x,y + Line packagesSteps(bin.getBinCapacityHeight()),x +binLines, y *packagesSteps(bin.getBinCapacityHeight()));
                   g.drawLine(x,y + line * packagesSteps(bin.getBinCapacityHeight()), x + binLines,y + line * packagesSteps(bin.getBinCapacityHeight()));
             }
             x+=binLines;
@@ -97,25 +94,7 @@ public class Drawer extends JPanel {
                     //paint packet
                     g.setColor(packet.getColor());
                 }
-                //animation
-//                int yAnimation = 20;
-//                if(parent.getDelay() >= 50) {
-//                    for (int delay = 0; delay < parent.getDelay(); delay += 5) {
-//                        g.setColor(packet.getColor());
-////                        g.fillRect(x + binLines, yAnimation, binWidth - 20, packet.getPacketHeight() * packagesSteps(bin.getBinCapacityHeight()));
-//                        g.fillRect(x + binLines, yAnimation, binWidth - 20, 200);
-//                            try {
-//                                sleep(5);
-//                            } catch (InterruptedException e) {
-//                                e.printStackTrace();
-//                            }
-//                        g.setColor(new Color(192, 192, 192));
-//                        g.fillRect(x + binLines, yAnimation, binWidth - 20, packet.getPacketHeight() * packagesSteps(bin.getBinCapacityHeight()));
-//                        yAnimation += (y-20)/(parent.getDelay()/5);
-//                        g.setColor(packet.getColor());
-//
-//                    }
-//                }
+
                 //end position
                 g.fillRect(x + binLines, y + packet.getPacketHeight() * -packagesSteps(bin.getBinCapacityHeight()), binWidth - 20, packet.getPacketHeight() * packagesSteps(bin.getBinCapacityHeight()));
                 // pack number text
@@ -125,17 +104,9 @@ public class Drawer extends JPanel {
                 //package number
                 g.drawString("#" + packPosition.toString(), x + 10, y - 5);
                 y -= packet.getPacketHeight() * packagesSteps(bin.getBinCapacityHeight());
-
-
-
-
                 //line between packets
                 g.drawLine(x + binLines, y, x + binWidth - 11, y);
-
-
-
             }
-
             x+= binWidth + binSpacing;
         }
 

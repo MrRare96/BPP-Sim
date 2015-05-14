@@ -44,7 +44,6 @@ public class LookUp implements Algoritme{
         Thread runEnumeratie = new Thread(new Runnable() {
             @Override
             public void run() {
-                int half = binL.getBinCapacityHeight() / 4;
 
                 long lStartTime = System.currentTimeMillis();
                 for(Packet pack : order){
@@ -63,20 +62,37 @@ public class LookUp implements Algoritme{
 
 
 
+                   if(binL.getBinCapacityLeft() >= pack.getPacketHeight()){
 
-                    if(binL.getBinCapacityLeft() >= pack.getPacketHeight()){
-                        if(binL.getBinCapacityLeft() - pack.getPacketHeight() > binR.getBinCapacityLeft() - pack.getPacketHeight()){
-                            if(binL.getBinCapacityLeft() < pack.getPacketHeight()){
-                                binL.emptyBin();
+
+                        if(binL.getBinCapacityHeight() >=  binR.getBinCapacityHeight()){
+                            if(binL.getBinCapacityLeft() - pack.getPacketHeight() > binR.getBinCapacityLeft() - pack.getPacketHeight()){
+                                if(binL.getBinCapacityLeft() < pack.getPacketHeight()){
+                                    binL.emptyBin();
+                                }
+                                binL.addPacket(pack, "LookUP");
+                            } else {
+                                if(binR.getBinCapacityLeft() < pack.getPacketHeight()){
+                                    binR.emptyBin();
+                                }
+                                binR.addPacket(pack, "LookUP");
+
                             }
-                            binL.addPacket(pack, "LookUP");
                         } else {
-                            if(binR.getBinCapacityLeft() < pack.getPacketHeight()){
-                                binR.emptyBin();
-                            }
-                            binR.addPacket(pack, "LookUP");
+                            if(binR.getBinCapacityLeft() - pack.getPacketHeight() > binL.getBinCapacityLeft() - pack.getPacketHeight()){
+                                if(binR.getBinCapacityLeft() < pack.getPacketHeight()){
+                                    binR.emptyBin();
+                                }
+                                binR.addPacket(pack, "LookUP");
+                            } else {
+                                if(binL.getBinCapacityLeft() < pack.getPacketHeight()){
+                                    binL.emptyBin();
+                                }
+                                binL.addPacket(pack, "LookUP");
 
+                            }
                         }
+
                     } else {
                         if(binR.getBinCapacityLeft() < pack.getPacketHeight()){
                             binR.emptyBin();
