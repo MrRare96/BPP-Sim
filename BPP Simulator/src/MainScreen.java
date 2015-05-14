@@ -131,17 +131,13 @@ public class MainScreen extends JFrame implements ActionListener, KeyListener {
 
         double seconds = difference / 1000.0;
 
-        input += " \r\n Total emptied: " + (right.getTimesEmptied()+ left.getTimesEmptied()) +
-                "\r\n" +
-                "Capacity left in left bin: " + left.getBinCapacityLeft() + "/" + left.getBinCapacityHeight() +
-                "\r\n" +
-
-                "Capacity left in right bin: " + right.getBinCapacityLeft() + "/" + left.getBinCapacityHeight() +
-                "\r\n" +
-                "Time to simulate: " + seconds + " Seconds" +
-                "\r\n" +
-                "" +
-                "-----------------------------";
+        input += "\r\n" +
+                 "Total emptied: " + (right.getTimesEmptied()+ left.getTimesEmptied()) +
+                 "\r\n" +
+                 "Time to simulate: " + seconds + " Seconds" +
+                 "\r\n" +
+                 "" +
+                 "-----------------------------";
 
         for( int x = 0; x < left.getBinCapacityHeight(); x++) {
             if(left.getEmptiedHeightLeft()[x] > 0 || right.getEmptiedHeightLeft()[x] > 0) {
