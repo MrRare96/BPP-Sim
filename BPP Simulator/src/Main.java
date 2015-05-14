@@ -8,7 +8,7 @@ public class Main {
     
     private static int binHeight = 400;
     private static int binWidth = 150;
-    private static ArrayList<Bin> binArray = new ArrayList<Bin>();
+    private static ArrayList<Bin> binArray = new ArrayList<>();
     private static ArrayList<Packet> order = new ArrayList<Packet>();
     private static ArrayList<Drawer> drawers = new ArrayList<Drawer>();
 
@@ -23,9 +23,6 @@ public class Main {
          * the bins, and drawing the bins containing those packets on the main screen. Creating the algo's.
          */
 
-
-
-
         //create bins with: capacity
         Bin bin1 = new Bin(10);
         Bin bin2 = new Bin(10);
@@ -33,7 +30,6 @@ public class Main {
         Bin bin4 = new Bin(10);
         Bin bin5 = new Bin(10);
         Bin bin6 = new Bin(10);
-//        Bin bin6 = new Bin(((binWspacing * 6) + binWidth * 5), binHspacing, binWidth, binHeight, 10);
 
         binArray.add(bin1);
         binArray.add(bin2);
@@ -43,39 +39,12 @@ public class Main {
         binArray.add(bin6);
 
 
-        //create packets with: packetID , ContentHeight
-//          Packet packet1 = new Packet(0);
-//
-//
-//        for(Bin bin : binArray){
-//            bin.addPacket(packet1);
-//        }
-
-
-
-        int x = 0;
-        while(true){
-            if(x == 5){
-                break;
-            }
-//            bin3.addPacket(packet1);
-            x++;
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-
-        }
-//        Drawer draw2 = new Drawer(bin3, bin4);
-
         //retrieve all the dimensions for the to be drawn bins and packages
         //create screen and drawer
         MainScreen screen = new MainScreen(drawers, binArray, order);
-        Drawer draw1 = new Drawer(screen, "Simpel gretig",bin1, bin2, order, binHeight, binWidth);
-        Drawer draw2 = new Drawer(screen, "Gretig",bin3, bin4, order, binHeight, binWidth);
-        Drawer draw3 = new Drawer(screen, "Enumeratie", bin5, bin6, order, binHeight, binWidth);
+        Drawer draw1 = new Drawer(screen, "Simple Greedy",bin1, bin2, order, binHeight, binWidth);
+        Drawer draw2 = new Drawer(screen, "Simple Look Ahead",bin3, bin4, order, binHeight, binWidth);
+        Drawer draw3 = new Drawer(screen, "Enumeration", bin5, bin6, order, binHeight, binWidth);
         drawers.add(draw1);
         drawers.add(draw2);
         drawers.add(draw3);
@@ -95,9 +64,6 @@ public class Main {
         screen.addSimpelGretig(simpel);
         screen.addLookUp(lookUp);
         screen.addEnumeratie(enumeratie);
-
-
-        System.out.println("Bin capacity after adding packets: " + bin1.getBinCapacityLeft());
 
 
     }

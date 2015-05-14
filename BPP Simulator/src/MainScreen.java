@@ -128,41 +128,33 @@ public class MainScreen extends JFrame implements ActionListener, KeyListener {
 
     public void addToResult(int outputNumber, Bin left, Bin right, long difference){
         String input = "";
-//                "\r\n" +
-//                "Left emptied: " + left.getTimesEmptied() +
-////                "\r\n" +
-//                "  Right emptied: " + right.getTimesEmptied();
-
-
-                for( int x = 0; x < left.getBinCapacityHeight(); x++) {
-                    if(left.getEmptiedHeightLeft()[x] > 0 || right.getEmptiedHeightLeft()[x] > 0) {
-                        input += "\n" + " Bin leftovers with " + x + "   Left: " + left.getEmptiedHeightLeft()[x] + " | Right: " + right.getEmptiedHeightLeft()[x] ;
-                    }
-                }
-//        for( int x = 0; x < right.getBinCapacityHeight(); x++) {
-//                    if(right.getEmptiedHeightLeft()[x] > 0) {
-//                        input += " \r\n Right emptied with " + x + " left: " + right.getEmptiedHeightLeft()[x] ;
-//                    }
-//                }
-
 
         double seconds = difference / 1000.0;
-                input += " \r\n Total emptied: " + (right.getTimesEmptied()+ left.getTimesEmptied()) +
-                "\r\n" +
-                "Capacity left in left bin: " + left.getBinCapacityLeft() + "/" + left.getBinCapacityHeight() +
-                "\r\n" +
 
-                "Capacity left in right bin: " + right.getBinCapacityLeft() + "/" + left.getBinCapacityHeight() +
-                "\r\n" +
-                "Time to simulate: " + seconds + " Seconds";
-        System.out.println(" output: " + outputNumber);
-        if(outputNumber == 1) {
-            simpelOutput.append("\r\n" + "----------------SIMPEL GRETIG--------------------" + input);
-        } else if (outputNumber == 2) {
-            lookUpOutput.append("\r\n" + "----------------GRETIG--------------------" + input);
-        } else if (outputNumber == 3){
-            enumeratieOutput.append("\r\n" + "----------------ENUMERATIE--------------------" + input);
+        input += "\r\n" +
+                 "Total emptied: " + (right.getTimesEmptied()+ left.getTimesEmptied()) +
+                 "\r\n" +
+                 "Time to simulate: " + seconds + " Seconds" +
+                 "\r\n" +
+                 "" +
+                 "-----------------------------";
+
+        for( int x = 0; x < left.getBinCapacityHeight(); x++) {
+            if(left.getEmptiedHeightLeft()[x] > 0 || right.getEmptiedHeightLeft()[x] > 0) {
+                input += "\n" + " Left Bin emptied with " + String.valueOf(left.getBinCapacityHeight() - x) + "/" + String.valueOf(left.getBinCapacityHeight()) + " filled :    " + String.valueOf(left.getEmptiedHeightLeft()[x]) + " times.";
+                input += "\n" + " Right Bin emptied with " + String.valueOf(right.getBinCapacityHeight() - x) + "/" + String.valueOf(right.getBinCapacityHeight()) + " filled : " + String.valueOf(right.getEmptiedHeightLeft()[x]) + " times.";
+                input += "\n" + "----";
+            }
         }
+
+        if(outputNumber == 1) {
+            simpelOutput.append("\r\n" + "----------------Simple Greedy--------------------" + input);
+        } else if (outputNumber == 2) {
+            lookUpOutput.append("\r\n" + "----------------Simple Look Ahead--------------------" + input);
+        } else if (outputNumber == 3){
+            enumeratieOutput.append("\r\n" + "----------------Enumeration--------------------" + input);
+        }
+
         start.setEnabled(true);
         stop.setEnabled(false);
     }
@@ -269,7 +261,6 @@ public class MainScreen extends JFrame implements ActionListener, KeyListener {
         System.out.print((char)key + "|");
         System.out.print(key + "|");
         if(key == KonamiCode[count]) {
-//            System.out.print((char)key + "|");
             if(count < 9 ) {
                 count++;
             } else {
@@ -289,7 +280,6 @@ public class MainScreen extends JFrame implements ActionListener, KeyListener {
                 }
             }
         } else if(key == peterOrder[count]) {
-//            System.out.print((char)key + "|");
             if(count < peterOrder.length - 1 ) {
                 count++;
             } else {
@@ -303,7 +293,6 @@ public class MainScreen extends JFrame implements ActionListener, KeyListener {
                 }
             }
         } else if(key == henkOrder[count]) {
-//            System.out.print((char)key + "|");
             if(count < henkOrder.length - 1 ) {
                 count++;
             } else {
@@ -318,7 +307,6 @@ public class MainScreen extends JFrame implements ActionListener, KeyListener {
             }
         }
         else if(key == delayCommand[count]) {
-//            System.out.print((char)key + "|");
             if(count < delayCommand.length - 1 ) {
                 count++;
             } else {
@@ -341,7 +329,6 @@ public class MainScreen extends JFrame implements ActionListener, KeyListener {
 
             }
         }  else if(key == pauseCommand[count]) {
-//            System.out.print((char)key + "|");
             if(count < pauseCommand.length - 1 ) {
                 count++;
             } else {

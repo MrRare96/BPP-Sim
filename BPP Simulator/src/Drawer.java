@@ -57,15 +57,15 @@ public class Drawer extends JPanel {
         int x = 10;
         //outline bins
         g.drawRect(0,0,binWidth*2 + binSpacing + 40, binHeight + 40);
+
         g.drawString(algo,10,12);
 
         for(Bin bin: bins) {
             int y = 20;
 
-            //Draw draw heights of bins
+            //Draw packetheights in bin
             g.drawLine(x, y, x, y + binHeight);
             for(int line = 0; line < bin.getBinCapacityHeight(); line++) {
-//                g.drawLine(x,y + Line packagesSteps(bin.getBinCapacityHeight()),x +binLines, y *packagesSteps(bin.getBinCapacityHeight()));
                   g.drawLine(x,y + line * packagesSteps(bin.getBinCapacityHeight()), x + binLines,y + line * packagesSteps(bin.getBinCapacityHeight()));
             }
             x+=binLines;
