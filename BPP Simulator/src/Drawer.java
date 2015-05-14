@@ -19,10 +19,9 @@ public class Drawer extends JPanel {
     private String algo;
     private boolean konami;
     private MainScreen parent;
-//    private JProgressBar progressBar;
 
     public Drawer(MainScreen parent, String algo, Bin left, Bin right,ArrayList<Packet> order, int binHeight, int binWidth) {
-        this.bins = new ArrayList<Bin>();
+        this.bins = new ArrayList<>();
         bins.add(left);
         bins.add(right);
         this.order = order;
@@ -55,11 +54,12 @@ public class Drawer extends JPanel {
          */
 
         super.paintComponent(g);
-        //for loop in for loop gets dimension for the specific shape
-            int x = 10;
+        int x = 10;
+        //outline bins
         g.drawRect(0,0,binWidth*2 + binSpacing + 40, binHeight + 40);
 
         g.drawString(algo,10,12);
+
         for(Bin bin: bins) {
             int y = 20;
 
@@ -69,11 +69,10 @@ public class Drawer extends JPanel {
                   g.drawLine(x,y + line * packagesSteps(bin.getBinCapacityHeight()), x + binLines,y + line * packagesSteps(bin.getBinCapacityHeight()));
             }
             x+=binLines;
-            //gray bin
+            //draw gray bin
             g.setColor(new Color(192, 192, 192));
             g.fillRect(x, y, binWidth, binHeight + 1);
             y += binHeight;
-
             g.setColor(Color.black);
             g.drawString(" Emptied: " + bin.getTimesEmptied(), x, 430);
                     g.drawString(bin.getBinCapicityFilled() + "/" + bin.getBinCapacityHeight() +//  5/10
@@ -91,22 +90,22 @@ public class Drawer extends JPanel {
 
                     g.setColor(new Color(rc,gc,bc));
                 } else {
-                    //paint packet
                     g.setColor(packet.getColor());
                 }
-
-                //end position
+                //draw packet
                 g.fillRect(x + binLines, y + packet.getPacketHeight() * -packagesSteps(bin.getBinCapacityHeight()), binWidth - 20, packet.getPacketHeight() * packagesSteps(bin.getBinCapacityHeight()));
                 // pack number text
                 Integer packPosition = order.indexOf(packet);
+                //package number
                 g.setColor(Color.BLACK);
                 g.setFont(new Font(null, Font.PLAIN, 12));
-                //package number
                 g.drawString("#" + packPosition.toString(), x + 10, y - 5);
+
                 y -= packet.getPacketHeight() * packagesSteps(bin.getBinCapacityHeight());
                 //line between packets
                 g.drawLine(x + binLines, y, x + binWidth - 11, y);
             }
+
             x+= binWidth + binSpacing;
         }
 
